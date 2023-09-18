@@ -1,3 +1,3 @@
-# xStream
+# ReelyFriends
 
 FRONT END REPO
