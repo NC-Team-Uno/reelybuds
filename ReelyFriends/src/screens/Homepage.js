@@ -2,19 +2,20 @@ import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ScrollView, FlatList, Dimensions } from "react-native";
 import { getNowPopularMovies } from "../api/Apicall";
-import MovieCard from "../components/MovieCard"
+// import MovieCard from "../components/MovieCard"
 
 
 const Homepage = () => {
-  const [nowPopular, setNowPopular] = useState({});
+  const [newMovies, setNewMovies] = useState({});
   useEffect(() => {
-    getNowPopularMovies().then((movieResponse) =>
+    getNewMovies().then((movieResponse) =>
     // console.log(movieResponse.data)
-    setNowPopular(movieResponse.data)
+    setNewMovies(movieResponse.data)
     );
   }, []);
 
   return (
+
     <ScrollView style={styles.container}>
       <StatusBar style="auto" translucent={false} />
       <View style={styles.headerContainer}>

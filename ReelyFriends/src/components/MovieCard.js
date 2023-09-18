@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { getPoster } from "../api/Apicall";
+import { getPoster } from "../components/";
 
 const MovieCard = ({title, poster}) => {
   return (
