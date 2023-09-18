@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ScrollView, FlatList, Dimensions } from "react-native";
-import { getNowPopularMovies } from "../api/Apicall";
-// import MovieCard from "../components/MovieCard"
+import { getNewMovies } from "../api/Apicall";
+import MovieCard from "../components/MovieCard"
 
 
 const Homepage = () => {
   const [newMovies, setNewMovies] = useState({});
   useEffect(() => {
     getNewMovies().then((movieResponse) =>
-    // console.log(movieResponse.data)
     setNewMovies(movieResponse.data)
     );
   }, []);
@@ -22,7 +21,7 @@ const Homepage = () => {
         <Text style={styles.headerSubtitle}>View All</Text>
       </View>
       <FlatList
-        data={nowPopular.results}
+        data={newMovies.results}
         keyExtractor={(item) => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 13,
     color: "#FFF",
-    fontWeight: 800,
+    fontWeight: 'bold',
     textTransform: "uppercase",
   },
   mainContainer: {
