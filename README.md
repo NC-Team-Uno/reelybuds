@@ -1,3 +1,3 @@
 # ReelyFriends
 
-FRONT END REPO
+ReelyFriends Front End
