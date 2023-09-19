@@ -4,9 +4,10 @@ import Homepage from './src/screens/Homepage'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Header from './src/components/Header';
 
 import FriendsScreen from './src/screens/FriendsScreen';
-import SearchScreen from './src/screens/SearchScreen';
+import MyList from './src/screens/MyList';
 import WatchPartyScreen from './src/screens/WatchPartyScreen';
 import UserScreen from './src/screens/UserScreen';
 
@@ -19,6 +20,8 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
+    <>
+    <Header />
     <NavigationContainer>
     <View style={styles.container}>
       <Tab.Navigator>
@@ -27,9 +30,9 @@ export default function App() {
                 <Icon name="home-outline" size={size} color={color} />
               ),
             }}/>
-        <Tab.Screen name="Search" component={SearchScreen} options={{
+        <Tab.Screen name="My List" component={MyList} options={{
               tabBarIcon: ({ color, size }) => (
-                <Icon name="search-outline" size={size} color={color} />
+                <Icon name="albums-outline" size={size} color={color} />
               ),
             }}/>
         <Tab.Screen name="Watch Party" component={WatchPartyScreen} options={{
@@ -53,6 +56,7 @@ export default function App() {
       <StatusBar style="auto" />
     </View>
     </NavigationContainer>
+    </>
   );
 }
 
