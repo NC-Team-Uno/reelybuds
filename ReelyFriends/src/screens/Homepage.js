@@ -28,21 +28,16 @@ const Homepage = () => {
         keyExtractor={(item) => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <MovieCard title={item.title} poster={item.poster_path} />
-        )}
+        renderItem={({ item }) => <MovieCard item={item} />}
       />
     </ScrollView>
   );
 };
 
-const deviceWidth = Dimensions.get("window").width;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1E2030",
-    width: deviceWidth,
     color: "#FFF",
   },
   headerContainer: {

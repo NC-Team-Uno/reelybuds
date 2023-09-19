@@ -1,45 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   ImageBackground,
+  Modal,
 } from "react-native";
 import { getPoster } from "../api/Apicall";
+import MovieDetail from "./MovieDetail";
 
-const MovieCard = ({poster}) => {
+const MovieCard = ({ item }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  handleMovieCardClick = (item) => {
+    setSelectedMovie(item);
+    setModalVisible(true);
+  };
+
   return (
-    <TouchableOpacity>
-      <ImageBackground
-        style={styles.container}
-        source={{ uri: getPoster(poster) }}
-      ></ImageBackground>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity onPress={() => handleMovieCardClick(item)}>
+        <ImageBackground
+          style={styles.container}
+          source={{ uri: getPoster(item.poster_path) }}
+        ></ImageBackground>
+      </TouchableOpacity>
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <MovieDetail
+          movie={selectedMovie}
+          closeModal={() => setModalVisible(false)}
+        />
+      </Modal>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-
     backgroundColor: "white",
     height: 300,
     width: 230,
     borderRadius: 12,
     elevation: 5,
-    marginVertical: 20,
-    marginHorizontal: 10,
-    padding: "50px",
-    shadowColor: '#11131c',
+    marginVertical: 30,
+    marginBottom: 40,
+    marginHorizontal: 20,
+    shadowColor: "#08080C",
     shadowOffset: {
       width: 10,
-      height:10,
+      height: 10,
     },
     shadowOpacity: 1,
     shadowRadius: 12,
-
   },
 });
-
 
 export default MovieCard;
