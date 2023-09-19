@@ -13,6 +13,7 @@ const TMDB_HTTP_REQUEST = axios.create({
   },
 });
 
+
 const getNewMovies = () =>
   TMDB_HTTP_REQUEST.get(ENDPOINTS.TRENDING);
 
