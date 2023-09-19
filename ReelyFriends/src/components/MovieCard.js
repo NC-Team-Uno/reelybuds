@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   ImageBackground,
+  Modal,
 } from "react-native";
 import { getPoster } from "../api/Apicall";
+import MovieDetail from "./MovieDetail";
 
-const MovieCard = ({ poster }) => {
+const MovieCard = ({ item }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  handleMovieCardClick = (item) => {
+    setSelectedMovie(item);
+    setModalVisible(true);
+  };
+
   return (
-    <TouchableOpacity>
-      <ImageBackground
-        style={styles.container}
-        source={{ uri: getPoster(poster) }}
-      ></ImageBackground>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity onPress={() => handleMovieCardClick(item)}>
+        <ImageBackground
+          style={styles.container}
+          source={{ uri: getPoster(item.poster_path) }}
+        ></ImageBackground>
+      </TouchableOpacity>
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <MovieDetail
+          movie={selectedMovie}
+          closeModal={() => setModalVisible(false)}
+        />
+      </Modal>
+    </>
   );
 };
 

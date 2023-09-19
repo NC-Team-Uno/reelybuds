@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView, FlatList, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  FlatList,
+  Dimensions,
+} from "react-native";
 import { getNewMovies } from "../api/Apicall";
-import MovieCard from "../components/MovieCard"
-
+import MovieCard from "../components/MovieCard";
 
 const Homepage = () => {
   const [newMovies, setNewMovies] = useState({});
   useEffect(() => {
-    getNewMovies().then((movieResponse) =>
-    setNewMovies(movieResponse.data)
-    );
+    getNewMovies().then((movieResponse) => setNewMovies(movieResponse.data));
   }, []);
 
   return (
-
     <ScrollView style={styles.container}>
       <StatusBar style="auto" translucent={false} />
       <View style={styles.headerContainer}>
@@ -25,21 +28,16 @@ const Homepage = () => {
         keyExtractor={(item) => item.id.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <MovieCard title={item.title} poster={item.poster_path} />
-        )}
+        renderItem={({ item }) => <MovieCard item={item} />}
       />
     </ScrollView>
   );
-}
-
-const deviceWidth = Dimensions.get("window").width;
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1E2030",
-    width: deviceWidth,
     color: "#FFF",
   },
   headerContainer: {
@@ -53,7 +51,7 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 13,
     color: "#FFF",
-    fontWeight: 'bold',
+    fontWeight: "bold",
     textTransform: "uppercase",
   },
   mainContainer: {
@@ -64,6 +62,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 });
-
 
 export default Homepage;
