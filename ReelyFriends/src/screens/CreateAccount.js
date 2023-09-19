@@ -14,7 +14,7 @@ function CreateAccount() {
   } else if (timesPressed > 0) {
     textLog = 'onPress';
   }
-
+  const [value, onChangeText] = React.useState('Useless Multiline Placeholder');
 
   return (
     <SafeAreaView >
@@ -24,6 +24,7 @@ function CreateAccount() {
           value={name}
           onChangeText={(name) => setName(name)}
           placeholder={'enter your name here'}
+          placeholderTextColor='#50515e'
           style={styles.input}
         />
         <Text style={{color: 'white'}}>{name}</Text>
@@ -32,6 +33,7 @@ function CreateAccount() {
           value={name}
           onChangeText={(userName) => setUserName(userName)}
           placeholder={'enter your username here'}
+          placeholderTextColor='#50515e'
           style={styles.input}
         />
         <Text style={{color: 'white'}}>{userName}</Text>
@@ -40,6 +42,7 @@ function CreateAccount() {
           value={password}
           onChangeText={(password) => setPassword(password)}
           placeholder={'enter your password here'}
+          placeholderTextColor='#50515e'
           style={styles.input}
         />
         <Text style={{color: 'white'}}>{password}</Text>
@@ -48,6 +51,7 @@ function CreateAccount() {
           value={confirmedPassword}
           onChangeText={(confirmedPassword) => setConfirmedPassword(confirmedPassword)}
           placeholder={'enter your password here'}
+          placeholderTextColor='#50515e'
           style={styles.input}
         />
         <Text style={{color: 'white'}}>{confirmedPassword}</Text>
@@ -56,6 +60,7 @@ function CreateAccount() {
           value={email}
           onChangeText={(email) => setEmail(email)}
           placeholder={'enter your email here'}
+          placeholderTextColor='#50515e'
           style={styles.input}
         />
         <Text style={{color: 'white'}}>{email}</Text>
@@ -65,7 +70,7 @@ function CreateAccount() {
             }}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'orange',
+                backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#f96501',
               },
               styles.wrapperCustom,
             ]}>
@@ -82,7 +87,6 @@ const deviceWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: deviceWidth * 0.75,
     alignItems: 'top',
     backgroundColor: '#1e2030',
@@ -92,7 +96,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     borderColor: 'orange',
     color: 'grey',
-    fontSize: 24
+    fontSize: 18
   },
   text: {
     borderRadius: 20,

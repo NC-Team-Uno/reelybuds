@@ -38,7 +38,7 @@ function LogIn() {
             }}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'orange',
+                backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#f96501',
               },
               styles.wrapperCustom,
             ]}>
@@ -53,7 +53,7 @@ function LogIn() {
             }}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'orange',
+                backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#f96501',
               },
               styles.wrapperCustom,
             ]}>
