@@ -1,13 +1,10 @@
-export default function WatchPartyScreen() {
-    return (
-        <View> style={styles.title}
-            <Text>WatchParty Screen</Text>
-        </View>
-    )
-    }
-    // const styles = StyleSheet.create({
-    //     title: {
-    //     color: 'black'
+import React from 'react';
+import { View, Text } from 'react-native';
 
-    //     },
-    //   });
+export default function WatchPartyScreen() {
+return (
+    <View>
+        <Text>Wacth Party</Text>
+    </View>
+)
+}

@@ -5,6 +5,7 @@ import { getNewMovies } from "../api/Apicall";
 import MovieCard from "../components/MovieCard"
 
 
+
 const Homepage = () => {
   const [newMovies, setNewMovies] = useState({});
   useEffect(() => {
@@ -18,7 +19,7 @@ const Homepage = () => {
     <ScrollView style={styles.container}>
       <StatusBar style="auto" translucent={false} />
       <View style={styles.headerContainer}>
-        <Text style={styles.headerSubtitle}>View All</Text>
+        <Text style={styles.headerSubtitle}>New Movies</Text>
       </View>
       <FlatList
         data={newMovies.results}
