@@ -24,29 +24,35 @@ export default function App() {
     <Header />
     <NavigationContainer>
     <View style={styles.container}>
+      
       <Tab.Navigator>
         <Tab.Screen name="Home" component={Homepage}  options={{
+          headerShown:false,
               tabBarIcon: ({ color, size }) => (
                 <Icon name="home-outline" size={size} color={color} />
               ),
             }}/>
         <Tab.Screen name="My List" component={MyList} options={{
+           headerShown:false,
               tabBarIcon: ({ color, size }) => (
                 <Icon name="albums-outline" size={size} color={color} />
               ),
             }}/>
         <Tab.Screen name="Watch Party" component={WatchPartyScreen} options={{
+           headerShown:false,
           tabBarIcon: ({ color, size }) => (
           <Icon name="film-outline" size={size} color={color}/>
           ),
         }}/>
         <Tab.Screen name="Friends" component={FriendsScreen} options={{
+           headerShown:false,
           tabBarIcon: ({ color, size }) => (
             <Icon name="happy" size={size} color={color}/>
           )
         }}
           />
         <Tab.Screen name="UserScreen" component={UserScreen} options={{
+           headerShown:false,
           tabBarIcon:({ color, size })=> (
             <Icon name="person" size={size} color={color}/>
           )
