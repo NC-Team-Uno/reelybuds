@@ -11,6 +11,7 @@ const TMDB_HTTP_REQUEST = axios.create({
   params: {
     api_key: TMDB_API_KEY,
   },
+  timeout: 5000,
 });
 
 
@@ -25,14 +26,12 @@ const getMovieGenres = async () => {
       params: {
         api_key: TMDB_API_KEY,
       },
-    });
-
-    
+    })
     const genres = response.data.genres;
-    console.log(genres);
     return genres;
   } catch (error) {
-    console.error("Error fetching movie genres:", error);
+    
+    le.error("Error fetching movie genres:", error);
     throw error;
   }
 };
@@ -49,7 +48,6 @@ const getMoviesByGenre = async (genre) => {
       }
     );
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching movies by genre:", error);
@@ -57,4 +55,43 @@ const getMoviesByGenre = async (genre) => {
   }
 };
 
-export { getNewMovies, getPoster, getMovieGenres, getMoviesByGenre };
+const getMoviesByProvider = async (providerId) => {
+  try {
+    const response = await TMDB_HTTP_REQUEST.get(
+      `/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=GB&with_watch_providers=${providerId}`
+    );
+    const movies = response.data.results;
+    return movies;
+  } catch (error) {
+    console.error("Error fetching movies by provider:", error);
+    throw error;
+  }
+};
+
+const getProviderLogo = async (providerId) => {
+  try {
+    const response = await TMDB_HTTP_REQUEST.get(`/watch/providers/movie`, {
+      params: {
+        api_key: TMDB_API_KEY,
+        watch_region: "GB",
+      },
+    });
+
+    const providerData = response.data.results[providerId];
+
+    if (providerData) {
+      const logoUrl = providerData.logo_path
+        ? `https://image.tmdb.org/t/p/original${providerData.logo_path}`
+        : null;
+      return logoUrl;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching provider logo:", error);
+    throw error;
+  }
+};
+
+
+export { getNewMovies, getPoster, getMovieGenres, getMoviesByGenre, getMoviesByProvider, getProviderLogo };
