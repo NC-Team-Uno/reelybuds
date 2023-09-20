@@ -38,9 +38,9 @@ const Homepage = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <StatusBar style="auto" translucent={false} />
+      <StatusBar style="dark" translucent={false} />
       <View style={styles.headerContainer}>
-        <Text style={styles.headerSubtitle}>View All</Text>
+        <Text style={styles.headerSubtitle}>New Movies</Text>
       </View>
       <GenreList />
       <FlatList
