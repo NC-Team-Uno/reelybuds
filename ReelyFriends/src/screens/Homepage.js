@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-
 import {
   StyleSheet,
   Text,
@@ -9,32 +8,14 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import { StyleSheet, Text, View, ScrollView, FlatList, Dimensions } from "react-native";
-import { getNewMovies, getMovieGenres } from "../api/Apicall";
+import { getNewMovies } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
-import GenreList from "../components/GenresList"
-
 
 const Homepage = () => {
   const [newMovies, setNewMovies] = useState({});
-  const [genres, setGenres] = useState([]);
-
   useEffect(() => {
-
     getNewMovies().then((movieResponse) => setNewMovies(movieResponse.data));
   }, []);
-
-
-
-    getMovieGenres()
-      .then((data) => {
-        setGenres(data);
-      })
-      .catch((error) => {});
-  }, []);
-
-
-
 
   return (
     <ScrollView style={styles.container}>
@@ -42,7 +23,6 @@ const Homepage = () => {
       <View style={styles.headerContainer}>
         <Text style={styles.headerSubtitle}>New Movies</Text>
       </View>
-      <GenreList />
       <FlatList
         data={newMovies.results}
         keyExtractor={(item) => item.id.toString()}
