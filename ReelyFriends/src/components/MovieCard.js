@@ -13,7 +13,7 @@ import MovieDetail from "./MovieDetail";
 const MovieCard = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  handleMovieCardClick = (item) => {
+  const handleMovieCardClick = (item) => {
     setSelectedMovie(item);
     setModalVisible(true);
   };
