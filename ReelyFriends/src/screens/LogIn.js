@@ -131,17 +131,12 @@ const deviceWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: deviceWidth * 0.80,
+    width: deviceWidth,
     alignItems: 'top',
     backgroundColor: '#1e2035',
     justifyContent: 'center',  
-    borderRadius: 5,
-    marginBottom: 10,
-    marginStart: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
 
   },
   input: {
@@ -152,7 +147,7 @@ const styles = StyleSheet.create({
     borderColor: 'white', 
     borderRadius: 2,
     paddingHorizontal: 10,
-    marginBottom: 10,
+
   },
   username: {
     textAlign: 'center',
@@ -168,20 +163,24 @@ const styles = StyleSheet.create({
     color: '#7AA5D9',
     fontSize: 16,
     marginTop: 10,
-    marginBottom: 10,
+
   },
   wrapperCustom: {
     borderColor: 'purple',
     borderRadius: 5,
     fontSize: 16,
-    marginBottom: 20,
+    marginTop: 15,
   },
   pressed: {
     borderRadius: 10,
     textAlign: 'center',
     color: '#DDDBCB',
-    fontSize: 24,
-    marginBottom: 30,
+    fontSize: 22,
+    borderRadius: 10,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 15,
+    marginBottom: 15,
   },
   error: {
     color: 'magenta',

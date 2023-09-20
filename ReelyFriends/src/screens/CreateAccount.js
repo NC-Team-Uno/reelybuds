@@ -175,17 +175,12 @@ const deviceWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
 container: {
     flex: 1,
-    width: deviceWidth * 0.75,
+    width: deviceWidth,
     alignItems: 'top',
     backgroundColor: '#1e2035',
     justifyContent: 'center',  
-    borderRadius: 5,
-    marginBottom: 30,
-    marginStart: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
 },
 input: {
     textAlign: 'center',
@@ -225,7 +220,11 @@ pressed: {
     textAlign: 'center',
     color: '#DDDBCB',
     fontSize: 24,
-    marginBottom: 5,
+    borderRadius: 10,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 15,
+    marginBottom: 15,
 },
 error: {
     color: 'magenta',

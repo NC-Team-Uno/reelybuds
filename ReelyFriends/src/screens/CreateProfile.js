@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, SafeAreaView, Text, View, TextInput, Pressable, Dimensions, Alert, PermissionsAndroid, TouchableOpacity} from 'react-native';
+import { StyleSheet, SafeAreaView, Text, View, Pressable, Dimensions, Alert, PermissionsAndroid, TouchableOpacity} from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
 function CreateProfile() {
@@ -8,168 +8,194 @@ function CreateProfile() {
   const [avatar, setAvatar] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (timesPressed > 1) {
-    textLog = timesPressed + 'x onPress';
-  } else if (timesPressed > 0) {
-    textLog = 'onPress';
-  }
+  const providerData = [
+    "Netflix" ,
+    "Disney+" ,
+    "Apple TV" ,
+    "Amazon Prime" ,
+    "Now TV" ,
+    "BBC iPlayer" ,
+    "Channel 4" ,
+    "Paramount+" ,
+    "Sky Go" ,
+    "BritBox" ,
+    "YouTube" 
+];
+
+  const genres = ['Action', 'Comedy', 'Drama', 'Sci-Fi', 'Fantasy'];
+
+  const [selectedProviders, setSelectedProviders] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+
+  const toggleProvider = (provider) => {
+    if (selectedProviders.includes(provider)) {
+      setSelectedProviders(selectedProviders.filter((item) => item !== provider));
+    } else {
+      setSelectedProviders([...selectedProviders, provider]);
+    }
+  };
+
+  const toggleGenre = (genre) => {
+    if (selectedGenres.includes(genre)) {
+      setSelectedGenres(selectedGenres.filter((item) => item !== genre));
+    } else {
+      setSelectedGenres([...selectedGenres, genre]);
+    }
+  };
 
   const handleCreateAccount = () => {
     setIsSubmitting(true);
+    // post 'avatar', 'selectedProviders', and 'selectedGenres' in the user account (db)
+
+
     setTimeout(() => {
       setIsSubmitting(false);
-      }, 2000); // 2-second delay
-    };
-
-  const [singleFile, setSingleFile] = useState(null);
+      // alert account created and navigate home
+    }, 2000);
+  };
 
   const checkPermissions = async () => {
-      try {
-        const result = await PermissionsAndroid.check(
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+    try {
+      const result = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+      );
+
+      if (!result) {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          {
+            title:
+              'You need to give storage permission to download and save the file',
+            message: 'App needs access to your camera ',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
         );
-  
-        if (!result) {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-            {
-              title:
-                'You need to give storage permission to download and save the file',
-              message: 'App needs access to your camera ',
-              buttonNeutral: 'Ask Me Later',
-              buttonNegative: 'Cancel',
-              buttonPositive: 'OK',
-            }
-          );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('You can use the camera');
-            return true;
-        } else {
-            Alert.alert('Error', I18n.t('PERMISSION_ACCESS_FILE'));
-  
-            console.log('Camera permission denied');
-            return false;
-          }
-        } else {
+          console.log('You can use the camera');
           return true;
-        }
-      } catch (err) {
-        console.warn(err);
-        return false;
-      }
-    };
-  
-    const uploadImage = async () => {
-      const BASE_URL = 'xxxx';
-  
-      // Check if any file is selected or not
-      if (singleFile != null) {
-        // If file selected then create FormData
-        const data = new FormData();
-  
-        data.append('file_attachment', {
-          uri: singleFile.uri,
-          name: singleFile.name,
-          type: singleFile.mimeType,
-        });
-  
-        // return
-        try {
-          let res = await fetch(BASE_URL + 'tutorial/upload.php', {
-            method: 'post',
-            body: data,
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'multipart/form-data',
-            },
-            timeout: 5000,
-          });
-  
-          let result = await res.json();
-          console.log('result', result);
-          if (result.status == 1) {
-            Alert.alert('Info', result.msg);
-          }
-        } catch (error) {
-          // Error retrieving data
-          // Alert.alert('Error', error.message);
-          console.log('error upload', error);
+        } else {
+          Alert.alert('Error', 'Camera permission denied');
+          console.log('Camera permission denied');
+          return false;
         }
       } else {
-        // If no file selected the show alert
-        Alert.alert('Please Select File first');
+        return true;
       }
-    };
-  
-    async function selectFile() {
-      try {
-        const result = await checkPermissions();
-  
-        if (result) {
-          const result = await DocumentPicker.getDocumentAsync({
-            copyToCacheDirectory: false,
-            type: 'image/*',
-          });
-  
-          if (result.type === 'success') {
-            // Printing the log realted to the file
-            console.log('res : ' + JSON.stringify(result));
-            // Setting the state to show single file attributes
-            setSingleFile(result);
-          }
-        }
-      } catch (err) {
-        setSingleFile(null);
-        console.warn(err);
-        return false;
-      }
+    } catch (err) {
+      console.warn(err);
+      return false;
     }
+  };
+
+  const selectFile = async () => {
+    try {
+      const result = await checkPermissions();
+
+      if (result) {
+        const result = await DocumentPicker.getDocumentAsync({
+          copyToCacheDirectory: false,
+          type: 'image/*',
+        });
+
+        if (result.type === 'success') {
+          setAvatar(result);
+        }
+      }
+    } catch (err) {
+      setAvatar(null);
+      console.warn(err);
+      return false;
+    }
+  };
+
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.username}> Upload profile picture:</Text>
-        {singleFile != null ? (
-        <Text style={styles.textStyle}>
-          File Name: {singleFile.name ? singleFile.name : ''}
-          {'\n'}
-          Type: {singleFile.type ? singleFile.type : ''}
-          {'\n'}
-          File Size: {singleFile.size ? singleFile.size : ''}
-          {'\n'}
-          URI: {singleFile.uri ? singleFile.uri : ''}
-          {'\n'}
-        </Text>
-      ) : null}
+        <Text style={styles.textSelection}>Upload profile picture:</Text>
+        {avatar ? (
+          <Text style={styles.buttonTextStyle}>
+            File Name: {avatar.name ? avatar.name : ''}
+            {'\n'}
+            Type: {avatar.type ? avatar.type : ''}
+            {'\n'}
+            File Size: {avatar.size ? avatar.size : ''}
+            {'\n'}
+            URI: {avatar.uri ? avatar.uri : ''}
+            {'\n'}
+          </Text>
+        ) : null}
 
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        activeOpacity={0.5}
-        onPress={selectFile}>
-        <Text style={styles.buttonTextStyle}>Select File</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        activeOpacity={0.5}
-        onPress={uploadImage}>
-        <Text style={styles.buttonTextStyle}>Upload File</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={selectFile}>
+          <Text style={styles.buttonTextStyle}>Select photo</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.textSelection}>Select favorite streaming providers:</Text>
+        <View style={styles.selectionContainer}>
+          {providerData.map((provider) => (
+            <Pressable
+              key={provider}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: selectedProviders.includes(provider)
+                  ? '#f96501'
+                  : pressed
+                  ? '#f96501'
+                  : '#D2E6FF',
+                },
+                styles.selectionButton,
+              ]}
+              onPress={() => toggleProvider(provider)}>
+              <Text style={styles.selectionText}>{provider}</Text>
+            </Pressable>
+          ))}
+        </View>
+
+        <Text style={styles.textSelection}>Select favorite genres:</Text>
+        <View style={styles.selectionContainer}>
+          {genres.map((genre) => (
+            <Pressable
+              key={genre}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: selectedGenres.includes(genre)
+                    ? '#f96501'
+                    : pressed
+                    ? '#f96501'
+                    : '#D2E6FF',
+                },
+                styles.selectionButton,
+              ]}
+              onPress={() => toggleGenre(genre)}>
+              <Text style={styles.selectionText}>{genre}</Text>
+            </Pressable>
+          ))}
+        </View>
+
         <Pressable
-            onPress={() => {
-              setTimesPressed(current => current + 1)
-              handleCreateAccount();       
-            }} 
-            disabled = {isSubmitting}
-            style={({pressed}) => [
-              {
-                backgroundColor: pressed ? '#D2E6FF' : '#f96501',
-              },
-              styles.wrapperCustom,
-            ]}>
-            {({pressed}) => (
-              <Text style={styles.pressed}>{pressed ? 'Creating account ...' : 'Complete profile'}</Text>
-            )}
-        </Pressable>   
+          onPress={() => {
+            setTimesPressed((current) => current + 1);
+            handleCreateAccount();
+          }}
+          disabled={isSubmitting}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? '#D2E6FF' : '#f96501',
+            },
+            styles.wrapperCustom,
+          ]}>
+          {({ pressed }) => (
+            <Text style={styles.pressed}>
+              {pressed ? 'Creating account ...' : 'Complete profile'}
+            </Text>
+          )}
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -180,17 +206,12 @@ const deviceWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
 container: {
     flex: 1,
-    width: deviceWidth * 0.75,
+    width: deviceWidth,
     alignItems: 'top',
     backgroundColor: '#1e2035',
     justifyContent: 'center',  
-    borderRadius: 5,
-    marginBottom: 30,
-    marginStart: 10,
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
 },
 input: {
     textAlign: 'center',
@@ -202,7 +223,7 @@ input: {
     paddingHorizontal: 10,
     marginBottom: 10,
 },
-username: {
+textSelection: {
     textAlign: 'center',
     marginStart: 10,
     alignContent: 'center',
@@ -238,7 +259,7 @@ error: {
 },
 buttonStyle: {
   backgroundColor: '#307ecc',
-  borderWidth: 0,
+  borderWidth: 1,
   color: '#FFFFFF',
   borderColor: '#307ecc',
   height: 40,
@@ -261,6 +282,22 @@ textStyle: {
   marginLeft: 35,
   marginRight: 35,
   textAlign: 'center',
+},
+selectionContainer: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  alignSelf:'auto',
+},
+selectionButton: {
+  padding: 10,
+  margin: 5,
+  borderRadius: 5,
+  borderWidth: 1,
+
+},
+selectionText: {
+  fontSize: 16,
+  fontWeight: 'bold',
 },
 });
 
