@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import { StyleSheet, SafeAreaView, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
 
 function CreateAccount() {
+
+  const [timesPressed, setTimesPressed] = useState(0);
   const [name, setName] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -11,8 +13,7 @@ function CreateAccount() {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [passwordConfirmationError, setPasswordConfirmationError] = useState('');
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [timesPressed, setTimesPressed] = useState(0);
+  const [emailError, setEmailError] = useState(''); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   if (timesPressed > 1) {
     textLog = timesPressed + 'x onPress';
@@ -112,7 +113,6 @@ function CreateAccount() {
           value={password}
           onChangeText={(password) => {
             setPassword(password)
-            console.log('password in the password input ->', password)
             validatePassword()
         }}
           placeholder={'enter your password here'}
