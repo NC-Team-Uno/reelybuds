@@ -14,10 +14,6 @@ const TMDB_HTTP_REQUEST = axios.create({
   timeout: 5000,
 });
 
-
-const getNewMovies = () =>
-  TMDB_HTTP_REQUEST.get(ENDPOINTS.TRENDING);
-
 const getPoster = (path) => `${TMDB_IMAGE_BASE_URL}/original${path}`;
 
 const getMovieGenres = async () => {
@@ -26,11 +22,10 @@ const getMovieGenres = async () => {
       params: {
         api_key: TMDB_API_KEY,
       },
-    })
+    });
     const genres = response.data.genres;
     return genres;
   } catch (error) {
-    
     le.error("Error fetching movie genres:", error);
     throw error;
   }
@@ -93,5 +88,10 @@ const getProviderLogo = async (providerId) => {
   }
 };
 
-
-export { getNewMovies, getPoster, getMovieGenres, getMoviesByGenre, getMoviesByProvider, getProviderLogo };
+export {
+  getPoster,
+  getMovieGenres,
+  getMoviesByGenre,
+  getMoviesByProvider,
+  getProviderLogo,
+};

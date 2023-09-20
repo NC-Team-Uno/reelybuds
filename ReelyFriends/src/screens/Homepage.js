@@ -1,35 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  FlatList,
-  Dimensions,
-} from "react-native";
-import { getNewMovies } from "../api/Apicall";
-import MovieCard from "../components/MovieCard";
+import { StyleSheet, ScrollView } from "react-native";
+import Providers from "../components/Providers";
 
 const Homepage = () => {
-  const [newMovies, setNewMovies] = useState({});
-  useEffect(() => {
-    getNewMovies().then((movieResponse) => setNewMovies(movieResponse.data));
-  }, []);
-
   return (
     <ScrollView style={styles.container}>
       <StatusBar style="dark" translucent={false} />
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerSubtitle}>New Movies</Text>
-      </View>
-      <FlatList
-        data={newMovies.results}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => <MovieCard item={item} />}
-      />
+      <Providers />
     </ScrollView>
   );
 };
