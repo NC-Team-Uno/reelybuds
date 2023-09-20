@@ -9,14 +9,24 @@ import {
 } from "react-native";
 import React from "react";
 import { getPoster } from "../api/Apicall";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const MovieDetail = ({ movie, closeModal }) => {
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.contentcontainer}>
-        <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-          <Text style={styles.closeButtonText}>X</Text>
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.button}>
+          <Icon name="heart" color={"#fea971"} size={40} />
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Icon name="star" color={"#fea971"} size={40} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={closeModal}>
+          <Icon name="close" color={"#f46201"} size={40} />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.contentcontainer}>
         <Image
           resizeMethod="scale"
           resizeMode="cover"
@@ -53,6 +63,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
+  buttons: {
+    position: "absolute",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    zIndex: 2,
+    top: 15,
+    width: deviceWidth,
+  },
   title: {
     fontSize: 30,
     fontWeight: "bold",
@@ -65,19 +84,10 @@ const styles = StyleSheet.create({
     color: "#f0f0f1",
     paddingHorizontal: 30,
   },
-  closeButton: {
-    position: "absolute",
-    top: 12,
-    right: 12,
-    zIndex: 1,
-    backgroundColor: "#ccc",
-    padding: 10,
-    borderRadius: 5,
-  },
-  closeButtonText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#fff",
+  button: {
+    backgroundColor: "#50515e",
+    padding: 4,
+    borderRadius: 12,
   },
   images: {
     width: deviceWidth,
@@ -93,9 +103,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     padding: 10,
     margin: 10,
+    marginTop: 20,
     color: "#f0f0f1",
     fontWeight: "bold",
-    borderRadius: 14,
+    borderRadius: 12,
     textAlign: "center",
   },
 });
