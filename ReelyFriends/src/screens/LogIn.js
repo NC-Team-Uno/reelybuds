@@ -1,16 +1,63 @@
 import React, {useState} from 'react';
 import { StyleSheet, SafeAreaView, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
+import CreateAccount from './CreateAccount';
 
 function LogIn() {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [userNameError, setUserNameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [timesPressed, setTimesPressed] = useState(0);
-  let textLog = '';
+
   if (timesPressed > 1) {
     textLog = timesPressed + 'x onPress';
   } else if (timesPressed > 0) {
     textLog = 'onPress';
   }
+
+  const validateUserName = () => {
+    if (!userName.trim()) {
+      setUserNameError('Username is required');
+    } else {
+      setUserNameError('');
+    }
+  };
+  
+  const validatePassword = () => {
+    if (!password.trim()) {
+      setPasswordError('Password is required');
+    } else if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters long');
+    } else {
+      setPasswordError('');
+    }
+  };
+  const handleLogin = () => {
+    
+    validateUserName();
+    validatePassword();
+
+  
+    
+    if (!userNameError && !passwordError && !passwordConfirmationError) {
+      if (password === confirmPassword) {
+   
+        console.log('Logging in...');
+        // usecontext on user to login
+      } else {
+        // display message
+        console.log('Passwords do not match');
+      }
+    } else {
+
+      console.log('Incorrect username or password');
+    }
+  };
+
+
+  const handleCreateAccount = () => {
+    // use 'userName' and 'password' to create a new account (post to DB)
+  };
 
 
   return (
@@ -19,48 +66,61 @@ function LogIn() {
         <Text style={styles.username}>Username:</Text>
         <TextInput
           value={userName}
-          onChangeText={(userName) => setUserName(userName)}
+          onChangeText={(userName) => {
+              validateUserName(userName)
+              setUserName(userName)}}
           placeholder={'enter your username here'}
+          placeholderTextColor='#50515e'
           style={styles.input}
+          autoFocus
         />
-        <Text style={{color: 'white'}}>{userName}</Text>
-        <Text style={styles.password}>Password:</Text>
+        {userNameError ? <Text style={styles.error}>{userNameError}</Text> : null}
+        <Text style={styles.username}>Password:</Text>
         <TextInput
           value={password}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(password) => {
+              validatePassword(password)
+              setPassword(password)}
+          }
           placeholder={'enter your password here'}
+          placeholderTextColor='#50515e'
           style={styles.input}
+          secureTextEntry={true}
+          autoFocus
         />
-        <Text style={{color: 'white'}}>{password}</Text>
+        {passwordError ? <Text style={styles.error}>{passwordError}</Text> : null}
         <Pressable
-            onPress={() => {
-              setTimesPressed(current => current + 1);
-            }}
+            onPress={() => {             
+                      setTimesPressed(current => current + 1);
+                      handleLogin()
+                    }}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#f96501',
+                backgroundColor: pressed ? '#D2E6FF' : '#f96501',
               },
               styles.wrapperCustom,
             ]}>
             {({pressed}) => (
-              <Text style={styles.text}>{pressed ? 'Logging in ...' : 'Log in'}</Text>
+              <Text style={styles.pressed}>{pressed ? 'Logging in ...' : 'Log in'}</Text>
             )}
         </Pressable>
         <Text style={styles.create}> Don't have an account? Click below to create one. </Text>
         <Pressable
             onPress={() => {
               setTimesPressed(current => current + 1);
+              <CreateAccount />
             }}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? 'rgb(210, 230, 255)' : '#f96501',
+                backgroundColor: pressed ? '#D2E6FF' : '#f96501',
               },
               styles.wrapperCustom,
             ]}>
             {({pressed}) => (
-              <Text style={styles.text}>{pressed ? 'Creating account ...' : 'Create account'}</Text>
+              <Text style={styles.pressed}>{pressed ? 'Creating account ...' : 'Create account'}</Text>
             )}
-        </Pressable>       
+        </Pressable>  
+        <Text style={styles.create}> Forgot your password? Click HERE to retrieve it. </Text>
       </View>
     </SafeAreaView>
   );
@@ -71,44 +131,62 @@ const deviceWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: deviceWidth * 0.75,
+    width: deviceWidth * 0.80,
     alignItems: 'top',
-    backgroundColor: '#1e2030',
+    backgroundColor: '#1e2035',
     justifyContent: 'center',  
+    borderRadius: 5,
+    marginBottom: 10,
+    marginStart: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+
   },
   input: {
-    alignContent: 'center',
-    borderColor: 'orange',
-    color: 'grey',
-    fontSize: 24
-  },
-  text: {
-    borderRadius: 20,
-    alignContent: 'center',
-    color: 'black',
-    fontSize: 24
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: 'white', 
+    borderRadius: 2,
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
   username: {
+    textAlign: 'center',
+    marginStart: 10,
     alignContent: 'center',
-    color: 'white',
-    fontSize: 24
-  },
-  password: {
-    alignContent: 'center',
-    color: 'white',
-    fontSize: 24
+    color: '#EF8945',
+    fontSize: 24,
   },
   create: {
     justifyContent: 'center',
-    paddingLeft: 30,
-    paddingRight: 30,
-    color: 'white',
-    fontSize: 20
+    paddingLeft: 10,
+    paddingRight: 10,
+    color: '#7AA5D9',
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 10,
   },
   wrapperCustom: {
     borderColor: 'purple',
-    fontSize: 18
-  }
+    borderRadius: 5,
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  pressed: {
+    borderRadius: 10,
+    textAlign: 'center',
+    color: '#DDDBCB',
+    fontSize: 24,
+    marginBottom: 30,
+  },
+  error: {
+    color: 'magenta',
+    marginBottom: 10,
+  },
 });
 
 export default LogIn;
