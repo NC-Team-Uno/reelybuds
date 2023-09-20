@@ -1,15 +1,10 @@
-import {
-  TMDB_BASE_URL,
-  TMDB_API_KEY,
-  TMDB_IMAGE_BASE_URL,
-  ENDPOINTS,
-} from "./Private";
+import { TMDB_BASE_URL, TMDB_IMAGE_BASE_URL, ENDPOINTS } from "./Private";
 import axios from "axios";
 
 const TMDB_HTTP_REQUEST = axios.create({
   baseURL: TMDB_BASE_URL,
   params: {
-    api_key: TMDB_API_KEY,
+    api_key: process.env.TMDB_API_KEY,
   },
   timeout: 5000,
 });
@@ -26,7 +21,7 @@ const getMovieGenres = async () => {
     const genres = response.data.genres;
     return genres;
   } catch (error) {
-    le.error("Error fetching movie genres:", error);
+    console.error("Error fetching movie genres:", error);
     throw error;
   }
 };
