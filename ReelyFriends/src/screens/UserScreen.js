@@ -1,15 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 export default function UserScreen() {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>User Screen</Text>
+            <HamburgerMenu />
+            <Text style={[styles.text, styles.username]}>UserName</Text>
+            <Text style={[styles.text, styles.name]}>Name</Text>
             <Image
         source={require('../../assets/face.jpeg')}
-        style={{ width: 200, height: 200 }} 
+        style={styles.profileImage} 
       />
-
+  <Text style={[styles.text, styles.componentToCome]}>Need component here to render user likes</Text>
+  <Text style={[styles.text, styles.componentToCome]}>Need component here to render user watch list</Text>
         </View>
     )
     }
@@ -18,8 +22,31 @@ export default function UserScreen() {
         container: {
             flex: 1,
             backgroundColor: "#1E2030",
+
         },
         text: {
-            color: "#FFF"
+            color: "#fff"
+        },
+        username: {
+            textAlign: "center",
+            fontSize: 25,
+        },
+        name: {
+            textAlign: "center",
+            fontSize: 15,
+            padding: 6, 
+        },
+        profileImage: {
+            width: 150, 
+            height: 150,
+            borderRadius: 100,
+            alignSelf: "center",
+            margin: 10
+        },
+        componentToCome: {
+            alignSelf: "center",
+            fontSize: 15,
+            margin: 5,
         }
-    })
+        }
+    )
