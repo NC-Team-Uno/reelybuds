@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet,Text, View, TouchableOpacity, Button} from 'react-native';
+import {StyleSheet,Text, View, TouchableOpacity, Button, Alert} from 'react-native';
 import GroupNameInput from "../components/GroupNameInput";
 import UploadGroupImage from "../components/UploadImage";
 import FriendsSearchBar from "../components/FriendsSearchBar";
@@ -9,13 +9,13 @@ import Icon from "react-native-vector-icons/Ionicons";
 export default function CreateWatchParty(){
     return (
     <View style={styles.container}>
-    <Text style={styles.createWatchPartyTitle}>Create watch party</Text>
+    <Text style={styles.createWatchPartyTitle}>Create Watch Group</Text>
     <GroupNameInput />
     <UploadGroupImage />
 
 <View style={styles.searchFriendsContainer}>
 
-<FriendsSearchBar style={styles.friendsSearchBar}/> 
+<FriendsSearchBar /> 
 
 <View style={styles.individualFriendBox}>
 <Text style={styles.friendNameText}>Andra</Text>
@@ -28,7 +28,8 @@ export default function CreateWatchParty(){
 </View>
     
 <Button style={styles.createButton}
-    title="Create Watch Party"
+    title="Create Watch Group"
+    onPress={() => Alert.alert('One day soon this will enter data to our jazzy DB!')}
     />
     
     </View>
@@ -72,7 +73,5 @@ friendNameText: {
     paddingLeft: 15,
     paddingRight: 50, 
 },
-addButton:{
 
-}
 })

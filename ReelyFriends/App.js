@@ -23,6 +23,7 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <View style={styles.container}>
+          
           <Tab.Navigator>
             <Tab.Screen
               name="Home"
