@@ -1,17 +1,26 @@
 import {
   Dimensions,
+  FlatList,
   Image,
+  Linking,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
-import { getPoster } from "../api/Apicall";
+import React, { useEffect, useState } from "react";
+import { getLink, getPoster } from "../api/Apicall";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const MovieDetail = ({ movie, closeModal }) => {
+  useEffect(() => {
+    getLink(movie.id).then((linkObj) => {
+      setLinkData(linkObj);
+    });
+  }, []);
+  const [linkData, setLinkData] = useState([]);
   return (
     <View style={styles.container}>
       <View style={styles.buttons}>
@@ -43,6 +52,24 @@ const MovieDetail = ({ movie, closeModal }) => {
         </View>
         <Text style={styles.title}>{movie.original_title}</Text>
         <Text style={styles.description}>{movie.overview}</Text>
+        <FlatList
+          horizontal={true}
+          data={linkData}
+          renderItem={({ item }) => {
+            if (item.length !== 0) {
+              return (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    Linking.openURL(Object.values(item).toString());
+                  }}
+                >
+                  <Text style={styles.bubble}>{Object.keys(item)}</Text>
+                </TouchableOpacity>
+              );
+            }
+          }}
+        ></FlatList>
       </ScrollView>
     </View>
   );
@@ -62,6 +89,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  watchButtons: {
+    width: deviceWidth,
+    height: 200,
+    backgroundColor: "#fff",
   },
   buttons: {
     position: "absolute",
