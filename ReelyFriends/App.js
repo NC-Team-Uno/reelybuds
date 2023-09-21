@@ -11,7 +11,6 @@ import MyList from "./src/screens/MyList";
 import WatchPartyScreen from "./src/screens/WatchPartyScreen";
 import UserScreen from "./src/screens/UserScreen";
 
-//trying to use Ionicons - following instructions at: https://ionic.io/ionicons/usage#home-outline
 
 const Tab = createBottomTabNavigator();
 
