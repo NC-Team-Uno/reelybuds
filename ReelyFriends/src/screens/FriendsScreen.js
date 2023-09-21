@@ -6,7 +6,6 @@ export default function FriendsScreen(){
     return (
         <View style={styles.container}>
             <Text style={styles.friends}> Friends Screen </Text>
-            <FriendsScreen />
             
         </View>
     )
@@ -21,5 +20,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         textAlign: "center",
         fontSize: 25,
+        margin: 10,
     }
 })
