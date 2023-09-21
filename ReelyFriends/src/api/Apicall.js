@@ -83,10 +83,49 @@ const getProviderLogo = async (providerId) => {
   }
 };
 
+const getLink = async (id) => {
+  const streamLinks = [];
+  const options = {
+    method: "GET",
+    url: "https://streaming-availability.p.rapidapi.com/get",
+    params: {
+      output_language: "en",
+      tmdb_id: `movie/${id}`,
+    },
+    headers: {
+      "X-RapidAPI-Key": process.env.MOTN_API_KEY,
+      "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com",
+    },
+  };
+  try {
+    const {
+      data: { result },
+    } = await axios.request(options);
+    const {
+      streamingInfo: { gb },
+    } = result;
+    if (gb) {
+      await gb.filter((service) => {
+        if (
+          service.streamingType === "subscription" ||
+          service.streamingType === "addon" ||
+          service.streamingType === "free"
+        ) {
+          streamLinks.push({ [service.service]: service.link });
+        }
+      });
+      return streamLinks;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export {
   getPoster,
   getMovieGenres,
   getMoviesByGenre,
   getMoviesByProvider,
   getProviderLogo,
+  getLink,
 };
