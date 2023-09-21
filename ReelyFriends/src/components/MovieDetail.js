@@ -52,6 +52,7 @@ const MovieDetail = ({ movie, closeModal }) => {
         </View>
         <Text style={styles.title}>{movie.original_title}</Text>
         <Text style={styles.description}>{movie.overview}</Text>
+        <Text style={styles.watchNow}>Watch now on: </Text>
         <FlatList
           horizontal={true}
           data={linkData}
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    marginVertical: 30,
+    marginVertical: 8,
     color: "#f0f0f1",
   },
   description: {
@@ -131,15 +132,20 @@ const styles = StyleSheet.create({
     shadowColor: "08080c",
   },
   bubble: {
-    backgroundColor: "#f96501",
+    backgroundColor: "#11131C",
     overflow: "hidden",
     padding: 10,
-    margin: 10,
-    marginTop: 20,
+    margin: 5,
+    marginTop: 10,
     color: "#f0f0f1",
     fontWeight: "bold",
     borderRadius: 12,
     textAlign: "center",
+  },
+  watchNow: {
+    fontWeight: "bold",
+    color: "#f0f0f1",
+    fontSize: 20,
   },
 });
 
