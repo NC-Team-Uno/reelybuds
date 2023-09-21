@@ -2,14 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 
 export default function WatchPartyScreen() {
+
 return (
     <View style={styles.container}>
         <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
-        <Button
-    onPress={onPressLearnMore}
+        <Button style={styles.createButton}
     title="Create Watch Party"
-    color="#841584"
-    accessibilityLabel="Learn more about this purple button"
     />
         <View style={styles.explanationBox}>
         <Text style={styles.explanationText}>Invite friends to a watch party and choose the perfect film for your night in!</Text>
@@ -33,21 +31,14 @@ return (
       />
     </View>
   <View style={styles.friendsBox}>
-
-
             <Text style={styles.individualFriend}>Kieran</Text>
             <Text style={styles.individualFriend}>Andra</Text>
             <Text style={styles.individualFriend}>Hayden</Text>
             <Text style={styles.individualFriend}>Viktoriia</Text>
             <Text style={styles.individualFriend}>Imran</Text>
             <Text style={styles.individualFriend}>Sula</Text>
-
         </View>
-
         </View>
-      
-
-
     </View>
 )
 }
@@ -62,6 +53,9 @@ const styles = StyleSheet.create ({
         textAlign: 'center',
         fontSize: 25,
         margin: 10,
+    },
+    createButton: {
+
     },
     explanationBox: {
         backgroundColor: "#50515e",

@@ -1,16 +1,15 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 
-const FriendsSearchBar = () => {
-  const [text, setText] = React.useState('Search for friends');
+const GroupNameInput = () => {
+  const [groupName, setGroupName] = React.useState('Enter group name');
 
   return (
     <SafeAreaView>
       <TextInput
         style={styles.input}
-        onChangeText={setText}
-        placeholder="Search for Friends"
-        placeholderTextColor="#fff" 
+        onChangeText={setGroupName}
+        value={groupName}
       />
     </SafeAreaView>
   );
@@ -23,8 +22,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderColor: "#fff",
+    color: "#fff"
   },
 });
 
-
-export default FriendsSearchBar;
+export default GroupNameInput;

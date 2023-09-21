@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import TextInputExample from "../components/FriendsSearchBar";
+import FriendsSearchBar from "../components/FriendsSearchBar"
+
 
 export default function FriendsScreen(){
     return (
         <View style={styles.container}>
-            <Text style={styles.friends}> Friends Screen </Text>
+            <Text style={styles.friendsText}> Friends Screen </Text>
+            <FriendsSearchBar />
             
         </View>
     )
@@ -16,7 +18,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#1E2030",
     },
-    friends: {
+    friendsText: {
         color: "#fff",
         textAlign: "center",
         fontSize: 25,
