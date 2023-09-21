@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 
-const TextInputExample = () => {
+const FriendsSearchBar = () => {
   const [text, setText] = React.useState('Search for friends');
 
   return (
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TextInputExample;
+export default FriendsSearchBar;

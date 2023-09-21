@@ -6,7 +6,7 @@ export default function FriendsScreen(){
     return (
         <View style={styles.container}>
             <Text style={styles.friends}> Friends Screen </Text>
-            <TextInputExample />
+            <FriendsScreen />
             
         </View>
     )
