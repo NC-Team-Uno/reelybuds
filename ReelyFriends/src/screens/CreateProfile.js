@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { StyleSheet, SafeAreaView, Text, View, Pressable, Dimensions, Alert, PermissionsAndroid, TouchableOpacity} from 'react-native';
-import * as DocumentPicker from 'expo-document-picker';
+import { StyleSheet, SafeAreaView, Text, TextInput, View, Pressable, Dimensions} from 'react-native';
+
 
 function CreateProfile() {
 
@@ -55,87 +55,20 @@ function CreateProfile() {
     }, 2000);
   };
 
-  const checkPermissions = async () => {
-    try {
-      const result = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
-      );
-
-      if (!result) {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          {
-            title:
-              'You need to give storage permission to download and save the file',
-            message: 'App needs access to your camera ',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          }
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('You can use the camera');
-          return true;
-        } else {
-          Alert.alert('Error', 'Camera permission denied');
-          console.log('Camera permission denied');
-          return false;
-        }
-      } else {
-        return true;
-      }
-    } catch (err) {
-      console.warn(err);
-      return false;
-    }
-  };
-
-  const selectFile = async () => {
-    try {
-      const result = await checkPermissions();
-
-      if (result) {
-        const result = await DocumentPicker.getDocumentAsync({
-          copyToCacheDirectory: false,
-          type: 'image/*',
-        });
-
-        if (result.type === 'success') {
-          setAvatar(result);
-        }
-      }
-    } catch (err) {
-      setAvatar(null);
-      console.warn(err);
-      return false;
-    }
-  };
-
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <Text style={styles.textSelection}>Upload profile picture:</Text>
-        {avatar ? (
-          <Text style={styles.buttonTextStyle}>
-            File Name: {avatar.name ? avatar.name : ''}
-            {'\n'}
-            Type: {avatar.type ? avatar.type : ''}
-            {'\n'}
-            File Size: {avatar.size ? avatar.size : ''}
-            {'\n'}
-            URI: {avatar.uri ? avatar.uri : ''}
-            {'\n'}
-          </Text>
-        ) : null}
-
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={selectFile}>
-          <Text style={styles.buttonTextStyle}>Select photo</Text>
-        </TouchableOpacity>
-
+        <TextInput
+          value={avatar}
+          onChangeText={(avatar) => {
+            setAvatar(avatar)
+        }}
+          placeholder={'enter your photo url here'}
+          placeholderTextColor='#50515e'
+          style={styles.input}
+        />
         <Text style={styles.textSelection}>Select favorite streaming providers:</Text>
         <View style={styles.selectionContainer}>
           {providerData.map((provider) => (

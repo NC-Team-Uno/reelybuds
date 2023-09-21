@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, SafeAreaView, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
+import { StyleSheet, SafeAreaView, Text, View, TextInput, Pressable, Dimensions, SafeAreaViewComponent} from 'react-native';
 import CreateAccount from './CreateAccount';
 
 function LogIn() {
@@ -26,8 +26,6 @@ function LogIn() {
   const validatePassword = () => {
     if (!password.trim()) {
       setPasswordError('Password is required');
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters long');
     } else {
       setPasswordError('');
     }
@@ -37,28 +35,7 @@ function LogIn() {
     validateUserName();
     validatePassword();
 
-  
-    
-    if (!userNameError && !passwordError && !passwordConfirmationError) {
-      if (password === confirmPassword) {
-   
-        console.log('Logging in...');
-        // usecontext on user to login
-      } else {
-        // display message
-        console.log('Passwords do not match');
-      }
-    } else {
-
-      console.log('Incorrect username or password');
-    }
   };
-
-
-  const handleCreateAccount = () => {
-    // use 'userName' and 'password' to create a new account (post to DB)
-  };
-
 
   return (
     <SafeAreaView >
