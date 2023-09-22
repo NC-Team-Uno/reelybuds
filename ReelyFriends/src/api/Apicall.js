@@ -11,6 +11,27 @@ const TMDB_HTTP_REQUEST = axios.create({
 
 const getPoster = (path) => `${TMDB_IMAGE_BASE_URL}/original${path}`;
 
+const getMovieDetails = async (movieId) => {
+  try {
+    const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}`, {
+      params: {
+        api_key: TMDB_API_KEY,
+      },
+    });
+
+    if (response.status === 200) {
+      const movieDetails = response.data;
+      return movieDetails;
+    } else {
+      console.error("Error fetching movie details:", response.status);
+      return null;
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+    return null;
+  }
+};
+
 const getMovieGenres = async () => {
   try {
     const response = await axios.get(`${TMDB_BASE_URL}/genre/movie/list`, {
@@ -73,6 +94,7 @@ const getProviderLogo = async (providerId) => {
       const logoUrl = providerData.logo_path
         ? `https://image.tmdb.org/t/p/original${providerData.logo_path}`
         : null;
+        console.log(logoUrl);
       return logoUrl;
     } else {
       return null;
@@ -122,6 +144,7 @@ const getLink = async (id) => {
 };
 
 export {
+  getMovieDetails,
   getPoster,
   getMovieGenres,
   getMoviesByGenre,
