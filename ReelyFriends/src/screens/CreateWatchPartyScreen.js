@@ -1,7 +1,6 @@
 import React from "react";
-import {StyleSheet,Text, View, TouchableOpacity, Button, Alert} from 'react-native';
+import {StyleSheet,Text, View, TouchableOpacity, Button, Alert, Image} from 'react-native';
 import GroupNameInput from "../components/GroupNameInput";
-import UploadGroupImage from "../components/UploadImage";
 import FriendsSearchBar from "../components/FriendsSearchBar";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -11,9 +10,30 @@ export default function CreateWatchParty(){
     <View style={styles.container}>
     <Text style={styles.createWatchPartyTitle}>Create Watch Group</Text>
     <GroupNameInput />
-    <UploadGroupImage />
+
+    <Text style={styles.selectAvatar}>Select an avatar</Text>
+    <View style={styles.avatarContainer}>
+    <Image
+        source={require('../../assets/face.jpeg')}
+        style={styles.profileImage} 
+      />
+         <Image
+        source={require('../../assets/face.jpeg')}
+        style={styles.profileImage} 
+      />
+   <Image
+        source={require('../../assets/face.jpeg')}
+        style={styles.profileImage} 
+      />
+         <Image
+        source={require('../../assets/face.jpeg')}
+        style={styles.profileImage} 
+      />
+    </View>
+ 
 
 <View style={styles.searchFriendsContainer}>
+
 
 <FriendsSearchBar /> 
 
@@ -39,7 +59,7 @@ export default function CreateWatchParty(){
 const styles = StyleSheet.create({
 container: {
     flex: 1,
-backgroundColor: "#1E2030"
+    backgroundColor: "#1E2030"
 
 },
 createWatchPartyTitle: {
@@ -48,6 +68,15 @@ createWatchPartyTitle: {
     fontSize:17,
     fontWeight: "bold"
 },
+selectAvatar: {
+color: "#fff",
+marginLeft: 15, 
+},
+avatarContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+
+},
 searchFriendsContainer: {
     backgroundColor: "#50515e",
     padding: 5,
@@ -55,6 +84,15 @@ searchFriendsContainer: {
     borderRadius: 40,
     margin: 10,
     
+},
+profileImage: {
+    width: 70, 
+    height: 70,
+    borderRadius: 100,
+    alignSelf: "center",
+    margin: 10,
+
+
 },
 
 searchForFriendsText: {
