@@ -3,7 +3,6 @@ import {
   FlatList,
   Image,
   Linking,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -52,24 +51,27 @@ const MovieDetail = ({ movie, closeModal }) => {
         </View>
         <Text style={styles.title}>{movie.original_title}</Text>
         <Text style={styles.description}>{movie.overview}</Text>
-        <FlatList
-          horizontal={true}
-          data={linkData}
-          renderItem={({ item }) => {
-            if (item.length !== 0) {
-              return (
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    Linking.openURL(Object.values(item).toString());
-                  }}
-                >
-                  <Text style={styles.bubble}>{Object.keys(item)}</Text>
-                </TouchableOpacity>
-              );
-            }
-          }}
-        ></FlatList>
+        <View style={styles.watchNow}>
+          <Text style={styles.watchNowText}>Watch now on: </Text>
+          <FlatList
+            horizontal={true}
+            data={linkData}
+            renderItem={({ item }) => {
+              if (item.length !== 0) {
+                return (
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                      Linking.openURL(Object.values(item).toString());
+                    }}
+                  >
+                    <Text style={styles.bubble}>{Object.keys(item)}</Text>
+                  </TouchableOpacity>
+                );
+              }
+            }}
+          ></FlatList>
+        </View>
       </ScrollView>
     </View>
   );
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    marginVertical: 30,
+    marginVertical: 8,
     color: "#f0f0f1",
   },
   description: {
@@ -131,15 +133,32 @@ const styles = StyleSheet.create({
     shadowColor: "08080c",
   },
   bubble: {
-    backgroundColor: "#f96501",
+    backgroundColor: "#11131C",
     overflow: "hidden",
     padding: 10,
-    margin: 10,
-    marginTop: 20,
+    margin: 5,
+    marginTop: 10,
     color: "#f0f0f1",
     fontWeight: "bold",
     borderRadius: 12,
     textAlign: "center",
+  },
+  watchNowText: {
+    fontWeight: "bold",
+    color: "#f0f0f1",
+    fontSize: 20,
+  },
+  icon: {
+    height: 20,
+    width: 20,
+  },
+  watchNow: {
+    display: "flex",
+    justifyContent: "center",
+    paddingBottom: 50,
+    paddingHorizontal: 30,
+    overflow: "hidden",
+    width: deviceWidth,
   },
 });
 

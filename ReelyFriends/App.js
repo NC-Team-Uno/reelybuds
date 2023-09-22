@@ -23,8 +23,20 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <View style={styles.container}>
-          
-          <Tab.Navigator>
+
+          <Tab.Navigator
+            screenOptions={{
+              tabBarActiveTintColor: "#f96501",
+              tabBarInactiveTintColor: "#fff",
+              tabBarStyle: {
+                backgroundColor: "#11131c",
+                activeTintColor: "#fff",
+                padding: 0,
+                borderTopWidth: 0,
+              },
+            }}
+          >
+
             <Tab.Screen
               name="Home"
               component={Homepage}

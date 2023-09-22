@@ -44,11 +44,10 @@ const MovieCard = ({ item }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
-    height: 300,
-    width: 230,
-    borderRadius: 12,
+    height: 150,
+    width: 115,
     elevation: 5,
-    marginVertical: 30,
+    marginVertical: 20,
     marginBottom: 40,
     marginHorizontal: 20,
     shadowColor: "#08080C",

@@ -48,7 +48,7 @@ const getMoviesByGenre = async (genre) => {
 const getMoviesByProvider = async (providerId) => {
   try {
     const response = await TMDB_HTTP_REQUEST.get(
-      `/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=GB&with_watch_providers=${providerId}`
+      `/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&watch_region=GB&with_original_language=en&with_watch_providers=${providerId}`
     );
     const movies = response.data.results;
     return movies;
