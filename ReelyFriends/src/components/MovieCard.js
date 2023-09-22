@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginVertical: 20,
     marginBottom: 40,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     shadowColor: "#08080C",
     shadowOffset: {
       width: 10,
