@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, View, Text } from "react-native";
 import MovieCard from "./MovieCard";
 
-
 const ProvidersMovies = ({ providerName, movies }) => {
   return (
-    <View>
+    <View style={styles.providerCarousel}>
       <Text style={styles.text}>Popular on {providerName}</Text>
       <FlatList
         data={movies}
@@ -20,15 +19,24 @@ const ProvidersMovies = ({ providerName, movies }) => {
 
 const styles = StyleSheet.create({
   text: {
+    marginTop: 10,
+    marginLeft: 20,
     display: "flex",
     justifyContent: "center",
     color: "#FFF",
-    fontSize: 30,
+    fontSize: 22,
   },
   logo: {
-    width: 40, 
-    height: 40, 
+    width: 40,
+    height: 40,
     marginRight: 10,
+  },
+  providerCarousel: {
+    flex: 1,
+    backgroundColor: "#373b58",
+    marginHorizontal: 10,
+    marginVertical: 20,
+    borderRadius: 12,
   },
 });
 

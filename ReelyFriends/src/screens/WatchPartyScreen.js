@@ -1,6 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button, Alert, navigation} from 'react-native';
+
 import WatchPartyCard from '../components/WacthPartyCard';
+
+
+import { View, Text, StyleSheet, Image, Button, Navigation} from 'react-native';
+import GoToButton from '../components/GoToButton';
 
 export default function WatchPartyScreen() {
 
@@ -8,11 +12,10 @@ return (
     <>
     <View style={styles.container}>
         <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
-        
-        <Button style={styles.createButton}
-    title="Create Watch Party"
-    onPress={() => Alert.alert('This will link to Create Watch Party page soon!')}
-    />
+   <GoToButton  />
+
+
+
         <View style={styles.explanationBox}>
         <Text style={styles.explanationText}>Invite friends to a watch party and choose the perfect film for your night in!</Text>
         </View>
