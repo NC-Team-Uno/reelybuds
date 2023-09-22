@@ -1,12 +1,17 @@
 import React from "react";
-import {StyleSheet,Text, View, TouchableOpacity, Button, Alert, Image} from 'react-native';
-import GroupNameInput from "../components/GroupNameInput";
-import FriendsSearchBar from "../components/FriendsSearchBar";
+import {StyleSheet,Text, View, TouchableOpacity, Button, Alert, Image, Pressable, Modal} from 'react-native';
+import GroupNameInput from "./GroupNameInput";
+import FriendsSearchBar from "./FriendsSearchBar";
 import Icon from "react-native-vector-icons/Ionicons";
+import {useState} from 'react';
 
 
-export default function CreateWatchParty(){
+
+export default function CreateWatchPartyModal(){
+    const [modalVisible, setModalVisible] = useState(false);
     return (
+
+         
     <View style={styles.container}>
     <Text style={styles.createWatchPartyTitle}>Create Watch Group</Text>
     <GroupNameInput />
@@ -46,15 +51,9 @@ export default function CreateWatchParty(){
 </View>
 
 </View>
-    
-<Button style={styles.createButton}
-    title="Create Watch Group"
-    onPress={() => Alert.alert('One day soon this will enter data to our jazzy DB!')}
-    />
-    
-    </View>
-    )
-}
+</View>
+    )}
+
 
 const styles = StyleSheet.create({
 container: {

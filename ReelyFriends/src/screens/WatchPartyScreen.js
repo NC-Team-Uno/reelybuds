@@ -1,26 +1,41 @@
 import React from 'react';
-
 import WatchPartyCard from '../components/WacthPartyCard';
+import { View, Text, StyleSheet, Image, Button, Navigation, Modal, Pressable} from 'react-native';
+import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
+import { useState } from 'react';
 
-
-import { View, Text, StyleSheet, Image, Button, Navigation} from 'react-native';
-import GoToButton from '../components/GoToButton';
 
 export default function WatchPartyScreen() {
+    const [modalVisible, setModalVisible] = useState(false);
 
 return (
     <>
     <View style={styles.container}>
         <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
-   <GoToButton  />
+        <Modal 
+        transparent={true}
+        visable={modalVisible}
+        onRequestClose={()=>{
+            setModalVisible(!modalVisible)
+        }}
+        >
+             {/* <Pressable onPress={()=> 
+             setModalVisible(!modalVisible)}>
+                <Text style={styles.text}>Exit</Text>
+                </Pressable>
 
+        <CreateWatchPartyModal /> */}
+   
+        </Modal>
+<Pressable onPress={() => console.log('helloooo')}>
+    <Text style={styles.text}>Show modal</Text>
 
+</Pressable>
+    
+<WatchPartyCard />
 
-        <View style={styles.explanationBox}>
-        <Text style={styles.explanationText}>Invite friends to a watch party and choose the perfect film for your night in!</Text>
-        </View>
-        <WatchPartyCard />
 </View>
+
 </>
 )
 }
@@ -29,6 +44,10 @@ const styles = StyleSheet.create ({
     container: {
         flex: 1,
         backgroundColor: "#1E2030"
+    },
+    text: {
+
+color: "#fff"
     },
     title: {
         color: "#fff",
