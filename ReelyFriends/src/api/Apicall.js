@@ -121,6 +121,22 @@ const getLink = async (id) => {
   }
 };
 
+const getAllMoviesForUser = async (pageNo) => {
+  const usersProviders = [8, 337, 38];
+  try {
+    const response = await TMDB_HTTP_REQUEST.get(
+      `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNo}&sort_by=popularity.desc&watch_region=GB&with_original_language=en&with_watch_providers=${usersProviders.join(
+        "%7C%7C"
+      )}`
+    );
+    const movies = response.data.results;
+    return movies;
+  } catch (error) {
+    console.error("Error fetching movies by provider:", error);
+    throw error;
+  }
+};
+
 export {
   getPoster,
   getMovieGenres,
@@ -128,4 +144,5 @@ export {
   getMoviesByProvider,
   getProviderLogo,
   getLink,
+  getAllMoviesForUser,
 };
