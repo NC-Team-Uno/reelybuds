@@ -6,7 +6,7 @@ export default function WatchPartyCard(){
     return (
         <>
         <View style={styles.watchGroupContainer}>
-            <Text style={styles.innerContainerText}>Northcoders Movie Buds</Text>
+            <Text style={styles.innerContainerGroupName}>Northcoders Movie Buds</Text>
        
        <View style={styles.providersBox}>
        <Image
@@ -41,22 +41,24 @@ const styles = StyleSheet.create ({
         padding: 15,
         borderRadius: 40,
         margin: 10,
-           shadowColor: "#08080C",
-    shadowOffset: {
-      width: 10,
-      height: 10,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 12,
+        shadowColor: "#fff",
+        shadowOffset: {
+          width: 10,
+          height: 10,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 12,
   },
-    innerContainerText: {
+    innerContainerGroupName: {
         color: "black",
         backgroundColor: "#d3d3d3",
         padding: 10,
         textAlign: "center",
         borderRadius: 15,
         marginRight:20,
-        marginLeft: 20
+        marginLeft: 20,
+        fontWeight: 'bold'
+      
     },
     groupImage:{
         width: 70, 
@@ -79,7 +81,7 @@ const styles = StyleSheet.create ({
         flexWrap: 'wrap'
     },
     individualFriend: {
-        backgroundColor: "red",
+        backgroundColor: "#",
         padding: 10,
         marginLeft: 3,
         marginRight:3, 

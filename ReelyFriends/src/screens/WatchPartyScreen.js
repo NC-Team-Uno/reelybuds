@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from 'react-native';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
-import WatchPartyCard from '../components/WacthPartyCard';
+import WatchPartyCard from '../components/WatchPartyCard';
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     yourWatchParties:{
         textAlign: "center",
         fontSize: 25,
-        color: "#fff"
+        color: "#fff",
+        marginBottom:5,
     },
   centeredView: {
     flex: 1,
@@ -84,6 +85,7 @@ backgroundColor: "red"
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+
   },
   modalText: {
     marginBottom: 15,
