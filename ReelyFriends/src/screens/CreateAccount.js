@@ -1,7 +1,21 @@
 import React, {useState} from 'react';
 import { StyleSheet, SafeAreaView, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { firebase_auth } from '../../firebase';
 
 function CreateAccount() {
+
+  const auth=firebase_auth;
+
+  const createUserFirebase = () => {
+    createUserWithEmailAndPassword(auth, email,password)
+    .then(()=> {
+        alert('Check your emails!');})
+    .catch((error) => {
+        const errorMessage = error.message;
+        alert('Sign up failed: ' + errorMessage);
+      })   
+  }
 
   const [timesPressed, setTimesPressed] = useState(0);
   const [name, setName] = useState('');
@@ -152,7 +166,8 @@ function CreateAccount() {
         <Pressable
             onPress={() => {
               setTimesPressed(current => current + 1);
-              handleCreateAccount()            
+              handleCreateAccount() 
+              createUserFirebase()           
             }} 
             disabled = {isSubmitting}
             style={({pressed}) => [

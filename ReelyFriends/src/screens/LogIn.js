@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import { StyleSheet, SafeAreaView, Text, View, TextInput, Pressable, Dimensions, SafeAreaViewComponent} from 'react-native';
-import CreateAccount from './CreateAccount';
+import { StyleSheet, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../firebase';
 
 function LogIn() {
-  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userNameError, setUserNameError] = useState('');
+  const [userEmailError, setUserEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [timesPressed, setTimesPressed] = useState(0);
+
 
   if (timesPressed > 1) {
     textLog = timesPressed + 'x onPress';
@@ -15,11 +17,11 @@ function LogIn() {
     textLog = 'onPress';
   }
 
-  const validateUserName = () => {
-    if (!userName.trim()) {
-      setUserNameError('Username is required');
+  const validateEmail = () => {
+    if (!email.trim()) {
+      setUserEmailError('Email is required');
     } else {
-      setUserNameError('');
+      setUserEmailError('');
     }
   };
   
@@ -30,28 +32,37 @@ function LogIn() {
       setPasswordError('');
     }
   };
-  const handleLogin = () => {
     
-    validateUserName();
-    validatePassword();
+  const handleLogin = ({navigation}) => {   //use navigation as prop
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
 
-  };
+          const user = userCredential.user; // get username by email from MongoDB        
+          navigation.navigate('Home') //Go to Homepage inside user account, create context
+          //..
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert('Sign in failed: ' + error.message);
 
+        })
+  }
+    
   return (
-    <SafeAreaView >
       <View style={styles.container}>
-        <Text style={styles.username}>Username:</Text>
+        <Text style={styles.username}>Email:</Text>
         <TextInput
-          value={userName}
-          onChangeText={(userName) => {
-              validateUserName(userName)
-              setUserName(userName)}}
-          placeholder={'enter your username here'}
+          value={email}
+          onChangeText={(email) => {
+              validateEmail(email)
+              setEmail(email)}}
+          placeholder={'enter your email here'}
           placeholderTextColor='#50515e'
           style={styles.input}
           autoFocus
         />
-        {userNameError ? <Text style={styles.error}>{userNameError}</Text> : null}
+        {userEmailError ? <Text style={styles.error}>{emailError}</Text> : null}
         <Text style={styles.username}>Password:</Text>
         <TextInput
           value={password}
@@ -66,7 +77,7 @@ function LogIn() {
           autoFocus
         />
         {passwordError ? <Text style={styles.error}>{passwordError}</Text> : null}
-        <Pressable
+          <Pressable
             onPress={() => {             
                       setTimesPressed(current => current + 1);
                       handleLogin()
@@ -80,12 +91,12 @@ function LogIn() {
             {({pressed}) => (
               <Text style={styles.pressed}>{pressed ? 'Logging in ...' : 'Log in'}</Text>
             )}
-        </Pressable>
+         </Pressable>
         <Text style={styles.create}> Don't have an account? Click below to create one. </Text>
-        <Pressable
+          <Pressable
             onPress={() => {
               setTimesPressed(current => current + 1);
-              <CreateAccount />
+              // Link to CreateAccount
             }}
             style={({pressed}) => [
               {
@@ -96,10 +107,10 @@ function LogIn() {
             {({pressed}) => (
               <Text style={styles.pressed}>{pressed ? 'Creating account ...' : 'Create account'}</Text>
             )}
-        </Pressable>  
+          </Pressable>  
         <Text style={styles.create}> Forgot your password? Click HERE to retrieve it. </Text>
       </View>
-    </SafeAreaView>
+
   );
 }
 

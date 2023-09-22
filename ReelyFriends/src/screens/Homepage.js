@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, ScrollView, FlatList, Dimensions } from "react-native";
-import { getNowPopularMovies } from "../api/Apicall";
 // import MovieCard from "../components/MovieCard"
 
 
