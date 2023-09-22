@@ -3,7 +3,6 @@ import {
   FlatList,
   Image,
   Linking,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -52,25 +51,27 @@ const MovieDetail = ({ movie, closeModal }) => {
         </View>
         <Text style={styles.title}>{movie.original_title}</Text>
         <Text style={styles.description}>{movie.overview}</Text>
-        <Text style={styles.watchNow}>Watch now on: </Text>
-        <FlatList
-          horizontal={true}
-          data={linkData}
-          renderItem={({ item }) => {
-            if (item.length !== 0) {
-              return (
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    Linking.openURL(Object.values(item).toString());
-                  }}
-                >
-                  <Text style={styles.bubble}>{Object.keys(item)}</Text>
-                </TouchableOpacity>
-              );
-            }
-          }}
-        ></FlatList>
+        <View style={styles.watchNow}>
+          <Text style={styles.watchNowText}>Watch now on: </Text>
+          <FlatList
+            horizontal={true}
+            data={linkData}
+            renderItem={({ item }) => {
+              if (item.length !== 0) {
+                return (
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                      Linking.openURL(Object.values(item).toString());
+                    }}
+                  >
+                    <Text style={styles.bubble}>{Object.keys(item)}</Text>
+                  </TouchableOpacity>
+                );
+              }
+            }}
+          ></FlatList>
+        </View>
       </ScrollView>
     </View>
   );
@@ -142,10 +143,17 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     textAlign: "center",
   },
-  watchNow: {
+  watchNowText: {
     fontWeight: "bold",
     color: "#f0f0f1",
     fontSize: 20,
+  },
+  icon: {
+    height: 20,
+    width: 20,
+  },
+  watchNow: {
+    paddingBottom: 50,
   },
 });
 
