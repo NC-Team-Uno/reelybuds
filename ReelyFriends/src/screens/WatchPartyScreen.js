@@ -1,77 +1,94 @@
-import React from 'react';
-import WatchPartyCard from '../components/WacthPartyCard';
-import { View, Text, StyleSheet, Image, Button, Navigation, Modal, Pressable} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from 'react-native';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
-import { useState } from 'react';
+import WatchPartyCard from '../components/WacthPartyCard';
 
+const App = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  return (
+    <View style={[styles.container, styles.centeredView]}>
+         <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
 
-export default function WatchPartyScreen() {
-    const [modalVisible, setModalVisible] = useState(false);
-
-return (
-    <>
-    <View style={styles.container}>
-        <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
-        <Modal 
+           <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => setModalVisible(true)}>
+            
+        <Text style={styles.textStyle}>Create Watch Group</Text>
+      </Pressable>
+          
+           <WatchPartyCard />
+      <Modal
+        animationType="slide"
         transparent={true}
-        visable={modalVisible}
-        onRequestClose={()=>{
-            setModalVisible(!modalVisible)
-        }}
-        >
-             {/* <Pressable onPress={()=> 
-             setModalVisible(!modalVisible)}>
-                <Text style={styles.text}>Exit</Text>
-                </Pressable>
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+  
+            <CreateWatchPartyModal
+            closeModal={()=> setModalVisible(false)}
+            />
+      </Modal>
+      
+    </View>
+  );
+};
 
-        <CreateWatchPartyModal /> */}
-   
-        </Modal>
-<Pressable onPress={() => console.log('helloooo')}>
-    <Text style={styles.text}>Show modal</Text>
-
-</Pressable>
-    
-<WatchPartyCard />
-
-</View>
-
-</>
-)
-}
-
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#1E2030"
-    },
-    text: {
-
-color: "#fff"
-    },
-    title: {
-        color: "#fff",
-        textAlign: 'center',
-        fontSize: 25,
-        margin: 10,
-    }, explanationBox: {
-        backgroundColor: "#50515e",
-
-    },
-    explanationText: {
-        color: "#fff",
-        textAlign: 'center',
-        marginLeft: 15,
-        marginRight: 15,
-        marginTop:5,
-        marginBottom: 5
+        backgroundColor: "#1E2030",
+        height: 150,
     },
     yourWatchParties:{
-        color: "#fff",
-        margin:10,
-        fontSize:17,
-        fontWeight: "bold"
-    }
-})
+        textAlign: "center",
+        fontSize: 25,
+        color: "#fff"
+    },
+  centeredView: {
+    flex: 1,
+    alignItems: 'center',
 
+  },
+  buttonOpen: {
+backgroundColor: "red"
 
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingTop:2,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#f96501',
+  },
+  buttonClose: {
+    backgroundColor: '#f96501',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+});
+
+export default App;

@@ -9,7 +9,8 @@ const GroupNameInput = () => {
       <TextInput
         style={styles.input}
         onChangeText={setGroupName}
-        value={groupName}
+        placeholder="Enter Group Name"
+        placeholderTextColor="#fff" 
       />
     </SafeAreaView>
   );
