@@ -10,7 +10,7 @@ import FriendsScreen from "./src/screens/FriendsScreen";
 import MyList from "./src/screens/MyList";
 import WatchPartyScreen from "./src/screens/WatchPartyScreen";
 import UserScreen from "./src/screens/UserScreen";
-import CreateWatchParty from "./src/screens/CreateWatchPartyScreen";
+
 
 
 
@@ -57,7 +57,7 @@ export default function App() {
                 ),
               }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
               name="CreateWatchParty"
               component={CreateWatchParty}
               options={{
@@ -65,8 +65,8 @@ export default function App() {
                 tabBarIcon: ({ color, size }) => (
                   <Icon name="albums-outline" size={size} color={color} />
                 ),
-              }}
-            />
+              }} */}
+            {/* /> */}
             <Tab.Screen
               name="Watch Party"
               component={WatchPartyScreen}
