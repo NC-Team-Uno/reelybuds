@@ -153,7 +153,12 @@ const styles = StyleSheet.create({
     width: 20,
   },
   watchNow: {
+    display: "flex",
+    justifyContent: "center",
     paddingBottom: 50,
+    paddingHorizontal: 30,
+    overflow: "hidden",
+    width: deviceWidth,
   },
 });
 
