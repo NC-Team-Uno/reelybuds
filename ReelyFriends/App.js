@@ -5,16 +5,43 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/Ionicons";
 import Header from "./src/components/Header";
-
 import FriendsScreen from "./src/screens/FriendsScreen";
 import MyList from "./src/screens/MyList";
 import WatchPartyScreen from "./src/screens/WatchPartyScreen";
 import UserScreen from "./src/screens/UserScreen";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useEffect, useState } from 'react';
+import { auth } from './firebase';
+import CreateAccount from './src/screens/CreateAccount';
+import LogIn from './src/screens/LogIn';
+import CreateProfile from './src/screens/CreateProfile';
 
 
+const [user, setUser] = useState(null);
 
+
+useEffect(() => {
+  auth.onAuthStateChanged((user) => {
+    if (user) setUser(user);
+  })
+},[])
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+const InsideStack = createNativeStackNavigator();
+
+function InsideLayout ({}) {
+      return (
+        <InsideStack.Navigator initialRouteName='CreateAccount'>
+            <InsideStack.Screen name="CreateAccount" component={CreateAccount} />
+            <InsideStack.Screen name="CreateProfile" component={CreateProfile} />
+            <InsideStack.Screen name="Homepage" component={Homepage} />
+        </InsideStack.Navigator>
+      )
+
+}
+
+
 
 export default function App() {
   return (
@@ -23,6 +50,11 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <View style={styles.container}>
+        <Stack.Navigator initialRouteName='Login'>
+          {!user ? 
+          (<Stack.Screen name= "Login" component = {LogIn} />) 
+          : (<Stack.Screen name = "Register" component={InsideLayout} />)}
+        </Stack.Navigator>
 
           <Tab.Navigator
             screenOptions={{
