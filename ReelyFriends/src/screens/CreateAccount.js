@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-function CreateAccount({navigation}) {
+function CreateAccount() {
 
 
   const [timesPressed, setTimesPressed] = useState(0);
@@ -17,6 +17,9 @@ function CreateAccount({navigation}) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState(''); 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  let textLog= '';
+  const navigation = useNavigation();
   if (timesPressed > 1) {
     textLog = timesPressed + 'x onPress';
   } else if (timesPressed > 0) {

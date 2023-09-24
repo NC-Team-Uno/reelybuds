@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import Homepage from "./src/screens/Homepage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -13,49 +13,37 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 import { auth } from './firebase';
 import CreateAccount from './src/screens/CreateAccount';
-import LogIn from './src/screens/LogIn';
-import CreateProfile from './src/screens/CreateProfile';
-
-
-const [user, setUser] = useState(null);
-
-
-useEffect(() => {
-  auth.onAuthStateChanged((user) => {
-    if (user) setUser(user);
-  })
-},[])
-
-const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-const InsideStack = createNativeStackNavigator();
-
-function InsideLayout ({}) {
-      return (
-        <InsideStack.Navigator initialRouteName='CreateAccount'>
-            <InsideStack.Screen name="CreateAccount" component={CreateAccount} />
-            <InsideStack.Screen name="CreateProfile" component={CreateProfile} />
-            <InsideStack.Screen name="Homepage" component={Homepage} />
-        </InsideStack.Navigator>
-      )
-
-}
-
-
+import LogIn from "./src/screens/LogIn";
+import CreateProfile from "./src/screens/CreateProfile";
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) setUser(user);
+    })
+  },[])
+
+  const Tab = createBottomTabNavigator();
+  const Stack = createNativeStackNavigator();
+  const InsideStack = createNativeStackNavigator();
+
+  function InsideLayout() {
+    return (
+      <InsideStack.Navigator initialRouteName='Register'>
+        <InsideStack.Screen name="CreateAccount" component={CreateAccount} />
+        <InsideStack.Screen name="CreateProfile" component={CreateProfile} />
+      </InsideStack.Navigator>
+    )
+  }
+
   return (
     <>
       <Header />
       <StatusBar style="light" />
       <NavigationContainer>
-        <View style={styles.container}>
-        <Stack.Navigator initialRouteName='Login'>
-          {!user ? 
-          (<Stack.Screen name= "Login" component = {LogIn} />) 
-          : (<Stack.Screen name = "Register" component={InsideLayout} />)}
-        </Stack.Navigator>
-
+        {user ? (
           <Tab.Navigator
             screenOptions={{
               tabBarActiveTintColor: "#f96501",
@@ -68,9 +56,8 @@ export default function App() {
               },
             }}
           >
-
             <Tab.Screen
-              name="Home"
+              name='Homepage'
               component={Homepage}
               options={{
                 headerShown: false,
@@ -130,7 +117,12 @@ export default function App() {
               }}
             />
           </Tab.Navigator>
-        </View>
+        ) : (
+          <Stack.Navigator initialRouteName='LogIn'>
+            <Stack.Screen name="LogIn" component={LogIn} options={{headerShown: false}}/>
+            <Stack.Screen name="Register" component={InsideLayout} options={{headerShown: false}}/>
+          </Stack.Navigator>
+        )}
       </NavigationContainer>
     </>
   );
@@ -142,3 +134,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#1e2030",
   },
 });
+
+
+
+
+

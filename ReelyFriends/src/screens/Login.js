@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 import { auth } from '../../firebase';
 
-function LogIn({navigation}) {
+
+
+function LogIn() {
  
 
   const [email, setEmail] = useState('');
@@ -12,14 +14,9 @@ function LogIn({navigation}) {
   const [userEmailError, setUserEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [timesPressed, setTimesPressed] = useState(0);
-  navigation= useNavigation();
 
+  const navigation= useNavigation();
 
-  if (timesPressed > 1) {
-    textLog = timesPressed + 'x onPress';
-  } else if (timesPressed > 0) {
-    textLog = 'onPress';
-  }
 
   const validateEmail = () => {
     if (!email.trim()) {
@@ -42,12 +39,11 @@ function LogIn({navigation}) {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
 
-          const user = userCredential.user; // get username by email from MongoDB     
-          navigation.navigate('Homepage' , {  
-                          user: user,      
-                          email: email,
-                          password: password,
-          })
+          const user = userCredential.user; // get username by email from MongoDB    
+          console.log(user); 
+          navigation.navigate('Homepage' , {
+            screen:'Homepage',
+          user: user})
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -103,9 +99,8 @@ function LogIn({navigation}) {
         <Text style={styles.create}> Don't have an account? Click below to create one. </Text>
           <Pressable
             onPress={() => {
-              navigation= useNavigation();
               setTimesPressed(current => current + 1);
-              navigation.navigate('Signup',{screen:'CreateAccount'}); 
+              navigation.navigate('Register',{screen:'CreateAccount'}); 
             }}
             style={({pressed}) => [
               {
@@ -118,25 +113,6 @@ function LogIn({navigation}) {
             )}
           </Pressable>  
         <Text style={styles.create}> Forgot your password? Click HERE to retrieve it. </Text>
-        <Pressable
-            onPress={() => {
-              setTimesPressed(current => current + 1);
-              signOut(auth).then(() => {
-                navigation.navigate('SignOut',{screen:'LogIn'}); 
-              })
-              .catch((error) => {
-                Alert("Error signing out", + error.message)
-            })}}
-            style={({pressed}) => [
-              {
-                backgroundColor: pressed ? '#D2E6FF' : '#f96501',
-              },
-              styles.wrapperCustom,
-            ]}>
-            {({pressed}) => (
-              <Text style={styles.pressed}>{pressed ? 'Signing out ...' : 'Sign out'}</Text>
-            )}
-          </Pressable>  
       </View>
 
   );
