@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   providerLogo: {
     width: 70,
-    height: 60,
+    height: 65,
     padding: 5,
   },
   providerNamesContainer: {
