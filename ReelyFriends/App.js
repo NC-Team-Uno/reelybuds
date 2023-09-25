@@ -11,19 +11,15 @@ import MyList from "./src/screens/MyList";
 import WatchPartyScreen from "./src/screens/WatchPartyScreen";
 import UserScreen from "./src/screens/UserScreen";
 
-
-
-
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <>
       <Header />
-      <StatusBar style="light" />
+      <StatusBar style={"#fff"} />
       <NavigationContainer>
         <View style={styles.container}>
-
           <Tab.Navigator
             screenOptions={{
               tabBarActiveTintColor: "#f96501",
@@ -36,7 +32,6 @@ export default function App() {
               },
             }}
           >
-
             <Tab.Screen
               name="Home"
               component={Homepage}

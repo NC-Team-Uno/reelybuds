@@ -6,7 +6,7 @@ import Providers from "../components/Providers";
 const Homepage = () => {
   return (
     <ScrollView style={styles.container}>
-      <StatusBar style="dark" translucent={false} />
+      <StatusBar style="light" translucent={false} />
       <Providers />
     </ScrollView>
   );

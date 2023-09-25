@@ -14,12 +14,25 @@ import { getLink, getPoster } from "../api/Apicall";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const MovieDetail = ({ movie, closeModal }) => {
+  const linkImages = {
+    netflix: require("../../assets/netflix.png"),
+    disney: require("../../assets/disney.png"),
+    now: require("../../assets/nowtv.png"),
+    apple: require("../../assets/appletv.jpg"),
+    prime: require("../../assets/prime.png"),
+    iplayer: require("../../assets/iplayer.png"),
+    all4: require("../../assets/channel4.png"),
+    paramount: require("../../assets/paramount.png"),
+    britbox: require("../../assets/britbox.png"),
+  };
   useEffect(() => {
     getLink(movie.id).then((linkObj) => {
       setLinkData(linkObj);
     });
   }, []);
   const [linkData, setLinkData] = useState([]);
+  const linkArray = Object.entries(linkData);
+  console.log(linkArray);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
@@ -50,21 +63,29 @@ const MovieDetail = ({ movie, closeModal }) => {
           <Text style={styles.bubble}>{movie.vote_average} ★</Text>
         </View>
         <View style={styles.watchList}>
-          {linkData.map((link) => {
+          {linkArray.map((link) => {
             if (link === undefined) {
               return <Text>There was an error finding the stream!</Text>;
             } else {
+              const imgPath = linkImages[link[0]];
               return (
                 <TouchableOpacity
                   style={styles.watchButton}
-                  key={Object.values(link)}
+                  key={link[0]}
                   onPress={() => {
-                    Linking.openURL(Object.values(link).toString());
+                    Linking.openURL(link[1]);
                   }}
                 >
-                  <Text style={styles.watchButton} numberOfLines={1}>
-                    Watch now on {Object.keys(link)}
-                  </Text>
+                  <Icon name="play" color={"black"} size={25} />
+                  <Image
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 4,
+                      margin: 5,
+                    }}
+                    source={imgPath}
+                  ></Image>
                 </TouchableOpacity>
               );
             }
@@ -102,8 +123,11 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   watchButton: {
+    flex: 1,
+    flexDirection: "row",
     backgroundColor: "white",
-    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
     marginHorizontal: 10,
     marginVertical: 10,
     padding: 2,

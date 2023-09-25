@@ -106,7 +106,7 @@ const getProviderLogo = async (providerId) => {
 };
 
 const getLink = async (id) => {
-  const streamLinks = [];
+  const streamLinks = {};
   const options = {
     method: "GET",
     url: "https://streaming-availability.p.rapidapi.com/get",
@@ -133,7 +133,7 @@ const getLink = async (id) => {
           service.streamingType === "addon" ||
           service.streamingType === "free"
         ) {
-          streamLinks.push({ [service.service]: service.link });
+          streamLinks[service.service] = service.link;
         }
       });
       return streamLinks;
