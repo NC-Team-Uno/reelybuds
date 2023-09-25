@@ -63,33 +63,33 @@ const MovieDetail = ({ movie, closeModal }) => {
           <Text style={styles.bubble}>{movie.vote_average} ★</Text>
         </View>
         <View style={styles.watchList}>
-          {linkArray.map((link) => {
-            if (link === undefined) {
-              return <Text>There was an error finding the stream!</Text>;
-            } else {
-              const imgPath = linkImages[link[0]];
-              return (
-                <TouchableOpacity
-                  style={styles.watchButton}
-                  key={link[0]}
-                  onPress={() => {
-                    Linking.openURL(link[1]);
-                  }}
-                >
-                  <Icon name="play" color={"black"} size={25} />
-                  <Image
-                    style={{
-                      height: 40,
-                      width: 40,
-                      borderRadius: 4,
-                      margin: 5,
+          <FlatList
+            horizontal={true}
+            data={linkArray}
+            renderItem={({ item }) => {
+              if (item.length !== 0) {
+                return (
+                  <TouchableOpacity
+                    style={styles.watchButton}
+                    onPress={() => {
+                      Linking.openURL(item[1]);
                     }}
-                    source={imgPath}
-                  ></Image>
-                </TouchableOpacity>
-              );
-            }
-          })}
+                  >
+                    <Icon name="play" color={"black"} size={25} />
+                    <Image
+                      style={{
+                        height: 40,
+                        width: 40,
+                        borderRadius: 4,
+                        margin: 5,
+                      }}
+                      source={linkImages[item[0]]}
+                    ></Image>
+                  </TouchableOpacity>
+                );
+              }
+            }}
+          ></FlatList>
         </View>
 
         <View style={styles.movieDetails}>
@@ -121,6 +121,8 @@ const styles = StyleSheet.create({
   watchList: {
     width: deviceWidth,
     overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
   },
   watchButton: {
     flex: 1,
