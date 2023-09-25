@@ -15,7 +15,7 @@ const getMovieDetails = async (movieId) => {
   try {
     const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}`, {
       params: {
-        api_key: TMDB_API_KEY,
+        api_key: process.env.TMDB_API_KEY,
       },
     });
 
@@ -36,7 +36,7 @@ const getMovieGenres = async () => {
   try {
     const response = await axios.get(`${TMDB_BASE_URL}/genre/movie/list`, {
       params: {
-        api_key: TMDB_API_KEY,
+        api_key: process.env.TMDB_API_KEY,
       },
     });
     const genres = response.data.genres;
@@ -53,7 +53,7 @@ const getMoviesByGenre = async (genre) => {
       `${TMDB_BASE_URL}${ENDPOINTS.DISCOVER_MOVIES}`,
       {
         params: {
-          api_key: TMDB_API_KEY,
+          api_key: process.env.TMDB_API_KEY,
           with_genres: genre,
         },
       }
@@ -83,7 +83,7 @@ const getProviderLogo = async (providerId) => {
   try {
     const response = await TMDB_HTTP_REQUEST.get(`/watch/providers/movie`, {
       params: {
-        api_key: TMDB_API_KEY,
+        api_key: process.env.TMDB_API_KEY,
         watch_region: "GB",
       },
     });
