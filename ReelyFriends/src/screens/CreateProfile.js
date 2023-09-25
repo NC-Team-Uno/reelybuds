@@ -15,7 +15,6 @@ function CreateProfile({route}) {
 
   const navigation = useNavigation();
 
-  console.log(name, userName, email, password)
 
   const providerData = [
     "Netflix" ,
@@ -33,15 +32,15 @@ function CreateProfile({route}) {
 
   const genres = ['Action', 'Comedy', 'Drama', 'Sci-Fi', 'Fantasy'];
 
-  const [selectedProviders, setSelectedProviders] = useState([]);
+  const [streamingPreferences, setStreamingPreferences] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
 
 
   const toggleProvider = (provider) => {
-    if (selectedProviders.includes(provider)) {
-      setSelectedProviders(selectedProviders.filter((item) => item !== provider));
+    if (streamingPreferences.includes(provider)) {
+      setStreamingPreferences(streamingPreferences.filter((item) => item !== provider));
     } else {
-      setSelectedProviders([...selectedProviders, provider]);
+      setStreamingPreferences([...streamingPreferences, provider]);
     }
   };
 
@@ -95,7 +94,7 @@ function CreateProfile({route}) {
               key={provider}
               style={({ pressed }) => [
                 {
-                  backgroundColor: selectedProviders.includes(provider)
+                  backgroundColor: streamingPreferences.includes(provider)
                   ? '#f96501'
                   : pressed
                   ? '#f96501'
