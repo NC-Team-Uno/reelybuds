@@ -88,7 +88,7 @@ export default function App() {
               }}
             />
             <Tab.Screen
-              name="UserScreen"
+              name="User Profile"
               component={UserScreen}
               options={{
                 headerShown: false,

@@ -6,6 +6,7 @@ import {
   TextInput,
   StyleSheet,
   Pressable, 
+  Image
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import GenreList from "../components/GenreList";
@@ -26,14 +27,13 @@ const EditProfileScreen = ({closeModal}) => {
     // Implement logic to add/remove genres from the selectedGenres array
   };
 
-  const toggleServiceSelection = (service) => {
-    // Implement logic to toggle the selected streaming service
-    if (selectedServices.includes(service)) {
-      setSelectedServices(selectedServices.filter((s) => s !== service));
-    } else {
-      setSelectedServices([...selectedServices, service]);
-    }
-  };
+ const toggleServiceSelection = (service) => {
+   if (selectedServices.includes(service)) {
+     setSelectedServices(selectedServices.filter((s) => s !== service));
+   } else {
+     setSelectedServices([...selectedServices, service]);
+   }
+ };
 
   const handleProfileUpdate = () => {
     // Implement logic to update the user's profile data on the server
@@ -79,36 +79,28 @@ const EditProfileScreen = ({closeModal}) => {
         <View style={styles.buttonContainer}>
           {Object.keys(providerData).map((providerKey) => {
             const provider = providerData[providerKey];
-            const isSelected = selectedServices.includes(providerKey);
+            const isSelected = selectedServices.includes(provider.logo);
             return (
               <Pressable
                 key={providerKey}
                 style={[
                   styles.pressableButton,
                   {
-                    width: "45%",
+                    width: "30%",
                     backgroundColor: isSelected
                       ? COLORS.LIGHT_BACKGROUND
                       : COLORS.BASIC_BACKGROUND,
                     borderColor: isSelected
                       ? COLORS.FONT_COLOR_ORANGE
-                      : COLORS.LIGHT_BACKGROUND,
+                      : COLORS.BASIC_BACKGROUND,
                   },
                 ]}
-                onPress={() => toggleServiceSelection(providerKey)}
+                onPress={() => toggleServiceSelection(provider.logo)} 
               >
-                <Text
-                  style={[
-                    styles.buttonProviders,
-                    {
-                      color: isSelected
-                        ? COLORS.FONT_COLOR_ORANGE
-                        : COLORS.FONT_COLOR_ORANGE,
-                    },
-                  ]}
-                >
-                  {provider.name}
-                </Text>
+                <Image
+                  source={{ uri: provider.logo }}
+                  style={styles.providerLogo}
+                />
               </Pressable>
             );
           })}
@@ -136,7 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 40,
     fontWeight: "bold",
     color: COLORS.FONT_COLOR_MAIN,
   },
@@ -200,6 +192,11 @@ const styles = StyleSheet.create({
     color: COLORS.FONT_COLOR_MAIN,
     fontSize: 18,
     fontWeight: "bold",
+  },
+  providerLogo: {
+    width: 80,
+    height: 73,
+    padding: 10,
   },
 });
 
