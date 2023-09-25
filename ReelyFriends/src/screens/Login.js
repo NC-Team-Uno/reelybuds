@@ -85,7 +85,7 @@ function LogIn() {
                     }}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? '#D2E6FF' : '#f96501',
+                backgroundColor: pressed ? '#D2E6FF' : '#de5900',
               },
               styles.wrapperCustom,
             ]}>
@@ -101,7 +101,7 @@ function LogIn() {
             }}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? '#D2E6FF' : '#f96501',
+                backgroundColor: pressed ? '#D2E6FF' : '#de5900',
               },
               styles.wrapperCustom,
             ]}>
@@ -109,7 +109,6 @@ function LogIn() {
               <Text style={styles.pressed}>{pressed ? 'Creating account ...' : 'Create account'}</Text>
             )}
           </Pressable>  
-        <Text style={styles.create}> Forgot your password? Click HERE to retrieve it. </Text>
       </View>
 
   );
@@ -121,7 +120,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: deviceWidth,
-    alignItems: 'top',
+    alignItems: 'center',
     backgroundColor: '#1e2035',
     justifyContent: 'center',  
     paddingLeft: 20,
@@ -129,23 +128,30 @@ const styles = StyleSheet.create({
 
   },
   input: {
+    width: deviceWidth * 0.75,
+    alignContent: 'center',
     textAlign: 'center',
     color: 'white',
     fontSize: 18,
     borderWidth: 1,
     borderColor: 'white', 
-    borderRadius: 2,
+    borderRadius: 5,
     paddingHorizontal: 10,
+    height: 37,
 
   },
   username: {
+    width: deviceWidth * 0.75,
     textAlign: 'center',
+    marginTop: 15,
     marginStart: 10,
+    marginBottom: 5,
     alignContent: 'center',
     color: '#EF8945',
     fontSize: 24,
-  },
+    },
   create: {
+    width: deviceWidth * 0.75,
     justifyContent: 'center',
     paddingLeft: 10,
     paddingRight: 10,
@@ -155,8 +161,9 @@ const styles = StyleSheet.create({
 
   },
   wrapperCustom: {
+    width: deviceWidth * 0.75,
     borderColor: 'purple',
-    borderRadius: 5,
+    borderRadius: 15,
     fontSize: 16,
     marginTop: 15,
   },
@@ -164,7 +171,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
     color: '#DDDBCB',
-    fontSize: 22,
+    fontSize: 24,
+    textShadowRadius: 5,
+    textShadowColor:"black",
+    fontWeight: "700",
     borderRadius: 10,
     marginLeft: 35,
     marginRight: 35,

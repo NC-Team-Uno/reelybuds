@@ -81,7 +81,7 @@ function CreateAccount() {
             setUserName(userName)
             validateUserName()
         }}
-          placeholder={'enter your username here'}
+          placeholder={'your username here'}
           placeholderTextColor='#50515e'
           style={styles.input}
         />
@@ -95,7 +95,7 @@ function CreateAccount() {
             setPassword(password)
             validatePassword()
         }}
-          placeholder={'enter your password here'}
+          placeholder={'your password here'}
           placeholderTextColor='#50515e'
           secureTextEntry={true}
           style={styles.input}
@@ -109,7 +109,7 @@ function CreateAccount() {
           onChangeText={(confirmedPassword) => {
             setConfirmedPassword(confirmedPassword)
         }}      
-          placeholder={'enter your password here'}
+          placeholder={'confirm password here'}
           placeholderTextColor='#50515e'
           style={styles.input}
           secureTextEntry={true}
@@ -125,7 +125,7 @@ function CreateAccount() {
             setEmail(email)
             validateEmail()
         }}
-          placeholder={'enter your email here'}
+          placeholder={'your email here'}
           placeholderTextColor='#50515e'
           style={styles.input}
         />
@@ -139,7 +139,7 @@ function CreateAccount() {
             disabled = {isSubmitting}
             style={({pressed}) => [
               {
-                backgroundColor: pressed ? '#D2E6FF' : '#f96501',
+                backgroundColor: pressed ? '#D2E6FF' : '#de5900',
               },
               styles.wrapperCustom,
             ]}>
@@ -157,31 +157,37 @@ const styles = StyleSheet.create({
 container: {
     flex: 1,
     width: deviceWidth,
-    alignItems: 'top',
+    alignItems: 'center',
     backgroundColor: '#1e2035',
     justifyContent: 'center',  
     paddingLeft: 20,
     paddingRight: 20,
 },
 input: {
+    width: deviceWidth * 0.75,
     textAlign: 'center',
     color: 'white',
     fontSize: 18,
     borderWidth: 1,
     borderColor: 'white', 
-    borderRadius: 2,
+    borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+    marginTop:10,
+    height: 37,
 },
 username: {
+    width: deviceWidth * 0.75,
     textAlign: 'center',
     marginStart: 10,
     alignContent: 'center',
     color: '#EF8945',
     fontSize: 24,
+
 },
 
 create: {
+    width: deviceWidth * 0.75,
     justifyContent: 'center',
     paddingLeft: 10,
     paddingRight: 10,
@@ -191,16 +197,20 @@ create: {
     marginBottom: 10,
   },
 wrapperCustom: {
+    width: deviceWidth * 0.75,
     borderColor: 'purple',
-    borderRadius: 5,
+    borderRadius: 15,
     fontSize: 16,
     marginBottom:20,
 },
 pressed: {
-    borderRadius: 10,
+    borderRadius: 20,
     textAlign: 'center',
     color: '#DDDBCB',
     fontSize: 24,
+    fontWeight: "700",
+    textShadowRadius: 5,
+    textShadowColor:"black",
     borderRadius: 10,
     marginLeft: 35,
     marginRight: 35,

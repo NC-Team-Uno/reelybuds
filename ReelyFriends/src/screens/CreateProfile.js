@@ -99,9 +99,9 @@ function CreateProfile({route}) {
               style={({ pressed }) => [
                 {
                   backgroundColor: streamingPreferences.includes(provider)
-                  ? '#f96501'
+                  ? '#de5900'
                   : pressed
-                  ? '#f96501'
+                  ? '#de5900'
                   : '#D2E6FF',
                 },
                 styles.selectionButton,
@@ -120,9 +120,9 @@ function CreateProfile({route}) {
               style={({ pressed }) => [
                 {
                   backgroundColor: selectedGenres.includes(genre)
-                    ? '#f96501'
+                    ? '#de5900'
                     : pressed
-                    ? '#f96501'
+                    ? '#de5900'
                     : '#D2E6FF',
                 },
                 styles.selectionButton,
@@ -141,7 +141,7 @@ function CreateProfile({route}) {
           disabled={isSubmitting}
           style={({ pressed }) => [
             {
-              backgroundColor: pressed ? '#D2E6FF' : '#f96501',
+              backgroundColor: pressed ? '#D2E6FF' : '#de5900',
             },
             styles.wrapperCustom,
           ]}>
@@ -161,23 +161,27 @@ const styles = StyleSheet.create({
 container: {
     flex: 1,
     width: deviceWidth,
-    alignItems: 'top',
+    alignItems: "center",
     backgroundColor: '#1e2035',
     justifyContent: 'center',  
     paddingLeft: 20,
     paddingRight: 20,
 },
 input: {
+    width: deviceWidth * 0.75,
     textAlign: 'center',
     color: 'white',
     fontSize: 18,
     borderWidth: 1,
     borderColor: 'white', 
-    borderRadius: 2,
+    borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+    marginTop: 5,
+    height: 37,
 },
 textSelection: {
+    width: deviceWidth * 0.75,
     textAlign: 'center',
     marginStart: 10,
     alignContent: 'center',
@@ -186,26 +190,36 @@ textSelection: {
 },
 
 create: {
+    width: deviceWidth * 0.75,
     justifyContent: 'center',
     paddingLeft: 10,
     paddingRight: 10,
     color: '#7AA5D9',
     fontSize: 16,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 15,
+    marginBottom: 15,
   },
 wrapperCustom: {
+    width: deviceWidth * 0.75,
     borderColor: 'purple',
-    borderRadius: 5,
+    borderRadius: 15,
     fontSize: 16,
     marginBottom:20,
+    marginTop: 30,
 },
 pressed: {
-    borderRadius: 10,
-    textAlign: 'center',
-    color: '#DDDBCB',
-    fontSize: 24,
-    marginBottom: 5,
+  borderRadius: 20,
+  textAlign: 'center',
+  color: '#DDDBCB',
+  fontSize: 24,
+  fontWeight: "700",
+  textShadowRadius: 5,
+  textShadowColor:"black",
+  borderRadius: 10,
+  marginLeft: 35,
+  marginRight: 35,
+  marginTop: 10,
+  marginBottom: 15,
 },
 error: {
     color: 'magenta',
@@ -218,7 +232,7 @@ buttonStyle: {
   borderColor: '#307ecc',
   height: 40,
   alignItems: 'center',
-  borderRadius: 10,
+  borderRadius: 20,
   marginLeft: 35,
   marginRight: 35,
   marginTop: 15,
@@ -241,11 +255,12 @@ selectionContainer: {
   flexDirection: 'row',
   flexWrap: 'wrap',
   alignSelf:'auto',
+  alignItems: "stretch",
 },
 selectionButton: {
   padding: 10,
   margin: 5,
-  borderRadius: 5,
+  borderRadius: 10,
   borderWidth: 1,
 
 },
