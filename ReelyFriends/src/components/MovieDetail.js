@@ -22,19 +22,19 @@ const MovieDetail = ({ movie, closeModal }) => {
   const [linkData, setLinkData] = useState([]);
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button}>
-          <Icon name="heart" color={"#fea971"} size={40} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Icon name="star" color={"#fea971"} size={40} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={closeModal}>
-          <Icon name="close" color={"#f46201"} size={40} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+        <Icon name="close" color={"#f0f0f1"} size={25} />
+      </TouchableOpacity>
 
       <ScrollView contentContainerStyle={styles.contentcontainer}>
+        <View style={styles.buttons}>
+          <TouchableOpacity style={styles.button}>
+            <Icon name="heart" color={"#f0f0f1"} size={25} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Icon name="star" color={"#f0f0f1"} size={25} />
+          </TouchableOpacity>
+        </View>
         <Image
           resizeMethod="scale"
           resizeMode="cover"
@@ -49,28 +49,33 @@ const MovieDetail = ({ movie, closeModal }) => {
           </Text>
           <Text style={styles.bubble}>{movie.vote_average} ★</Text>
         </View>
-        <Text style={styles.title}>{movie.original_title}</Text>
-        <Text style={styles.description}>{movie.overview}</Text>
-        <View style={styles.watchNow}>
-          <Text style={styles.watchNowText}>Watch now on: </Text>
-          <FlatList
-            horizontal={true}
-            data={linkData}
-            renderItem={({ item }) => {
-              if (item.length !== 0) {
-                return (
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                      Linking.openURL(Object.values(item).toString());
-                    }}
-                  >
-                    <Text style={styles.bubble}>{Object.keys(item)}</Text>
-                  </TouchableOpacity>
-                );
-              }
-            }}
-          ></FlatList>
+        <View style={styles.watchList}>
+          {linkData.map((link) => {
+            if (link === undefined) {
+              return <Text>There was an error finding the stream!</Text>;
+            } else {
+              return (
+                <TouchableOpacity
+                  style={styles.watchButton}
+                  key={Object.values(link)}
+                  onPress={() => {
+                    Linking.openURL(Object.values(link).toString());
+                  }}
+                >
+                  <Text style={styles.watchButton} numberOfLines={1}>
+                    Watch now on {Object.keys(link)}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }
+          })}
+        </View>
+
+        <View style={styles.movieDetails}>
+          <Text style={styles.title} numberOfLines={1} adjustsFontSizeToFit>
+            {movie.original_title}
+          </Text>
+          <Text style={styles.description}>{movie.overview}</Text>
         </View>
       </ScrollView>
     </View>
@@ -92,36 +97,59 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
-  watchButtons: {
+  watchList: {
     width: deviceWidth,
-    height: 200,
-    backgroundColor: "#fff",
+    overflow: "hidden",
+  },
+  watchButton: {
+    backgroundColor: "white",
+    textAlign: "center",
+    marginHorizontal: 10,
+    marginVertical: 10,
+    padding: 2,
+    borderRadius: 8,
+    fontWeight: "bold",
   },
   buttons: {
     position: "absolute",
+    top: 310,
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
-    zIndex: 2,
-    top: 15,
+    justifyContent: "flex-start",
+    zIndex: 1,
+    left: 10,
     width: deviceWidth,
   },
   title: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "bold",
-    marginVertical: 8,
+    marginVertical: 20,
     color: "#f0f0f1",
+    marginHorizontal: 20,
   },
   description: {
     fontSize: 15,
     marginBottom: 20,
     color: "#f0f0f1",
-    paddingHorizontal: 30,
+    padding: 10,
+    marginHorizontal: 10,
   },
   button: {
-    backgroundColor: "#50515e",
+    backgroundColor: "#11131C",
     padding: 4,
-    borderRadius: 12,
+    borderRadius: 20,
+    marginHorizontal: 7,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 4,
+    right: 10,
+    backgroundColor: "#11131C",
+    padding: 4,
+    borderRadius: 20,
+    marginHorizontal: 2,
+    marginLeft: 290,
+    zIndex: 1,
   },
   images: {
     width: deviceWidth,
@@ -143,22 +171,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     textAlign: "center",
   },
-  watchNowText: {
-    fontWeight: "bold",
-    color: "#f0f0f1",
-    fontSize: 20,
-  },
   icon: {
     height: 20,
     width: 20,
   },
-  watchNow: {
-    display: "flex",
-    justifyContent: "center",
-    paddingBottom: 50,
-    paddingHorizontal: 30,
+  movieDetails: {
+    backgroundColor: "#42424D",
     overflow: "hidden",
-    width: deviceWidth,
+    borderRadius: 10,
+    marginHorizontal: 5,
   },
 });
 

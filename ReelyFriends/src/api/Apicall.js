@@ -15,7 +15,7 @@ const getMovieDetails = async (movieId) => {
   try {
     const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}`, {
       params: {
-        api_key: TMDB_API_KEY,
+        api_key: process.env.TMDB_API_KEY,
       },
     });
 
@@ -94,7 +94,7 @@ const getProviderLogo = async (providerId) => {
       const logoUrl = providerData.logo_path
         ? `https://image.tmdb.org/t/p/original${providerData.logo_path}`
         : null;
-        console.log(logoUrl);
+      console.log(logoUrl);
       return logoUrl;
     } else {
       return null;
