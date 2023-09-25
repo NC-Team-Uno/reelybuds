@@ -15,7 +15,7 @@ const SignOut = () => {
             onPress={() => {
               setTimesPressed(current => current + 1);
               signOut(auth).then(() => {
-                navigation.navigate('Login', {screens:'LogIn'}); 
+                navigation.navigate('LogIn'); 
               })
               .catch((error) => {
                 alert("Error signing out: " + error.message)

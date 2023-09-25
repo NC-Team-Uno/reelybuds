@@ -19,6 +19,17 @@ import CreateProfile from "./src/screens/CreateProfile";
 export default function App() {
   const [user, setUser] = useState(null);
 
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setUser(user.email);
+  //     } else {
+  //       setUser('guest');
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
+  
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) setUser(user);

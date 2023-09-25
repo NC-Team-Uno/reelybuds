@@ -10,6 +10,7 @@ const Homepage = () => {
   
   const [user, setUser] = useState(null);
   const [timesPressed, setTimesPressed] = useState(0);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const Homepage = () => {
               styles.wrapperCustom,
             ]}>
             {({pressed}) => (
-              <Text style={styles.pressed}>{pressed ? navigation.navigate('LogIn') : 'Sign out'}</Text>
+              <Text style={styles.pressed}>{pressed ? "Signing out" : 'Sign out'}</Text>
             )}
           </Pressable>  
     </ScrollView>

@@ -10,7 +10,7 @@ import { providerData } from '../constants/providerData';
 
 function CreateProfile({route}) {
 
-  const {name, userName, email, password} = route.params;
+  const { userName, email, password} = route.params;
 
   const [timesPressed, setTimesPressed] = useState(0);
   const [avatar, setAvatar] = useState('');
@@ -18,7 +18,6 @@ function CreateProfile({route}) {
 
   const navigation = useNavigation();
 
-  //console.log(name,userName, email, password)
 
   const providerNames = [
     "netflix" ,
@@ -60,8 +59,7 @@ function CreateProfile({route}) {
   const createUserFirebase = () => {
     createUserWithEmailAndPassword(auth, email, password)
     .then(()=> {   
-      navigation.navigate('Homepage', {screen : 'Homepage'
-      })   
+      navigation.navigate('Homepage')   
       })
     .catch((error) => {
         const errorMessage = error.message;
@@ -69,22 +67,14 @@ function CreateProfile({route}) {
       })   
   }
 
-const userprofile = {username: userName, avatar: avatar, streamingServices: streamingPreferences.map((service)=>{return providerData[service].id.toString()}), preferences: selectedGenres, wishlist: [], likedFilms: [], friends: [], watchGroups:[]};
-
-//console.log(userprofile);
+  const userprofile = {username: userName, avatar: avatar ? avatar : 'https://gravatar.com/avatar/8f77f34d18833ea1ffba1a8ba15633b9?s=200&d=robohash&r=pg', streamingServices: streamingPreferences.map((service)=>{return providerData[service].id.toString()}), preferences: selectedGenres, wishlist: [], likedFilms: [], friends: [], watchGroups:[]};
 
   const handleCreateAccount = () => {
-
     setIsSubmitting(true);
-    //createUserFirebase();
-    console.log(userprofile)
-    axios.post('https://reelyfriends-api-mnnh.onrender.com/users/', userprofile).then((user)=> { console.log(user)
-      }).catch((err)=> console.log(err));
-
-    // post  in the user account MongoDB name, username, email, selectedProviders, selectedGenres, avatar
-
+    axios.post('https://reelyfriends-api-mnnh.onrender.com/users', userprofile).then((user)=> { createUserFirebase(); })
+    .catch((err)=> alert('Please retry' + err));
     setTimeout(() => {
-      setIsSubmitting(false);
+    setIsSubmitting(false);
     }, 2000);
   };
 
@@ -93,11 +83,11 @@ const userprofile = {username: userName, avatar: avatar, streamingServices: stre
       <View style={styles.container}>
         <Text style={styles.textSelection}>Upload profile picture:</Text>
         <TextInput
-          value={avatar}
+          value={avatar} 
           onChangeText={(avatar) => {
-            setAvatar(avatar)
+            setAvatar(avatar);
         }}
-          placeholder={'enter your photo url here'}
+          placeholder={'your photo url here'}
           placeholderTextColor='#50515e'
           style={styles.input}
         />
@@ -144,8 +134,10 @@ const userprofile = {username: userName, avatar: avatar, streamingServices: stre
         </View>
 
         <Pressable
-          onPress={
-            handleCreateAccount}
+          onPress={() => {
+            setTimesPressed((current) => current + 1);
+            handleCreateAccount();
+          }}
           disabled={isSubmitting}
           style={({ pressed }) => [
             {

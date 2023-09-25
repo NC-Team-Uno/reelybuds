@@ -34,16 +34,13 @@ function LogIn() {
     }
   };
     
-  const handleLogin = () => {   //use navigation as prop
+  const handleLogin = () => {   
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
 
           const user = userCredential.user; // get username by email from MongoDB    
-          console.log(user); 
-          navigation.navigate('Homepage' , {
-            screen:'Homepage',
-          user: user})
+          navigation.navigate('Homepage')
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -61,7 +58,7 @@ function LogIn() {
           onChangeText={(email) => {
               validateEmail(email)
               setEmail(email)}}
-          placeholder={'enter your email here'}
+          placeholder={'your email here'}
           placeholderTextColor='#50515e'
           style={styles.input}
           autoFocus
@@ -74,7 +71,7 @@ function LogIn() {
               validatePassword(password)
               setPassword(password)}
           }
-          placeholder={'enter your password here'}
+          placeholder={'your password here'}
           placeholderTextColor='#50515e'
           style={styles.input}
           secureTextEntry={true}

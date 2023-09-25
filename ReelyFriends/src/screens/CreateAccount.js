@@ -17,7 +17,9 @@ function CreateAccount() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   let textLog= '';
+
   const navigation = useNavigation();
+  
   if (timesPressed > 1) {
     textLog = timesPressed + 'x onPress';
   } else if (timesPressed > 0) {
