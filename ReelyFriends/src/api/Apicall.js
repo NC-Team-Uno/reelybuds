@@ -94,7 +94,6 @@ const getProviderLogo = async (providerId) => {
       const logoUrl = providerData.logo_path
         ? `https://image.tmdb.org/t/p/original${providerData.logo_path}`
         : null;
-        console.log(logoUrl);
       return logoUrl;
     } else {
       return null;

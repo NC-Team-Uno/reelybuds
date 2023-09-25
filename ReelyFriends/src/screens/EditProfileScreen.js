@@ -4,16 +4,15 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
-  Platform,
-  Pressable
+  Pressable, 
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import GenreList from "../components/GenreList";
 import { providerData } from "../constants/providerData"; 
 import COLORS from "../style/Colors";
 
-const EditProfileScreen = () => {
+const EditProfileScreen = ({closeModal}) => {
   const [newPassword, setNewPassword] = useState("");
   const [newPicture, setNewPicture] = useState("");
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -43,6 +42,12 @@ const EditProfileScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.sectionTitle}>Edit Profile</Text>
+        <Pressable onPress={closeModal} style={styles.closeButton}>
+          <Ionicons name="close" size={24} color={COLORS.FONT_COLOR_MAIN} />
+        </Pressable>
+      </View>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Change Password</Text>
         <TextInput
@@ -120,8 +125,23 @@ const EditProfileScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     padding: 16,
     backgroundColor: COLORS.BASIC_BACKGROUND,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: COLORS.FONT_COLOR_MAIN,
+  },
+  closeButton: {
+    padding: 8,
   },
   wrapperBtn: {
     display: "flex",
