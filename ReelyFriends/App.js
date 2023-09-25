@@ -57,16 +57,7 @@ export default function App() {
                 ),
               }}
             />
-            {/* <Tab.Screen
-              name="CreateWatchParty"
-              component={CreateWatchParty}
-              options={{
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="albums-outline" size={size} color={color} />
-                ),
-              }} */}
-            {/* /> */}
+           
             <Tab.Screen
               name="Watch Party"
               component={WatchPartyScreen}

@@ -1,14 +1,21 @@
 import React from "react";
 import {StyleSheet,Text, View, TouchableOpacity, Button, Alert, Image, Pressable, Modal, Dimensions} from 'react-native';
 import GroupNameInput from "./GroupNameInput";
-import FriendsSearchBar from "./FriendsSearchBar";
 import Icon from "react-native-vector-icons/Ionicons";
 import {useState} from 'react';
+import WatchGroupFriends from "./WatchGroupFriends";
 
 
 
 export default function CreateWatchPartyModal({closeModal}){
+    const [admin, setAdmin] = useState("MovieBuffMaster")
     const [modalVisible, setModalVisible] = useState(false);
+    const [groupName, setGroupName] = React.useState("");
+    const [avatar, setAvatar] = React.useState(null)
+    const [members, setMembers] = React.useState([])
+
+const objectToSend = {admin, groupName, avatar,members}
+
     return (
 
          
@@ -18,60 +25,54 @@ export default function CreateWatchPartyModal({closeModal}){
         </TouchableOpacity>
         <View style={styles.internalContainer}>
     <Text style={styles.title}>Create Watch Group</Text>
-    <GroupNameInput />
+
+    <GroupNameInput groupName = {groupName} setGroupName = {setGroupName} />
 
     <Text style={styles.selectAvatarText}>Select an avatar</Text>
+
+   
     <View style={styles.avatarContainer}>
+<TouchableOpacity   onPress={()=>{
+setAvatar('https://t4.ftcdn.net/jpg/03/54/98/47/360_F_354984781_y61LJvrAl1bL0c8DkisoEhtQHQFyOv2C.jpg')
+}
+        }>
     <Image
-        source={require('../../assets/face.jpeg')}
+         source={{uri: 'https://t4.ftcdn.net/jpg/03/54/98/47/360_F_354984781_y61LJvrAl1bL0c8DkisoEhtQHQFyOv2C.jpg'}}
         style={styles.profileImage} 
       />
+      </TouchableOpacity>
          <Image
-        source={require('../../assets/face.jpeg')}
+        source={{uri: 'https://outsourcetopk.com/public/assets/images/portfolio/logo/Popcorn-1.jpg'}}
         style={styles.profileImage} 
       />
    <Image
-        source={require('../../assets/face.jpeg')}
+        source={{uri: 'https://i.pinimg.com/1200x/3e/08/1f/3e081f1c27ea7933ed8c9f32989c67ed.jpg'}}
         style={styles.profileImage} 
       />
-         <Image
-        source={require('../../assets/face.jpeg')}
-        style={styles.profileImage} 
-      />
-        <Image
-        source={require('../../assets/face.jpeg')}
-        style={styles.profileImage} 
-      />
-        <Image
-        source={require('../../assets/face.jpeg')}
-        style={styles.profileImage} 
-      />
-        <Image
-        source={require('../../assets/face.jpeg')}
-        style={styles.profileImage} 
-      />
+     
+    
     </View>
  
 
 <View style={styles.searchFriendsContainer}>
 
+<WatchGroupFriends members={members} setMembers={setMembers}/>
 
-<FriendsSearchBar /> 
 
-<View style={styles.individualFriendBox}>
-<Text style={styles.friendNameText}>Andra_the_Great</Text>
-<TouchableOpacity style={styles.addButton}>
-          <Icon name="add" color={"#fff"} size={40} />
-        </TouchableOpacity>
-        
-</View>
 </View>
 </View>
 <Pressable
         style={[styles.pressable]}
-        onPress={() => setModalVisible(true)}>
+        onPress={() => {setModalVisible(true)
+console.log(objectToSend)
+      }}
+
+        >
+
             
         <Text style={styles.createButton}>Create Watch Group</Text>
+
+
       </Pressable>
 </View>
     )}
