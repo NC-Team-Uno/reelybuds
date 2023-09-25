@@ -6,10 +6,8 @@ function CreateAccount() {
 
 
   const [timesPressed, setTimesPressed] = useState(0);
-  const [name, setName] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [nameError, setNameError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -26,13 +24,6 @@ function CreateAccount() {
     textLog = 'onPress';
   }
 
-  const validateName = () => {
-    if (!name.trim()) {
-      setNameError('Name is required');
-    } else {
-      setNameError('');
-    }
-  };
 
   const validateUserName = () => {
     if (!userName.trim()) {
@@ -72,7 +63,6 @@ function CreateAccount() {
     }
     setEmailError('');
     navigation.navigate('CreateProfile', {
-        name: name,
         userName: userName,
         email:email,
         password: password,
@@ -82,20 +72,6 @@ function CreateAccount() {
 
   return (
       <View style={styles.container}>
-        <Text style={styles.username}> Name:</Text>
-        <TextInput
-          value={name}
-          onChangeText={(name) => {
-            setName(name)
-            validateName()
-        }}
-          placeholder={'enter your name here'}
-          placeholderTextColor='#50515e'
-          style={styles.input}
-        />
-        {nameError ? (
-        <Text style={styles.error}>{nameError}</Text>
-        ) : null}
         <Text style={styles.username}>Username:</Text>
         <TextInput
           value={userName}
@@ -155,7 +131,7 @@ function CreateAccount() {
         <Pressable
             onPress={() => {
               setTimesPressed(current => current + 1);
-              handleNext({}) 
+              handleNext() 
      
             }} 
             disabled = {isSubmitting}

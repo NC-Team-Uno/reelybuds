@@ -3,6 +3,9 @@ import { StyleSheet, Text, TextInput, View, Pressable, Dimensions} from 'react-n
 import { createUserWithEmailAndPassword} from "firebase/auth";
 import { auth } from '../../firebase';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { providerData } from '../constants/providerData';
+
 
 
 function CreateProfile({route}) {
@@ -15,20 +18,22 @@ function CreateProfile({route}) {
 
   const navigation = useNavigation();
 
+  //console.log(name,userName, email, password)
 
-  const providerData = [
-    "Netflix" ,
-    "Disney+" ,
-    "Apple TV" ,
-    "Amazon Prime" ,
-    "Now TV" ,
-    "BBC iPlayer" ,
-    "Channel 4" ,
-    "Paramount+" ,
-    "Sky Go" ,
-    "BritBox" ,
-    "YouTube" 
+  const providerNames = [
+    "netflix" ,
+    "disneyplus" ,
+    "appletv" ,
+    "amazonprime" ,
+    "nowtv" ,
+    "bbciplayer" ,
+    "channel4" ,
+    "paramountplus" ,
+    "skygo" ,
+    "britbox" ,
+    "youtube" 
 ];
+
 
   const genres = ['Action', 'Comedy', 'Drama', 'Sci-Fi', 'Fantasy'];
 
@@ -64,11 +69,20 @@ function CreateProfile({route}) {
       })   
   }
 
+const userprofile = {username: userName, avatar: avatar, streamingServices: streamingPreferences.map((service)=>{return providerData[service].id.toString()}), preferences: selectedGenres, wishlist: [], likedFilms: [], friends: [], watchGroups:[]};
+
+//console.log(userprofile);
+
   const handleCreateAccount = () => {
 
     setIsSubmitting(true);
-    createUserFirebase()      
+    //createUserFirebase();
+    console.log(userprofile)
+    axios.post('https://reelyfriends-api-mnnh.onrender.com/users/', userprofile).then((user)=> { console.log(user)
+      }).catch((err)=> console.log(err));
+
     // post  in the user account MongoDB name, username, email, selectedProviders, selectedGenres, avatar
+
     setTimeout(() => {
       setIsSubmitting(false);
     }, 2000);
@@ -89,7 +103,7 @@ function CreateProfile({route}) {
         />
         <Text style={styles.textSelection}>Select favourite streaming providers:</Text>
         <View style={styles.selectionContainer}>
-          {providerData.map((provider) => (
+          {providerNames.map((provider) => (
             <Pressable
               key={provider}
               style={({ pressed }) => [
@@ -130,10 +144,8 @@ function CreateProfile({route}) {
         </View>
 
         <Pressable
-          onPress={() => {
-            setTimesPressed((current) => current + 1);
-            handleCreateAccount();
-          }}
+          onPress={
+            handleCreateAccount}
           disabled={isSubmitting}
           style={({ pressed }) => [
             {
