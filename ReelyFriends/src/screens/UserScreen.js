@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, FlatList, ScrollView} from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import HamburgerMenu from "../components/HamburgerMenu";
 import { providerData } from "../constants/providerData";
-import { getMovieDetails, getProviderLogo } from "../api/Apicall";
+import { getMovieDetails } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
 import COLORS from "../style/Colors";
 
 export default function UserScreen() {
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [moviesWatch, setMoviesWatch] = useState([]);
-  const [providerLogos, setProviderLogos] = useState([]);
   const [userData, setUserData] = useState({
     _id: "650af73caa1b3fded7210987",
     username: "MovieBuffMaster",
@@ -70,49 +76,14 @@ export default function UserScreen() {
     fetchMovies(userData.wishlist, setMoviesWatch);
   }, [userData]);
 
-  const getProviderLogos = async () => {
-    const logoPromises = userData.streamingServices.map(async (serviceId) => {
-      const logoUrl = await getProviderLogo(serviceId);
-      return { serviceId, logoUrl };
-    });
-
-    const providerLogos = await Promise.all(logoPromises);
-    return providerLogos;
-  };
-
-
-   useEffect(() => {
-     // Call getProviderLogos only once
-     getProviderLogos().then((logos) => {
-       // Remove duplicate logos
-       const uniqueLogos = logos.filter(
-         (logo, index, self) =>
-           index === self.findIndex((l) => l.serviceId === logo.serviceId)
-       );
-       setProviderLogos(uniqueLogos);
-     });
-   }, []); 
-
-  const getProviderNames = () => {
+  const getProviderLogos = () => {
     return userData.streamingServices.map((serviceId) => {
       const provider = Object.values(providerData).find(
         (provider) => provider.id === parseInt(serviceId)
       );
-      return provider ? provider.name : "";
+      return provider ? provider.logo : "null";
     });
   };
-
-   const renderProviderLogos = () => {
-     return providerLogos.map((logo) => (
-       <Image
-         key={logo.serviceId}
-         source={{ uri: logo.logoUrl }}
-         style={styles.providerLogo}
-       />
-     ));
-   };
-
-  const providerNames = getProviderNames();
 
   return (
     <ScrollView style={styles.container}>
@@ -142,30 +113,15 @@ export default function UserScreen() {
         />
       </View>
       <View style={styles.list}>
-        <Text style={styles.text}>
-          Streaming Services:
-        </Text>
+        <Text style={styles.text}>Streaming Services</Text>
         <FlatList
-          data={providerNames}
+          data={getProviderLogos()}
           keyExtractor={(item, index) => index.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
-            <Text style={styles.providerName}>{item}</Text>
+            <Image source={{ uri: item }} style={styles.providerLogo} />
           )}
-          contentContainerStyle={styles.providerNamesContainer}
-        />
-      </View>
-      <View style={styles.list}>
-        <Text style={styles.text}>
-          Streaming Services:
-        </Text>
-        <FlatList
-          data={providerLogos}
-          keyExtractor={(item) => item.serviceId}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderProviderLogos}
           contentContainerStyle={styles.providerLogosContainer}
         />
       </View>
@@ -201,7 +157,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.FONT_COLOR_MAIN,
-    alignSelf: "left",
+    alignSelf: "flex-start",
     fontSize: 18,
     marginHorizontal: 20,
   },
@@ -212,8 +168,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   providerLogo: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 65,
+    padding: 5,
   },
   providerNamesContainer: {
     marginLeft: 20,

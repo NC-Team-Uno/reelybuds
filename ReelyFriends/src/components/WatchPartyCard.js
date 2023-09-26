@@ -30,10 +30,6 @@ export default function WatchPartyCard({ group }) {
               </>
             );
           })}
-        </View>
-      </View>
-    </>
-  );
 }
 
 const styles = StyleSheet.create({
