@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Homepage from "./src/screens/Homepage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -41,86 +41,88 @@ export default function App() {
   return (
     <>
       <Header />
-      <StatusBar style="light" />
+      <StatusBar style={"#fff"} />
       <NavigationContainer>
-        {user ? (
-          <Tab.Navigator
-            screenOptions={{
-              tabBarActiveTintColor: "#f96501",
-              tabBarInactiveTintColor: "#fff",
-              tabBarStyle: {
-                backgroundColor: "#11131c",
-                activeTintColor: "#fff",
-                padding: 0,
-                borderTopWidth: 0,
-              },
-            }}
-          >
-            <Tab.Screen
-              name="Homepage"
-              component={Homepage}
-              options={{
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="home-outline" size={size} color={color} />
-                ),
+        <View style={styles.container}>
+          {user ? (
+            <Tab.Navigator
+              screenOptions={{
+                tabBarActiveTintColor: "#f96501",
+                tabBarInactiveTintColor: "#fff",
+                tabBarStyle: {
+                  backgroundColor: "#11131c",
+                  activeTintColor: "#fff",
+                  padding: 0,
+                  borderTopWidth: 0,
+                },
               }}
-            />
-            <Tab.Screen
-              name="My List"
-              component={MyList}
-              options={{
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="albums-outline" size={size} color={color} />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Watch Party"
-              component={WatchPartyScreen}
-              options={{
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="film-outline" size={size} color={color} />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Friends"
-              component={FriendsScreen}
-              options={{
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="happy" size={size} color={color} />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="User Profile"
-              component={UserScreen}
-              options={{
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="person" size={size} color={color} />
-                ),
-              }}
-            />
-          </Tab.Navigator>
-        ) : (
-          <Stack.Navigator initialRouteName="LogIn">
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={InsideLayout}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        )}
+            >
+              <Tab.Screen
+                name="Homepage"
+                component={Homepage}
+                options={{
+                  headerShown: false,
+                  tabBarIcon: ({ color, size }) => (
+                    <Icon name="home-outline" size={size} color={color} />
+                  ),
+                }}
+              />
+              <Tab.Screen
+                name="My List"
+                component={MyList}
+                options={{
+                  headerShown: false,
+                  tabBarIcon: ({ color, size }) => (
+                    <Icon name="albums-outline" size={size} color={color} />
+                  ),
+                }}
+              />
+              <Tab.Screen
+                name="Watch Party"
+                component={WatchPartyScreen}
+                options={{
+                  headerShown: false,
+                  tabBarIcon: ({ color, size }) => (
+                    <Icon name="film-outline" size={size} color={color} />
+                  ),
+                }}
+              />
+              <Tab.Screen
+                name="Friends"
+                component={FriendsScreen}
+                options={{
+                  headerShown: false,
+                  tabBarIcon: ({ color, size }) => (
+                    <Icon name="happy" size={size} color={color} />
+                  ),
+                }}
+              />
+              <Tab.Screen
+                name="User Profile"
+                component={UserScreen}
+                options={{
+                  headerShown: false,
+                  tabBarIcon: ({ color, size }) => (
+                    <Icon name="person" size={size} color={color} />
+                  ),
+                }}
+              />
+            </Tab.Navigator>
+          ) : (
+            <Stack.Navigator initialRouteName="LogIn">
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={InsideLayout}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          )}
+        </View>
       </NavigationContainer>
     </>
   );

@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, FlatList, ScrollView} from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import HamburgerMenu from "../components/HamburgerMenu";
 import { providerData } from "../constants/providerData";
 import { getMovieDetails } from "../api/Apicall";
@@ -69,14 +76,14 @@ export default function UserScreen() {
     fetchMovies(userData.wishlist, setMoviesWatch);
   }, [userData]);
 
- const getProviderLogos = () => {
-   return userData.streamingServices.map((serviceId) => {
-     const provider = Object.values(providerData).find(
-       (provider) => provider.id === parseInt(serviceId)
-     );
-     return provider ? provider.logo : "null";
-   });
- };
+  const getProviderLogos = () => {
+    return userData.streamingServices.map((serviceId) => {
+      const provider = Object.values(providerData).find(
+        (provider) => provider.id === parseInt(serviceId)
+      );
+      return provider ? provider.logo : "null";
+    });
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -109,11 +116,11 @@ export default function UserScreen() {
         <Text style={styles.text}>Streaming Services</Text>
         <FlatList
           data={getProviderLogos()}
-          keyExtractor={(item, index) => index.toString()} 
+          keyExtractor={(item, index) => index.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
-            <Image source={{ uri: item }} style={styles.providerLogo} /> 
+            <Image source={{ uri: item }} style={styles.providerLogo} />
           )}
           contentContainerStyle={styles.providerLogosContainer}
         />
@@ -150,7 +157,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.FONT_COLOR_MAIN,
-    alignSelf: "left",
+    alignSelf: "flex-start",
     fontSize: 18,
     marginHorizontal: 20,
   },
