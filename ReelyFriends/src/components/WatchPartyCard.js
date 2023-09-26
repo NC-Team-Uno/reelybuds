@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   individualFriend: {
-    backgroundColor: "#",
+    backgroundColor: "#f0f0f1",
     padding: 10,
     marginLeft: 3,
     marginRight: 3,

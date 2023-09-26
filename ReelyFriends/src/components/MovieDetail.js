@@ -32,7 +32,6 @@ const MovieDetail = ({ movie, closeModal }) => {
   }, []);
   const [linkData, setLinkData] = useState([]);
   const linkArray = Object.entries(linkData);
-  console.log(linkArray);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
