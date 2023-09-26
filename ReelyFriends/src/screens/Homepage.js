@@ -17,7 +17,7 @@ const Homepage = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user.email);
+        setUser(auth.currentUser.displayName);
       } else {
         setUser('');
       }
@@ -26,18 +26,16 @@ const Homepage = () => {
   }, []);
 
 
-
-
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.container}>Hello, {auth.currentUser.displayName} !</Text>
+      <Text style={styles.container}>Hello, {user} !</Text>
       <StatusBar style="dark" translucent={false} />
       <Providers />
       <Pressable
             onPress={() => {
               setTimesPressed(current => current + 1);
               signOut(auth).then(() => {
-                navigation.navigate('LogIn'); 
+                navigation.navigate('Login'); 
               })
               .catch((error) => {
                 alert("Error signing out: " + error.message)

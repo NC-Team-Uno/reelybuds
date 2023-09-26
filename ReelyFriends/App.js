@@ -12,14 +12,26 @@ import UserScreen from "./src/screens/UserScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
+import { onAuthStateChanged } from 'firebase/auth';
 import CreateAccount from "./src/screens/CreateAccount";
 import Login from "./src/screens/Login";
 import CreateProfile from "./src/screens/CreateProfile";
-import { onAuthStateChanged } from "firebase/auth";
-import { createContext } from 'react';
-import { userProvider } from "./src/components/user";
+import { getUserByUserName } from "./src/api/Apicall";
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser('');
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
 
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
@@ -35,9 +47,7 @@ export default function App() {
   }
 
   return (
-
     <>
-    <userProvider>
       <Header />
       <StatusBar style="light" />
       <NavigationContainer>
@@ -120,7 +130,6 @@ export default function App() {
           </Stack.Navigator>
         )}
       </NavigationContainer>
-      </userProvider>
     </>
   );
 }

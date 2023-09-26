@@ -12,22 +12,17 @@ import { onAuthStateChanged } from "firebase/auth";
 export default function UserScreen() {
 
   const [user, setUser] = useState(null);
-
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user.email);
+        setUser(auth.currentUser.displayName);
       } else {
         setUser('');
       }
     });
     return () => unsubscribe();
   }, []);
-
-  console.log(user);
-  
-  
-
 
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [moviesWatch, setMoviesWatch] = useState([]);
@@ -103,6 +98,7 @@ export default function UserScreen() {
   return (
     <ScrollView style={styles.container}>
       <HamburgerMenu />
+      <Text style={styles.username}>Hello, {user}!</Text>
       <Text style={styles.username}>{userData.username}</Text>
       <Image source={{ uri: userData.avatar }} style={styles.profileImage} />
       <View style={styles.list}>

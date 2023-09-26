@@ -64,7 +64,7 @@ function CreateProfile({route}) {
       updateProfile(auth.currentUser, {
         displayName: userName
       }).then(() => {
-        navigation.navigate('Homepage', {userName: auth.currentUser.displayName })   
+        navigation.navigate('Homepage')   
 
       }).catch((error) => {
         console.log(error)
