@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   View,
   Text,
@@ -16,46 +17,32 @@ import COLORS from "../style/Colors";
 export default function UserScreen() {
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [moviesWatch, setMoviesWatch] = useState([]);
-  const [userData, setUserData] = useState({
-    _id: "650af73caa1b3fded7210987",
-    username: "MovieBuffMaster",
-    avatar:
-      "https://gravatar.com/avatar/8f77f34d18833ea1ffba1a8ba15633b9?s=200&d=robohash&r=pg",
-    streamingServices: [
-      "8",
-      "337",
-      "350",
-      "9",
-      "39",
-      "38",
-      "103",
-      "531",
-      "29",
-      "380",
-    ],
-    likedFilms: [
-      "677179",
-      "330",
-      "343668",
-      "155",
-      "49026",
-      "399404",
-      "591274",
-      "159824",
-      "1001811",
-    ],
-    wishlist: [
-      "107",
-      "345940",
-      "4108",
-      "1008042",
-      "156022",
-      "20504",
-      "1271",
-      "117263",
-      "10191",
-    ],
-  });
+  const [userData, setUserData] = useState("");
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `https://reelyfriends-api-mnnh.onrender.com/users/Sunny`
+        );
+        const user = response.data;
+        return user;
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        return null;
+      }
+    };
+
+    const fetchData = async () => {
+      const user = await fetchUserData();
+      if (user) {
+        setUserData(user);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
     const fetchMovies = async (movieIds, stateSetter) => {
@@ -77,12 +64,16 @@ export default function UserScreen() {
   }, [userData]);
 
   const getProviderLogos = () => {
-    return userData.streamingServices.map((serviceId) => {
-      const provider = Object.values(providerData).find(
-        (provider) => provider.id === parseInt(serviceId)
-      );
-      return provider ? provider.logo : "null";
-    });
+    if (userData && userData.streamingServices) {
+      return userData.streamingServices.map((serviceId) => {
+        const provider = Object.values(providerData).find(
+          (provider) => provider.id === parseInt(serviceId)
+        );
+        return provider ? provider.logo : "null";
+      });
+    } else {
+      return [];
+    }
   };
 
   return (
