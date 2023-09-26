@@ -158,6 +158,15 @@ const getAllMoviesForUser = async (pageNo) => {
   }
 };
 
+const getUserByUserName = async (username) => {
+
+  return axios.get(`https://reelyfriends-api-mnnh.onrender.com/users/${username}`).then((userData)=> {
+    return userData;
+  }).catch((err)=> {
+    console.log(err)
+  })
+}
+
 export {
   getMovieDetails,
   getPoster,
@@ -167,4 +176,5 @@ export {
   getProviderLogo,
   getLink,
   getAllMoviesForUser,
+  getUserByUserName,
 };

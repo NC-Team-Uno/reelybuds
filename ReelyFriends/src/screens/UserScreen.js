@@ -5,8 +5,30 @@ import { providerData } from "../constants/providerData";
 import { getMovieDetails } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
 import COLORS from "../style/Colors";
+import { auth } from "../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+
 
 export default function UserScreen() {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user.email);
+      } else {
+        setUser('');
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  console.log(user);
+  
+  
+
+
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [moviesWatch, setMoviesWatch] = useState([]);
   const [userData, setUserData] = useState({

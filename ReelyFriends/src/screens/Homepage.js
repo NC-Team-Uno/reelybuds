@@ -5,6 +5,7 @@ import Providers from "../components/Providers";
 import { auth } from "../../firebase";
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useNavigation } from "@react-navigation/native";
+import { getUserByUserName } from "../api/Apicall";
 
 const Homepage = () => {
   
@@ -18,15 +19,18 @@ const Homepage = () => {
       if (user) {
         setUser(user.email);
       } else {
-        setUser('guest');
+        setUser('');
       }
     });
     return () => unsubscribe();
   }, []);
 
+
+
+
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.container}>Hello, {user} !</Text>
+      <Text style={styles.container}>Hello, {auth.currentUser.displayName} !</Text>
       <StatusBar style="dark" translucent={false} />
       <Providers />
       <Pressable

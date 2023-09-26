@@ -15,15 +15,11 @@ import { auth } from "./firebase";
 import CreateAccount from "./src/screens/CreateAccount";
 import Login from "./src/screens/Login";
 import CreateProfile from "./src/screens/CreateProfile";
+import { onAuthStateChanged } from "firebase/auth";
+import { createContext } from 'react';
+import { userProvider } from "./src/components/user";
 
 export default function App() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) setUser(user);
-    });
-  }, []);
 
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
@@ -39,7 +35,9 @@ export default function App() {
   }
 
   return (
+
     <>
+    <userProvider>
       <Header />
       <StatusBar style="light" />
       <NavigationContainer>
@@ -122,6 +120,7 @@ export default function App() {
           </Stack.Navigator>
         )}
       </NavigationContainer>
+      </userProvider>
     </>
   );
 }

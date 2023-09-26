@@ -5,6 +5,7 @@ import { auth } from '../../firebase';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { providerData } from '../constants/providerData';
+import { updateProfile } from "firebase/auth";
 
 
 
@@ -58,8 +59,16 @@ function CreateProfile({route}) {
 
   const createUserFirebase = () => {
     createUserWithEmailAndPassword(auth, email, password)
-    .then(()=> {   
-      navigation.navigate('Homepage')   
+    .then(()=> {  
+      console.log(userName);
+      updateProfile(auth.currentUser, {
+        displayName: userName
+      }).then(() => {
+        navigation.navigate('Homepage', {userName: auth.currentUser.displayName })   
+
+      }).catch((error) => {
+        console.log(error)
+      });
       })
     .catch((error) => {
         const errorMessage = error.message;
