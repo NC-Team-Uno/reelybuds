@@ -9,31 +9,27 @@ import {
   navigation,
 } from "react-native";
 
-export default function WatchPartyCard() {
+export default function WatchPartyCard({ group }) {
+  const { name, avatar, members, groupAdmin, streamingServices } = group;
   return (
     <>
       <View style={styles.watchGroupContainer}>
-        <Text style={styles.innerContainerGroupName}>
-          Northcoders Movie Buds
-        </Text>
-
+        <Text style={styles.innerContainerGroupName}>{name}</Text>
+       <Text>admin: {groupAdmin}</Text><Image style={{width: 100, height: 100}} source={{uri: avatar}}></Image>
         <View style={styles.providersBox}>
-          <Image
-            source={require("../../assets/face.jpeg")}
-            style={styles.groupImage}
-          />
         </View>
         <View style={styles.friendsBox}>
-          <Text style={styles.individualFriend}>Kieran</Text>
-          <Text style={styles.individualFriend}>Andra</Text>
-          <Text style={styles.individualFriend}>Hayden</Text>
-          <Text style={styles.individualFriend}>Viktoriia</Text>
-          <Text style={styles.individualFriend}>Imran</Text>
-          <Text style={styles.individualFriend}>Sula</Text>
-        </View>
-      </View>
-    </>
-  );
+        
+
+          {members.map((member) => {
+            return (
+              <>
+              <Text key={member} style={styles.individualFriend}>
+               {member}
+              </Text>
+              </>
+            );
+          })}
 }
 
 const styles = StyleSheet.create({
@@ -81,7 +77,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   individualFriend: {
-    backgroundColor: "#f0f0f1",
+    backgroundColor: "#50515E",
+    color: "white",
     padding: 10,
     marginLeft: 3,
     marginRight: 3,

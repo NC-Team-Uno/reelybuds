@@ -167,4 +167,6 @@ export {
   getProviderLogo,
   getLink,
   getAllMoviesForUser,
+
 };
+
