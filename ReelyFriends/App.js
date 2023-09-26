@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Homepage from "./src/screens/Homepage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -15,8 +15,6 @@ import { auth } from "./firebase";
 import CreateAccount from "./src/screens/CreateAccount";
 import Login from "./src/screens/Login";
 import CreateProfile from "./src/screens/CreateProfile";
-
-const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [user, setUser] = useState(null);
