@@ -12,8 +12,7 @@ import {
 export default function WatchPartyCard({ group }) {
   const { name, avatar, members, groupAdmin, streamingServices } = group;
   return (
-    <>
-      <View style={styles.watchGroupContainer}>
+     <View style={styles.watchGroupContainer}>
         <Text style={styles.innerContainerGroupName}>{name}</Text>
        <Text>admin: {groupAdmin}</Text><Image style={{width: 100, height: 100}} source={{uri: avatar}}></Image>
         <View style={styles.providersBox}>
@@ -23,14 +22,18 @@ export default function WatchPartyCard({ group }) {
 
           {members.map((member) => {
             return (
-              <>
-              <Text key={member} style={styles.individualFriend}>
+              <View key={member._id}>
+              <Text style={styles.individualFriend}>
                {member}
               </Text>
-              </>
+              </View>
             );
           })}
-}
+          </View>
+          </View>
+          )
+        }
+
 
 const styles = StyleSheet.create({
   watchGroupContainer: {

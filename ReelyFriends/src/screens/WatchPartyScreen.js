@@ -36,7 +36,7 @@ const App = () => {
             renderItem={({ item }) => {
               if (item.length !== 0) {
                 return (
-                  <TouchableOpacity
+                  <TouchableOpacity key={item._id}
                    >
                     <WatchPartyCard group={item} />
                   </TouchableOpacity>
