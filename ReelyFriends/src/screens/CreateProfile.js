@@ -95,6 +95,7 @@ function CreateProfile({route}) {
         <View style={styles.selectionContainer}>
           {providerNames.map((provider) => (
             <Pressable
+
               key={provider}
               style={({ pressed }) => [
                 {
