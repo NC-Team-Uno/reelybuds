@@ -32,6 +32,9 @@ const MovieDetail = ({ movie, closeModal }) => {
   }, []);
   const [linkData, setLinkData] = useState([]);
   const linkArray = Object.entries(linkData);
+
+  const [liked, setLiked] = useState(false);
+  const [favourited, setFavourited] = useState(false);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
@@ -40,11 +43,25 @@ const MovieDetail = ({ movie, closeModal }) => {
 
       <ScrollView contentContainerStyle={styles.contentcontainer}>
         <View style={styles.buttons}>
-          <TouchableOpacity style={styles.button}>
-            <Icon name="heart" color={"#f0f0f1"} size={25} />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              liked ? setLiked(false) : setLiked(true);
+            }}
+          >
+            <Icon name="heart" color={liked ? "red" : "white"} size={25} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Icon name="star" color={"#f0f0f1"} size={25} />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              favourited ? setFavourited(false) : setFavourited(true);
+            }}
+          >
+            <Icon
+              name="star"
+              color={favourited ? "orange" : "white"}
+              size={25}
+            />
           </TouchableOpacity>
         </View>
         <Image
