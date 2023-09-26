@@ -1,10 +1,21 @@
-import React, {useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, FlatList} from 'react-native';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
 import WatchPartyCard from '../components/WatchPartyCard';
+import {getUserWatchGroups} from '../api/backendAPICalls'
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [groups, setGroups] = useState([])
+
+
+  useEffect(() => {
+    getUserWatchGroups('ReelCritic2023').then((data) => {
+      setGroups(data.reverse())
+    })
+  }, [])
+
+
   return (
     <View style={[styles.container, styles.centeredView]}>
          <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
@@ -15,8 +26,23 @@ const App = () => {
             
         <Text style={styles.textStyle}>Create Watch Group</Text>
       </Pressable>
+
+      <FlatList
+            horizontal={false}
+            data={groups}
+            renderItem={({ item }) => {
+              if (item.length !== 0) {
+                return (
+                  <TouchableOpacity
+                   >
+                    <WatchPartyCard group={item} />
+                  </TouchableOpacity>
+                );
+              }
+            }}
+          ></FlatList>
           
-           <WatchPartyCard />
+         
       <Modal
         animationType="slide"
         transparent={true}
@@ -25,7 +51,7 @@ const App = () => {
           setModalVisible(!modalVisible);
         }}>
   
-            <CreateWatchPartyModal
+            <CreateWatchPartyModal setGroups={setGroups}
             closeModal={()=> setModalVisible(false)}
             />
       </Modal>

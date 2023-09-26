@@ -2,15 +2,15 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 
 
-const GroupNameInput = ({groupToPost, setGroupToPost, groupName, setGroupName}) => {
+const GroupNameInput = ({ name, setName}) => {
 
   return (
     <SafeAreaView>
-      <TextInput
+      <TextInput 
         style={styles.input}
-        value={groupName}
+        value={name}
         onChangeText={(text)=>{
-       setGroupName(text)
+       setName(text)
       
         
 
