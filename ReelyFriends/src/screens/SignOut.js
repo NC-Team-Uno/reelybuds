@@ -1,39 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, ScrollView, Text, Pressable } from "react-native";
-import Providers from "../components/Providers";
-import { auth } from "../../firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { View, Text, Pressable, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { signOut } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../firebase";
 
-const Homepage = () => {
-  const [user, setUser] = useState(null);
+const SignOut = () => {
+  const navigation = useNavigation();
   const [timesPressed, setTimesPressed] = useState(0);
 
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user.email);
-      } else {
-        setUser("guest");
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.container}>Hello, {user} !</Text>
-      <StatusBar style="light" translucent={false} />
-      <Providers />
+    <View>
       <Pressable
         onPress={() => {
           setTimesPressed((current) => current + 1);
           signOut(auth)
             .then(() => {
-              navigation.navigate("LogIn");
+              navigation.navigate("Login");
             })
             .catch((error) => {
               alert("Error signing out: " + error.message);
@@ -48,11 +30,11 @@ const Homepage = () => {
       >
         {({ pressed }) => (
           <Text style={styles.pressed}>
-            {pressed ? "Signing out" : "Sign out"}
+            {pressed ? "Signing out ..." : "Sign out"}
           </Text>
         )}
       </Pressable>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -85,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Homepage;
+export default SignOut;
