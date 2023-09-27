@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import {
   Alert,
   Modal,
@@ -16,9 +16,6 @@ import GroupDetail from "../components/GroupDetail";
 import CreateWatchGroup from "../components/CreateWatchGroup";
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
 import { UserContext } from '../contexts/User';
-
-
-
 
 
 const App = () => {
@@ -86,7 +83,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     color: "#fff",
-    marginBottom: 5,
+    marginBottom: 7,
+    marginTop: 7,
   },
   centeredView: {
     flex: 1,

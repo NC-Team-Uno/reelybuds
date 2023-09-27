@@ -14,21 +14,23 @@ export default function WatchPartyCard({ group }) {
   return (
      <View style={styles.watchGroupContainer}>
         <Text style={styles.innerContainerGroupName}>{name}</Text>
-       <Text>admin: {groupAdmin}</Text><Image style={{width: 100, height: 100}} source={{uri: avatar}}></Image>
-        <View style={styles.providersBox}>
-        </View>
-        <View style={styles.friendsBox}>
-        
-
+       <Text style={styles.admin}>Admin: {groupAdmin}</Text>
+   
+    
+        <View style={styles.friendsAndAvatarBox}>
+        <Image style={styles.avatar} source={{uri: avatar}}></Image>
+       <View>
           {members.map((member) => {
             return (
-              <View key={member._id}>
+              <View style={styles.friends} key={member._id}>
               <Text key={member.id} style={styles.individualFriend}>
                {member}
               </Text>
               </View>
+
             );
-          })}
+ }
+)}</View>
           </View>
           </View>
           )
@@ -51,33 +53,45 @@ const styles = StyleSheet.create({
   },
   innerContainerGroupName: {
     color: "black",
-    backgroundColor: "#d3d3d3",
+    backgroundColor: "#fc873f",
     padding: 10,
+    width:300,
     textAlign: "center",
     borderRadius: 15,
     marginRight: 20,
     marginLeft: 20,
     fontWeight: "bold",
+    fontSize: 17.5,
   },
-  groupImage: {
+  admin:{
+    backgroundColor: "#d3d3d3",
+    marginTop:5,
+    marginBottom: 5,
+    width: 300,
+    borderRadius: 15,
+    color: "black",
+    fontWeight: 'bold',
+    textAlign: 'center',
+    alignSelf: 'center',
+  },
+
+  avatar: {
     width: 70,
     height: 70,
     borderRadius: 100,
     alignSelf: "flex-start",
     margin: 10,
   },
-  disneyLogo: {
-    width: 50,
-    height: 30,
-    marginLeft: 7,
-  },
-  friendsBox: {
+  friendsAndAvatarBox: {
     backgroundColor: "#d3d3d3",
     borderRadius: 10,
     margin: 5,
     padding: 10,
     flexDirection: "row",
     flexWrap: "wrap",
+  },
+  friends:{
+    flexDirection: 'column'
   },
   individualFriend: {
     backgroundColor: "#50515E",
@@ -89,9 +103,5 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     borderRadius: 10,
     justifyContent: "flex-start",
-  },
-  providersBox: {
-    flexDirection: "row",
-    alignItems: "center",
   },
 })
