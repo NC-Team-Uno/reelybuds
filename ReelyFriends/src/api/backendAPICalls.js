@@ -1,5 +1,16 @@
 import axios from "axios";
 
+const getAllUsers = async () => {
+  try {
+    const { data } = await axios.get(
+      `https://reelyfriends-api-mnnh.onrender.com/users`
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getUserFriends = async (user) => {
   try {
     const data = await axios.get(
@@ -27,15 +38,20 @@ const getUserWatchGroups = (user) => {
     return axios
       .get("https://reelyfriends-api-mnnh.onrender.com/groups")
       .then(({ data }) => {
-       return data.filter(group => {
-            if (group.members.includes(user)) {
-                return group 
-            }
+        return data.filter((group) => {
+          if (group.members.includes(user)) {
+            return group;
+          }
         });
-      })
+      });
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = { getUserFriends, postWatchGroup, getUserWatchGroups };
+module.exports = {
+  getUserFriends,
+  postWatchGroup,
+  getUserWatchGroups,
+  getAllUsers,
+};
