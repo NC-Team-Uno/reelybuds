@@ -23,7 +23,7 @@ export default function WatchPartyCard({ group }) {
           {members.map((member) => {
             return (
               <View key={member._id}>
-              <Text style={styles.individualFriend}>
+              <Text key={member.id} style={styles.individualFriend}>
                {member}
               </Text>
               </View>
