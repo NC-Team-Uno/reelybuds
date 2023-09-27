@@ -1,5 +1,16 @@
 import axios from "axios";
 
+const getAllUsers = async () => {
+  try {
+    const { data } = await axios.get(
+      `https://reelyfriends-api-mnnh.onrender.com/users`
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getUserFriends = async (user) => {
   try {
     const data = await axios.get(
@@ -104,6 +115,7 @@ module.exports = {
   getUserFriends,
   postWatchGroup,
   getUserWatchGroups,
+  getAllUsers,
   getLikedFilms,
   likeFilms,
   unlikeFilms,
