@@ -12,7 +12,7 @@ export default function MyList() {
   const endReached = () => {
     setPageNo(pageNo + 1);
   };
-  console.log(user);
+
   useEffect(() => {
     getAllMoviesForUser(pageNo, user.streamingServices).then((movies) =>
       setMovieList(movieList.concat(movies))

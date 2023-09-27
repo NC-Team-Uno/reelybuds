@@ -1,14 +1,28 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Dimensions,
+} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import MovieCard from "./MovieCard";
-import { getMovieDetails } from "../api/Apicall";
+import { getAllMoviesForUser, getMovieDetails } from "../api/Apicall";
 
 export default GroupDetail = ({ closeModal, groupInfo }) => {
-   const {likedFilms} = groupInfo
-   const [moviesToDisplay, setMoviesToDisplay] = useState([])
+  const { likedFilms } = groupInfo;
+  const { streamingServices } = groupInfo;
+  const [moviesToDisplay, setMoviesToDisplay] = useState([]);
+  const [allMoviesToDisplay, setAllMoviesToDispaly] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
 
-useEffect(() => {
+  const endReached = () => {
+    setPageNo(pageNo + 1);
+  };
+
+  useEffect(() => {
     const fetchMovieDetails = async () => {
       const moviePromises = likedFilms.map(async (id) => {
         const movieDetails = await getMovieDetails(id);
@@ -20,41 +34,62 @@ useEffect(() => {
     fetchMovieDetails();
   }, [likedFilms]);
 
-if (moviesToDisplay.length === 0 ) {
-return <Text>Loading...</Text>
-} else return (<>
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-        <Icon name="close" color={"#f0f0f1"} size={25} />
-      </TouchableOpacity>
-      <Text>{groupInfo.name}</Text>
-      <View style={styles.list}>
-        <Text>Movies you all like:</Text>
-        <FlatList
-          data={moviesToDisplay}
-          horizontal
-          keyExtractor={(item) => item.id.toString()}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <MovieCard item={item} />}
-          contentContainerStyle={styles.movieCardContainer}
-        />
+  useEffect(() => {
+    getAllMoviesForUser(pageNo, streamingServices).then((movies) =>
+      setAllMoviesToDispaly(allMoviesToDisplay.concat(movies))
+    );
+  }, [pageNo]);
+
+  if (moviesToDisplay.length === 0) {
+    return <Text>Loading...</Text>;
+  } else
+    return (
+      <View style={styles.container}>
+          <Text style={styles.title}>{groupInfo.name}</Text>
+        <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+          <Icon name="close" color={"#f0f0f1"} size={25} />
+        </TouchableOpacity>
+        <View style={styles.likedMovies}>
+         
+          <Text style={styles.text}>Movies you all like:</Text>
+          <FlatList
+            data={moviesToDisplay}
+            horizontal
+            keyExtractor={(item) => item.id.toString()}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => <MovieCard item={item} />}
+            contentContainerStyle={styles.movieCardContainer}
+          />
+        </View>
+        <View style={styles.allMovies}>
+          <Text style={styles.text}>Movies on your groups services:</Text>
+          <FlatList
+            data={allMoviesToDisplay}
+            onEndReached={endReached}
+            key={allMoviesToDisplay.item}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={3}
+            renderItem={({ item }) => <MovieCard item={item}/>}
+          />
+        </View>
       </View>
-    </View>
-    </>
-  );
-}
+    );
+};
 
-  
-
+const deviceWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
+  likedMovies:{
+  backgroundColor: "#373b58",
+  marginBottom: 10,
+  borderRadius: 10
+  },
   container: {
+    width: deviceWidth,
     marginTop: 90,
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#50515e",
+    backgroundColor: '#50515e',
+    display: 'flex',
+    flexDirection: 'column'
   },
   closeButton: {
     position: "absolute",
@@ -65,13 +100,25 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 2,
     marginLeft: 290,
-    zIndex: 1,
+    zIndex: 1
   },
-  providerCarousel: {
-    flex: 1,
+  allMovies: {
     backgroundColor: "#373b58",
-    marginHorizontal: 10,
-    marginVertical: 20,
-    borderRadius: 12,
+    borderRadius: 10
+    
   },
+  text: {
+    marginTop: 10,
+    marginLeft: 20,
+    display: "flex",
+    justifyContent: "center",
+    color: "#FFF",
+    fontSize: 22,
+  },
+  title: {
+    margin: 10,
+   textAlign: 'center',
+    color: "#FFF",
+    fontSize: 30,
+  }
 });

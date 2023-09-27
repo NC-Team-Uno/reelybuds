@@ -11,12 +11,14 @@ import {
 } from "react-native";
 import GroupNameInput from "./GroupNameInput";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import WatchGroupFriends from "./WatchGroupFriends";
 import { postWatchGroup, getUserWatchGroups } from "../api/backendAPICalls";
+import { UserContext } from "../contexts/User";
 
 export default function CreateWatchPartyModal({ closeModal, setGroups }) {
-  const [groupAdmin, setGroupAdmin] = useState("ReelCritic2023");
+  const {user, setUser} = useContext(UserContext)
+  const [groupAdmin, setGroupAdmin] = useState(user.username);
   const [name, setName] = React.useState("");
   const [avatar, setAvatar] = React.useState("");
   const [members, setMembers] = React.useState([groupAdmin]);
@@ -119,8 +121,8 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
             Alert.alert("name required");
           } else {
             postWatchGroup(objectToSend);
-            getUserWatchGroups("ReelCritic2023").then((data) => {
-              console.log("group posted")
+            console.log("group posted", objectToSend);
+            getUserWatchGroups(user.username).then((data) => {
               setGroups(data.reverse());
               
             });

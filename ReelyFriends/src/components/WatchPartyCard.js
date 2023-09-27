@@ -1,16 +1,8 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Button,
-  Alert,
-  navigation,
-} from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 
 export default function WatchPartyCard({ group }) {
-  const { name, avatar, members, groupAdmin, streamingServices } = group;
+  const { name, avatar, members, groupAdmin } = group;
   return (
      <View style={styles.watchGroupContainer}>
         <Text style={styles.innerContainerGroupName}>{name}</Text>
@@ -35,7 +27,6 @@ export default function WatchPartyCard({ group }) {
           </View>
           )
         }
-
 
 const styles = StyleSheet.create({
   watchGroupContainer: {
@@ -103,4 +94,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "flex-start",
   },
-})
+
+  providersBox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
