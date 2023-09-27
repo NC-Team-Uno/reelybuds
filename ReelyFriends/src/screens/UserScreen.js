@@ -19,8 +19,6 @@ export default function UserScreen() {
   const { user, setUser } = useContext(UserContext); // user from db
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [moviesWatch, setMoviesWatch] = useState([]);
- 
-  
 
   useEffect(() => {
     const fetchMovies = async (movieIds, stateSetter) => {
@@ -42,7 +40,7 @@ export default function UserScreen() {
   }, []);
 
   const getProviderLogos = () => {
-    if(user.hasOwnProperty('streamingServices')){
+    if (user.hasOwnProperty("streamingServices")) {
       return user.streamingServices.map((serviceId) => {
         const provider = Object.values(providerData).find(
           (provider) => provider.id === parseInt(serviceId)
@@ -50,53 +48,50 @@ export default function UserScreen() {
         return provider ? provider.logo : "null";
       });
     }
-    
   };
 
-
-  if(Object.keys(user).length !==0){
   return (
-      <ScrollView style={styles.container}>
-        <HamburgerMenu />
-        <Text style={styles.username}>{user.username}</Text>
-        <Image source={{ uri: user.avatar }} style={styles.profileImage} />
-        <View style={styles.list}>
-          <Text style={[styles.text, styles.componentToCome]}>Likes</Text>
-          <FlatList
-            data={moviesLiked}
-            keyExtractor={(item) => item.id.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <MovieCard item={item} />}
-            contentContainerStyle={styles.movieCardContainer}
-          />
-        </View>
-        <View style={styles.list}>
-          <Text style={styles.text}>Watch List</Text>
-          <FlatList
-            data={moviesWatch}
-            keyExtractor={(item) => item.id.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <MovieCard item={item} />}
-            contentContainerStyle={styles.movieCardContainer}
-          />
-        </View>
-        <View style={styles.list}>
-          <Text style={styles.text}>Streaming Services</Text>
-          <FlatList
-            data={getProviderLogos()}
-            keyExtractor={(item, index) => index.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <Image source={{ uri: item }} style={styles.providerLogo} />
-            )}
-            contentContainerStyle={styles.providerLogosContainer}
-          />
-        </View>
-      </ScrollView>
-  );}
+    <ScrollView style={styles.container}>
+      <HamburgerMenu />
+      <Text style={styles.username}>{user.username}</Text>
+      <Image source={{ uri: user.avatar }} style={styles.profileImage} />
+      <View style={styles.list}>
+        <Text style={[styles.text, styles.componentToCome]}>Likes</Text>
+        <FlatList
+          data={moviesLiked}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => <MovieCard item={item} />}
+          contentContainerStyle={styles.movieCardContainer}
+        />
+      </View>
+      <View style={styles.list}>
+        <Text style={styles.text}>Watch List</Text>
+        <FlatList
+          data={moviesWatch}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => <MovieCard item={item} />}
+          contentContainerStyle={styles.movieCardContainer}
+        />
+      </View>
+      <View style={styles.list}>
+        <Text style={styles.text}>Streaming Services</Text>
+        <FlatList
+          data={getProviderLogos()}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <Image source={{ uri: item }} style={styles.providerLogo} />
+          )}
+          contentContainerStyle={styles.providerLogosContainer}
+        />
+      </View>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
