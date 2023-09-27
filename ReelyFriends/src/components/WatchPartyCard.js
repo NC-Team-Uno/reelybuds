@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 100,
-    alignSelf: "left",
+    alignSelf: "flex-start",
     margin: 10,
   },
   disneyLogo: {
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-});
+})

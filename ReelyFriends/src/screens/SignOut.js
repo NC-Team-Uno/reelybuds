@@ -1,11 +1,9 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { signOut } from "firebase/auth";
-import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
 
-const SignOut = () => {
-  const navigation = useNavigation();
+const SignOut = ({ navigation }) => {
   const [timesPressed, setTimesPressed] = useState(0);
 
   return (
@@ -15,7 +13,7 @@ const SignOut = () => {
           setTimesPressed((current) => current + 1);
           signOut(auth)
             .then(() => {
-              navigation.navigate("Login");
+              // navigation.navigate("Login");
             })
             .catch((error) => {
               alert("Error signing out: " + error.message);

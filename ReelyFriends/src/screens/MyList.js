@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import Icon from "react-native-ionicons";
 import { getAllMoviesForUser } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
+import { UserContext } from "../contexts/User";
 
 export default function MyList() {
+  const { user, setUser } = useContext(UserContext); // user from db
   const [movieList, setMovieList] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const endReached = () => {

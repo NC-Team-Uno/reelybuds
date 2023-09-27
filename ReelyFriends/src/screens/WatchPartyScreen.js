@@ -1,12 +1,13 @@
-
-import React, {useEffect, useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, FlatList} from 'react-native';
+import React, {useContext, useState, useEffect} from 'react';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
 import WatchPartyCard from '../components/WatchPartyCard';
+import { UserContext } from '../contexts/User';
+import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, FlatList} from 'react-native';
 import {getUserWatchGroups} from '../api/backendAPICalls'
 
 
 const App = () => {
+  const { user, setUser } = useContext(UserContext); // user from db
   const [modalVisible, setModalVisible] = useState(false);
   const [groups, setGroups] = useState([])
 

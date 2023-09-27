@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
   View,
@@ -13,36 +13,14 @@ import { providerData } from "../constants/providerData";
 import { getMovieDetails } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
 import COLORS from "../style/Colors";
+import { UserContext } from "../contexts/User";
 
 export default function UserScreen() {
+  const { user, setUser } = useContext(UserContext); // user from db
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [moviesWatch, setMoviesWatch] = useState([]);
-  const [userData, setUserData] = useState("");
+ 
   
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          `https://reelyfriends-api-mnnh.onrender.com/users/Sunny`
-        );
-        const user = response.data;
-        return user;
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        return null;
-      }
-    };
-
-    const fetchData = async () => {
-      const user = await fetchUserData();
-      if (user) {
-        setUserData(user);
-      }
-    };
-
-    fetchData();
-  }, []);
-
 
   useEffect(() => {
     const fetchMovies = async (movieIds, stateSetter) => {
@@ -59,65 +37,66 @@ export default function UserScreen() {
       }
     };
 
-    fetchMovies(userData.likedFilms, setMoviesLiked);
-    fetchMovies(userData.wishlist, setMoviesWatch);
-  }, [userData]);
+    fetchMovies(user.likedFilms, setMoviesLiked);
+    fetchMovies(user.wishlist, setMoviesWatch);
+  }, []);
 
   const getProviderLogos = () => {
-    if (userData && userData.streamingServices) {
-      return userData.streamingServices.map((serviceId) => {
+    if(user.hasOwnProperty('streamingServices')){
+      return user.streamingServices.map((serviceId) => {
         const provider = Object.values(providerData).find(
           (provider) => provider.id === parseInt(serviceId)
         );
         return provider ? provider.logo : "null";
       });
-    } else {
-      return [];
     }
+    
   };
 
+
+  if(Object.keys(user).length !==0){
   return (
-    <ScrollView style={styles.container}>
-      <HamburgerMenu />
-      <Text style={styles.username}>{userData.username}</Text>
-      <Image source={{ uri: userData.avatar }} style={styles.profileImage} />
-      <View style={styles.list}>
-        <Text style={[styles.text, styles.componentToCome]}>Likes</Text>
-        <FlatList
-          data={moviesLiked}
-          keyExtractor={(item) => item.id.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <MovieCard item={item} />}
-          contentContainerStyle={styles.movieCardContainer}
-        />
-      </View>
-      <View style={styles.list}>
-        <Text style={styles.text}>Watch List</Text>
-        <FlatList
-          data={moviesWatch}
-          keyExtractor={(item) => item.id.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <MovieCard item={item} />}
-          contentContainerStyle={styles.movieCardContainer}
-        />
-      </View>
-      <View style={styles.list}>
-        <Text style={styles.text}>Streaming Services</Text>
-        <FlatList
-          data={getProviderLogos()}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <Image source={{ uri: item }} style={styles.providerLogo} />
-          )}
-          contentContainerStyle={styles.providerLogosContainer}
-        />
-      </View>
-    </ScrollView>
-  );
+      <ScrollView style={styles.container}>
+        <HamburgerMenu />
+        <Text style={styles.username}>{user.username}</Text>
+        <Image source={{ uri: user.avatar }} style={styles.profileImage} />
+        <View style={styles.list}>
+          <Text style={[styles.text, styles.componentToCome]}>Likes</Text>
+          <FlatList
+            data={moviesLiked}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => <MovieCard item={item} />}
+            contentContainerStyle={styles.movieCardContainer}
+          />
+        </View>
+        <View style={styles.list}>
+          <Text style={styles.text}>Watch List</Text>
+          <FlatList
+            data={moviesWatch}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => <MovieCard item={item} />}
+            contentContainerStyle={styles.movieCardContainer}
+          />
+        </View>
+        <View style={styles.list}>
+          <Text style={styles.text}>Streaming Services</Text>
+          <FlatList
+            data={getProviderLogos()}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <Image source={{ uri: item }} style={styles.providerLogo} />
+            )}
+            contentContainerStyle={styles.providerLogosContainer}
+          />
+        </View>
+      </ScrollView>
+  );}
 }
 
 const styles = StyleSheet.create({

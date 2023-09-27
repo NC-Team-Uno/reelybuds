@@ -1,5 +1,5 @@
+import React, { useContext, useState } from "react";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 import GenreList from "../components/GenreList";
 import {
   ScrollView,
@@ -13,8 +13,10 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { providerData } from "../constants/providerData";
 import COLORS from "../style/Colors";
+import { UserContext } from "../contexts/User";
 
-const EditProfileScreen = ({ closeModal }) => {
+const EditProfileScreen = ({closeModal}) => {
+  const {user, setUser} = useContext(UserContext) // user from db
   const [newPassword, setNewPassword] = useState("");
   const [newPicture, setNewPicture] = useState("");
   const [selectedGenreNames, setSelectedGenreNames] = useState([]);

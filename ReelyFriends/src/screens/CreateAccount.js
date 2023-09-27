@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Pressable, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../contexts/User';
 
 function CreateAccount() {
-
+ 
+    const { user, setUser } = useContext(UserContext);
+    console.log(user);
 
   const [timesPressed, setTimesPressed] = useState(0);
   const [userName, setUserName] = useState('');
@@ -59,16 +62,14 @@ function CreateAccount() {
   };
 
   const handleNext = () => {
+    setUser({username:userName, password, email});
+  
     if (!validateEmail(email)) {
       setEmailError('Invalid email address');
       return;
     }
     setEmailError('');
-    navigation.navigate('CreateProfile', {
-        userName: userName,
-        email:email,
-        password: password,
-      });
+    navigation.navigate('CreateProfile');
   
     };
 
