@@ -22,14 +22,12 @@ const Providers = () => {
 
   useEffect(() => {
     if (user.hasOwnProperty("streamingServices")) {
-      console.log(user.streamingServices);
       const filteredProviders = Object.keys(providerData).filter(
         (providerName) =>
           user.streamingServices.includes(
             providerData[providerName].id.toString()
           )
       );
-      console.log(filteredProviders);
 
       filteredProviders.forEach((providerName) => {
         getMoviesByProvider(providerData[providerName].id).then(

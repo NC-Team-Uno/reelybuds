@@ -37,7 +37,7 @@ export default function UserScreen() {
 
     fetchMovies(user.likedFilms, setMoviesLiked);
     fetchMovies(user.wishlist, setMoviesWatch);
-  }, []);
+  }, [user]);
 
   const getProviderLogos = () => {
     if (user.hasOwnProperty("streamingServices")) {

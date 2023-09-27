@@ -12,21 +12,17 @@ import {
 import React, { useEffect, useState, useContext } from "react";
 import { getLink, getPoster } from "../api/Apicall";
 import Icon from "react-native-vector-icons/Ionicons";
-import {getLikedFilms, updateLikedFilms} from "../api/backendAPICalls";
+import {
+  getLikedFilms,
+  likeFilms,
+  unlikeFilms,
+  wishFilms,
+  unwishFilms,
+} from "../api/backendAPICalls";
 import { UserContext } from "../contexts/User";
 
 const MovieDetail = ({ movie, closeModal }) => {
-
-  const { user, setUser } = useContext(UserContext); 
-
-  const [userLikedFilms, setUserLikedFilms]= useState([]);
-
-  useEffect(() => {
-    getLikedFilms(user.username).then((userData) => {
-      
-      console.log(userData.likedFilms)})
-
-  }, [])
+  const { user, setUser } = useContext(UserContext);
 
   const linkImages = {
     netflix: require("../../assets/netflix.png"),
@@ -44,11 +40,17 @@ const MovieDetail = ({ movie, closeModal }) => {
       setLinkData(linkObj);
     });
   }, []);
+
+  useEffect(() => {
+    if (user.likedFilms.includes(movie.id)) setLiked(true);
+  }, [user]);
+
   const [linkData, setLinkData] = useState([]);
   const linkArray = Object.entries(linkData);
-
-  const [liked, setLiked] = useState(false);
-  const [favourited, setFavourited] = useState(false);
+  const [liked, setLiked] = useState(
+    user.likedFilms.includes(movie.id.toString())
+  );
+  const [wish, setWish] = useState(user.wishlist.includes(movie.id.toString()));
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
@@ -57,13 +59,18 @@ const MovieDetail = ({ movie, closeModal }) => {
 
       <ScrollView contentContainerStyle={styles.contentcontainer}>
         <View style={styles.buttons}>
-        <TouchableOpacity
+          <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              liked ? setLiked(true) : setLiked(true);
-              console.log(user.username, movie.id);          
-              updateLikedFilms(user.username, movie.id);
-                     
+              if (!liked) {
+                setLiked(true);
+                likeFilms(user, movie.id);
+                getLikedFilms(user.username).then((data) => setUser(data));
+              } else {
+                setLiked(false);
+                unlikeFilms(user, movie.id);
+                getLikedFilms(user.username).then((data) => setUser(data));
+              }
             }}
           >
             <Icon name="heart" color={liked ? "red" : "white"} size={25} />
@@ -71,14 +78,18 @@ const MovieDetail = ({ movie, closeModal }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              favourited ? setFavourited(false) : setFavourited(true);
+              if (!wish) {
+                setWish(true);
+                wishFilms(user, movie.id);
+                getLikedFilms(user.username).then((data) => setUser(data));
+              } else {
+                setWish(false);
+                unwishFilms(user, movie.id);
+                getLikedFilms(user.username).then((data) => setUser(data));
+              }
             }}
           >
-            <Icon
-              name="star"
-              color={favourited ? "orange" : "white"}
-              size={25}
-            />
+            <Icon name="star" color={wish ? "orange" : "white"} size={25} />
           </TouchableOpacity>
         </View>
         <Image
