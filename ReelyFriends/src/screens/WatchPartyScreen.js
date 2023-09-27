@@ -1,18 +1,10 @@
-<<<<<<< HEAD
-import React, {useContext, useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from 'react-native';
+import React, {useContext, useState, useEffect} from 'react';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
 import WatchPartyCard from '../components/WatchPartyCard';
 import { UserContext } from '../contexts/User';
-=======
-
-import React, {useEffect, useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, FlatList} from 'react-native';
-import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
-import WatchPartyCard from '../components/WatchPartyCard';
 import {getUserWatchGroups} from '../api/backendAPICalls'
 
->>>>>>> main
 
 const App = () => {
   const { user, setUser } = useContext(UserContext); // user from db
@@ -38,9 +30,6 @@ const App = () => {
         <Text style={styles.textStyle}>Create Watch Group</Text>
       </Pressable>
 
-<<<<<<< HEAD
-      <WatchPartyCard />
-=======
 
       <FlatList
             horizontal={false}
@@ -58,18 +47,12 @@ const App = () => {
           ></FlatList>
           
         
->>>>>>> main
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-<<<<<<< HEAD
-        }}
-      >
-        <CreateWatchPartyModal closeModal={() => setModalVisible(false)} />
-=======
 
         }}>
   
@@ -77,7 +60,6 @@ const App = () => {
             closeModal={()=> setModalVisible(false)}
             />
 
->>>>>>> main
       </Modal>
     </View>
   );

@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import React, { useContext, useState } from "react";
-=======
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 import GenreList from "../components/GenreList";
->>>>>>> main
 import {
   ScrollView,
   View,
@@ -19,12 +15,8 @@ import { providerData } from "../constants/providerData";
 import COLORS from "../style/Colors";
 import { UserContext } from "../contexts/User";
 
-<<<<<<< HEAD
 const EditProfileScreen = ({closeModal}) => {
   const {user, setUser} = useContext(UserContext) // user from db
-=======
-const EditProfileScreen = ({ closeModal }) => {
->>>>>>> main
   const [newPassword, setNewPassword] = useState("");
   const [newPicture, setNewPicture] = useState("");
   const [selectedGenreNames, setSelectedGenreNames] = useState([]);

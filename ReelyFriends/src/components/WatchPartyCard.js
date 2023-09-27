@@ -20,8 +20,6 @@ export default function WatchPartyCard({ group }) {
         <View style={styles.friendsBox}>
         
 
-<<<<<<< HEAD
-=======
           {members.map((member) => {
             return (
               <View key={member._id}>
@@ -37,7 +35,6 @@ export default function WatchPartyCard({ group }) {
         }
 
 
->>>>>>> main
 const styles = StyleSheet.create({
   watchGroupContainer: {
     backgroundColor: "#50515e",
@@ -66,11 +63,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 100,
-<<<<<<< HEAD
     alignSelf: "flex-start",
-=======
-    alignSelf: "left",
->>>>>>> main
     margin: 10,
   },
   disneyLogo: {
@@ -87,13 +80,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   individualFriend: {
-<<<<<<< HEAD
-    backgroundColor: "#f96501",
-    color: 'white',
-=======
     backgroundColor: "#50515E",
     color: "white",
->>>>>>> main
     padding: 10,
     marginLeft: 3,
     marginRight: 3,
@@ -106,8 +94,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-<<<<<<< HEAD
-});
-=======
-});
->>>>>>> main
+})

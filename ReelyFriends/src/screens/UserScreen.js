@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, Image, FlatList, ScrollView} from "react-native";
 import axios from "axios";
 import {
   View,
@@ -40,59 +39,64 @@ export default function UserScreen() {
 
     fetchMovies(user.likedFilms, setMoviesLiked);
     fetchMovies(user.wishlist, setMoviesWatch);
-  }, [user]);
+  }, []);
 
   const getProviderLogos = () => {
-    return user.streamingServices.map((serviceId) => {
-      const provider = Object.values(providerData).find(
-        (provider) => provider.id === parseInt(serviceId)
-      );
-      return provider ? provider.logo : "null";
-    });
+    if(user.hasOwnProperty('streamingServices')){
+      return user.streamingServices.map((serviceId) => {
+        const provider = Object.values(providerData).find(
+          (provider) => provider.id === parseInt(serviceId)
+        );
+        return provider ? provider.logo : "null";
+      });
+    }
+    
   };
 
+
+  if(Object.keys(user).length !==0){
   return (
-    <ScrollView style={styles.container}>
-      <HamburgerMenu />
-      <Text style={styles.username}>{user.username}</Text>
-      <Image source={{ uri: user.avatar }} style={styles.profileImage} />
-      <View style={styles.list}>
-        <Text style={[styles.text, styles.componentToCome]}>Likes</Text>
-        <FlatList
-          data={moviesLiked}
-          keyExtractor={(item) => item.id.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <MovieCard item={item} />}
-          contentContainerStyle={styles.movieCardContainer}
-        />
-      </View>
-      <View style={styles.list}>
-        <Text style={styles.text}>Watch List</Text>
-        <FlatList
-          data={moviesWatch}
-          keyExtractor={(item) => item.id.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <MovieCard item={item} />}
-          contentContainerStyle={styles.movieCardContainer}
-        />
-      </View>
-      <View style={styles.list}>
-        <Text style={styles.text}>Streaming Services</Text>
-        <FlatList
-          data={getProviderLogos()}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <Image source={{ uri: item }} style={styles.providerLogo} />
-          )}
-          contentContainerStyle={styles.providerLogosContainer}
-        />
-      </View>
-    </ScrollView>
-  );
+      <ScrollView style={styles.container}>
+        <HamburgerMenu />
+        <Text style={styles.username}>{user.username}</Text>
+        <Image source={{ uri: user.avatar }} style={styles.profileImage} />
+        <View style={styles.list}>
+          <Text style={[styles.text, styles.componentToCome]}>Likes</Text>
+          <FlatList
+            data={moviesLiked}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => <MovieCard item={item} />}
+            contentContainerStyle={styles.movieCardContainer}
+          />
+        </View>
+        <View style={styles.list}>
+          <Text style={styles.text}>Watch List</Text>
+          <FlatList
+            data={moviesWatch}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => <MovieCard item={item} />}
+            contentContainerStyle={styles.movieCardContainer}
+          />
+        </View>
+        <View style={styles.list}>
+          <Text style={styles.text}>Streaming Services</Text>
+          <FlatList
+            data={getProviderLogos()}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <Image source={{ uri: item }} style={styles.providerLogo} />
+            )}
+            contentContainerStyle={styles.providerLogosContainer}
+          />
+        </View>
+      </ScrollView>
+  );}
 }
 
 const styles = StyleSheet.create({
