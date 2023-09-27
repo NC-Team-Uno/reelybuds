@@ -81,6 +81,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignSelf: "flex-start",
     margin: 10,
+    borderWidth: 2,
+    borderColor: '#696a77',
   },
   friendsAndAvatarBox: {
     backgroundColor: "#d3d3d3",
@@ -89,9 +91,6 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     flexWrap: "wrap",
-  },
-  friends:{
-    flexDirection: 'column'
   },
   individualFriend: {
     backgroundColor: "#50515E",
