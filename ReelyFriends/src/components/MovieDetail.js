@@ -24,16 +24,6 @@ import { UserContext } from "../contexts/User";
 const MovieDetail = ({ movie, closeModal }) => {
   const { user, setUser } = useContext(UserContext);
 
-  const [userLikedFilms, setUserLikedFilms] = useState([]);
-
-  console.log(getLikedFilms(user.username));
-
-  useEffect(() => {
-    getLikedFilms(user.username).then((userData) => {
-      console.log(userData.likedFilms);
-    });
-  }, []);
-
   const linkImages = {
     netflix: require("../../assets/netflix.png"),
     disney: require("../../assets/disney.png"),
