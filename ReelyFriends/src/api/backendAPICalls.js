@@ -41,7 +41,7 @@ const getUserWatchGroups = (user) => {
 const getLikedFilms = (user) => {
   try {
     return axios.get(
-      `https://reelyfriends-api-mnnh.onrender.com/users/${user}`).then((data) => {return data.data})
+      `https://reelyfriends-api-mnnh.onrender.com/users/${user}`).then((data) => {console.log(data.data)})
   } catch (error) {
     console.log(error);
   }

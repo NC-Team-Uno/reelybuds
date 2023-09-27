@@ -21,6 +21,8 @@ const MovieDetail = ({ movie, closeModal }) => {
 
   const [userLikedFilms, setUserLikedFilms]= useState([]);
 
+  console.log(getLikedFilms(user.username))
+
   useEffect(() => {
     getLikedFilms(user.username).then((userData) => {
       
