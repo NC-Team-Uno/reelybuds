@@ -14,7 +14,7 @@ export default function MyList() {
   };
 
   useEffect(() => {
-    getAllMoviesForUser(pageNo).then((movies) =>
+    getAllMoviesForUser(pageNo, user.streamingServices).then((movies) =>
       setMovieList(movieList.concat(movies))
     );
   }, [pageNo]);

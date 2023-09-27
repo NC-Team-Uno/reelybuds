@@ -10,30 +10,28 @@ import FriendsScreen from "./FriendsScreen";
 import MyList from "./MyList";
 import WatchPartyScreen from "./WatchPartyScreen";
 import UserScreen from "./UserScreen";
-import CreateWatchParty from "./CreateWatchPartyScreen";
 import { auth } from "../../firebase";
-import {  useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/User";
-import {  updateProfile } from "firebase/auth";
-
+import { updateProfile } from "firebase/auth";
 
 export default function App() {
-   const Tab = createBottomTabNavigator();
-   const { user, setUser } = useContext(UserContext);
+  const Tab = createBottomTabNavigator();
+  const { user, setUser } = useContext(UserContext);
 
-   useEffect(() => {
-     if (auth.currentUser.displayName === null) {
-       updateProfile(auth.currentUser, { displayName: user.username });
-     }
-     axios
-       .get(
-         `https://reelyfriends-api-mnnh.onrender.com/users/${auth.currentUser.displayName}`
-       )
-       .then(({ data }) => {
-         setUser(data);
-       });
-   }, []);
+  useEffect(() => {
+    if (auth.currentUser.displayName === null) {
+      updateProfile(auth.currentUser, { displayName: user.username });
+    }
+    axios
+      .get(
+        `https://reelyfriends-api-mnnh.onrender.com/users/${auth.currentUser.displayName}`
+      )
+      .then(({ data }) => {
+        setUser(data);
+      });
+  }, []);
   return (
     <>
       <Header />

@@ -142,11 +142,10 @@ const getLink = async (id) => {
   }
 };
 
-const getAllMoviesForUser = async (pageNo) => {
-  const usersProviders = [8, 337, 38];
+const getAllMoviesForUser = async (pageNo, streamingServices) => {
   try {
     const response = await TMDB_HTTP_REQUEST.get(
-      `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNo}&sort_by=popularity.desc&watch_region=GB&with_original_language=en&with_watch_providers=${usersProviders.join(
+      `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNo}&sort_by=popularity.desc&watch_region=GB&with_original_language=en&with_watch_providers=${streamingServices.join(
         "%7C%7C"
       )}`
     );
@@ -167,6 +166,4 @@ export {
   getProviderLogo,
   getLink,
   getAllMoviesForUser,
-
 };
-

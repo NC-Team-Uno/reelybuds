@@ -1,65 +1,78 @@
-import React, {useContext, useState, useEffect} from 'react';
+
+
+import React, { useContext, useEffect, useState } from "react";
+
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import WatchPartyCard from "../components/WatchPartyCard";
+import { getUserWatchGroups } from "../api/backendAPICalls";
+import GroupDetail from "../components/GroupDetail";
+import CreateWatchGroup from "../components/CreateWatchGroup";
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
-import WatchPartyCard from '../components/WatchPartyCard';
 import { UserContext } from '../contexts/User';
-import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, FlatList} from 'react-native';
-import {getUserWatchGroups} from '../api/backendAPICalls'
+
 
 
 const App = () => {
   const { user, setUser } = useContext(UserContext); // user from db
   const [modalVisible, setModalVisible] = useState(false);
-  const [groups, setGroups] = useState([])
-
+  const [groups, setGroups] = useState([]);
+  const [groupModalData, setGroupModalData] = useState([]);
 
   useEffect(() => {
-    getUserWatchGroups('ReelCritic2023').then((data) => {
-      setGroups(data.reverse())
-    })
-  }, [])
+    getUserWatchGroups(user.username).then((data) => {
+      setGroups(data.reverse());
+    });
+  }, [groups]);
 
+  const handlePress = (item) => {
+    setGroupModalData(item);
+    setModalVisible(true);
+  };
 
   return (
     <View style={[styles.container, styles.centeredView]}>
       <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
 
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyle}>Create Watch Group</Text>
-      </Pressable>
-
+      <CreateWatchGroup setGroups={setGroups} />
 
       <FlatList
-            horizontal={false}
-            data={groups}
-            renderItem={({ item }) => {
-              if (item.length !== 0) {
-                return (
-                  <TouchableOpacity key={item._id}
-                   >
-                    <WatchPartyCard group={item} />
-                  </TouchableOpacity>
-                );
-              }
-            }}
-          ></FlatList>
-          
-        
+        horizontal={false}
+        data={groups}
+        key={groups.item}
+        renderItem={({ item }) => {
+          return (
+            <>
+              <TouchableOpacity
+                key={item._id}
+                onPress={() => {
+                  handlePress(item);
+                }}
+              >
+                <WatchPartyCard group={item} />
+              </TouchableOpacity>
+            </>
+          );
+        }}
+      ></FlatList>
       <Modal
-        animationType="slide"
         transparent={true}
+        animationType="slide"
         visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-
-        }}>
-  
-            <CreateWatchPartyModal setGroups={setGroups}
-            closeModal={()=> setModalVisible(false)}
-            />
-
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <GroupDetail
+          groupInfo={groupModalData}
+          closeModal={() => setModalVisible(false)}
+        />
       </Modal>
     </View>
   );
@@ -74,7 +87,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     color: "#fff",
-    marginBottom: 5,
+    marginBottom: 7,
+    marginTop: 7,
   },
   centeredView: {
     flex: 1,
