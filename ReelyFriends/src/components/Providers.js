@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View } from "react-native";
 import ProvidersMovies from "./ProvidersMovies";
 import { getMoviesByProvider } from "../api/Apicall";
+import { UserContext } from "../contexts/User";
 
 const providerData = {
   netflix: { id: 8, name: "Netflix" },
   disneyplus: { id: 337, name: "Disney+" },
   appletv: { id: 350, name: "Apple TV" },
   amazonprime: { id: 9, name: "Amazon Prime" },
-  nowtv: { id: 29, name: "Now TV" },
+  nowtv: { id: 39, name: "Now TV" },
   bbciplayer: { id: 38, name: "BBC iPlayer" },
   channel4: { id: 103, name: "All 4" },
   paramountplus: { id: 531, name: "Paramount+" },
@@ -17,23 +18,39 @@ const providerData = {
 
 const Providers = () => {
   const [movieLists, setMovieLists] = useState({});
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    Object.keys(providerData).forEach((providerName) => {
-      getMoviesByProvider(providerData[providerName].id).then(
-        (movieResponse) => {
-          setMovieLists((prevMovieLists) => ({
-            ...prevMovieLists,
-            [providerName]: movieResponse,
-          }));
-        }
+    if (user.hasOwnProperty("streamingServices")) {
+      console.log(user.streamingServices);
+      const filteredProviders = Object.keys(providerData).filter(
+        (providerName) =>
+          user.streamingServices.includes(
+            providerData[providerName].id.toString()
+          )
       );
-    });
-  }, []);
+      console.log(filteredProviders);
+
+      filteredProviders.forEach((providerName) => {
+        getMoviesByProvider(providerData[providerName].id).then(
+          (movieResponse) => {
+            setMovieLists((prevMovieLists) => ({
+              ...prevMovieLists,
+              [providerName]: movieResponse,
+            }));
+          }
+        );
+      });
+    }
+  }, [user]);
+
+  if (!user) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <View>
-      {Object.keys(providerData).map((providerName) => (
+      {Object.keys(movieLists).map((providerName) => (
         <ProvidersMovies
           key={providerName}
           providerName={providerData[providerName].name}
