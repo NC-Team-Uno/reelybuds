@@ -38,4 +38,24 @@ const getUserWatchGroups = (user) => {
   }
 };
 
-module.exports = { getUserFriends, postWatchGroup, getUserWatchGroups };
+const getLikedFilms = (user) => {
+  try {
+    return axios.get(
+      `https://reelyfriends-api-mnnh.onrender.com/users/${user}`).then((data) => {return data.data})
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateLikedFilms = (user, movie) => {
+  try {
+    return axios.patch(
+      `https://reelyfriends-api-mnnh.onrender.com/users/${user}`,
+      movie)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+module.exports = { getUserFriends, postWatchGroup, getUserWatchGroups, getLikedFilms, updateLikedFilms };

@@ -9,11 +9,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { getLink, getPoster } from "../api/Apicall";
 import Icon from "react-native-vector-icons/Ionicons";
+import {getLikedFilms, updateLikedFilms} from "../api/backendAPICalls";
+import { UserContext } from "../contexts/User";
 
 const MovieDetail = ({ movie, closeModal }) => {
+
+  const { user, setUser } = useContext(UserContext); 
+
+  const [userLikedFilms, setUserLikedFilms]= useState([]);
+
+  useEffect(() => {
+    getLikedFilms(user.username).then((userData) => {
+      
+      console.log(userData.likedFilms)})
+
+  }, [])
+
   const linkImages = {
     netflix: require("../../assets/netflix.png"),
     disney: require("../../assets/disney.png"),
@@ -43,10 +57,13 @@ const MovieDetail = ({ movie, closeModal }) => {
 
       <ScrollView contentContainerStyle={styles.contentcontainer}>
         <View style={styles.buttons}>
-          <TouchableOpacity
+        <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              liked ? setLiked(false) : setLiked(true);
+              liked ? setLiked(true) : setLiked(true);
+              console.log(user.username, movie.id);          
+              updateLikedFilms(user.username, movie.id);
+                     
             }}
           >
             <Icon name="heart" color={liked ? "red" : "white"} size={25} />
