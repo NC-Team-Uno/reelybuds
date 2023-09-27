@@ -11,6 +11,7 @@ export default function WatchGroupFriends({members, setMembers, groupAdmin}){
         })
         },[])
     const [friendsList, setFriendsList] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false);
     if (friendsList.length === 0){
         setFriendsList(["Loading..."])
     }
@@ -20,14 +21,15 @@ return (
     {friendsList.map((friend)=>{
         return (
             <TouchableOpacity 
+            disabled={isDisabled}
             onPress={()=>{
-                setMembers([...members, friend])
+            setIsDisabled(true)
+            setMembers([...members, friend])
             }} key={friend}>
         <Text>{friend}</Text>
         </TouchableOpacity>
         )
     })}
-
     </>
 )
 }
