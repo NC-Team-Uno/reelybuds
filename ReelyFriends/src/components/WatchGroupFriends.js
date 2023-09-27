@@ -1,7 +1,8 @@
 import React from "react";
 import {useState, useEffect} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, Icon } from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import {getUserFriends} from "../api/backendAPICalls";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default function WatchGroupFriends({members, setMembers, groupAdmin}){
     useEffect(()=>{
@@ -21,12 +22,14 @@ return (
     {friendsList.map((friend)=>{
         return (
             <TouchableOpacity 
-            disabled={isDisabled}
+            style={styles.friend}
+
             onPress={()=>{
-            setIsDisabled(true)
+
             setMembers([...members, friend])
             }} key={friend}>
-        <Text style={styles.friend}>{friend}</Text>
+        <Text>{friend}</Text>
+        <Icon name="add" color={"#f46201"} size={25} />
         </TouchableOpacity>
         )
     })}
@@ -36,8 +39,14 @@ return (
 
  const styles = StyleSheet.create({
     friend:{
+        flexDirection: 'row',
+    alignItems: 'center',
         color: '#50515e',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        backgroundColor:'white',
+        padding: 10,
+        borderRadius: 20,
+
 
     }
  

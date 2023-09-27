@@ -117,7 +117,7 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
               setMembers={setMembers}
               groupAdmin={groupAdmin}
             />
-            <Icon name="add" color={"#f46201"} size={25} />
+           
           </View>
         </View>
       </View>
@@ -125,7 +125,7 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
         style={[styles.pressable]}
         onPress={() => {
           if (objectToSend.name.length === 0) {
-            Alert.alert("name required");
+            Alert.alert("A group name is required to create a watch group.");
           } else {
             postWatchGroup(objectToSend);
             console.log("group posted", objectToSend);
@@ -221,7 +221,6 @@ const styles = StyleSheet.create({
   friends: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
     padding: 4,
     paddingLeft: 10,
     borderRadius: 12,
