@@ -16,12 +16,12 @@ import COLORS from "../style/Colors";
 import { UserContext } from "../contexts/User";
 
 const EditProfileScreen = ({closeModal}) => {
-  const {user, setUser} = useContext(UserContext) // user from db
+  const {user, setUser} = useContext(UserContext)
   const [newPassword, setNewPassword] = useState("");
   const [newPicture, setNewPicture] = useState("");
   const [selectedGenreNames, setSelectedGenreNames] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
-  const [userData, setUserData] = useState("Sunny");
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
 
   const findProviderIdByLogo = (logoUrl) => {
     for (const providerKey in providerData) {
@@ -33,12 +33,13 @@ const EditProfileScreen = ({closeModal}) => {
   };
 
   const handleProfileUpdate = () => {
+    setIsUpdatingProfile(true);
     const providerIds = selectedServices.map((logoUrl) =>
       findProviderIdByLogo(logoUrl)
     );
 
     const updatedUserData = {
-      ...userData,
+      ...user.username,
       preferences: selectedGenreNames,
       streamingServices: providerIds,
       avatar: newPicture,
@@ -46,12 +47,12 @@ const EditProfileScreen = ({closeModal}) => {
 
     axios
       .patch(
-        `https://reelyfriends-api-mnnh.onrender.com/users/${userData}`,
+        `https://reelyfriends-api-mnnh.onrender.com/users/${user.username}`,
         updatedUserData
       )
-      // .then((response) => {
-      //   console.log("User data updated successfully:", response.data);
-      // })
+      .then((response) => {
+        setIsUpdatingProfile(true);
+      })
       .catch((error) => {
         console.error("Error updating user data:", error);
       });
@@ -142,8 +143,17 @@ const EditProfileScreen = ({closeModal}) => {
         </View>
       </View>
       <View style={styles.wrapperBtn}>
-        <Pressable style={styles.pressableButton} onPress={handleProfileUpdate}>
-          <Text style={styles.buttonText}>Update Profile</Text>
+        <Pressable
+          style={
+            (styles.pressableButton)
+          }
+          onPress={handleProfileUpdate}
+          disabled={isUpdatingProfile}
+        >
+          <Text style={styles.buttonText}>
+            {" "}
+            {isUpdatingProfile ? "Updated" : "Update Profile"}
+          </Text>
         </Pressable>
       </View>
     </ScrollView>
