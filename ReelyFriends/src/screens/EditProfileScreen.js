@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   ScrollView,
   View,
@@ -12,8 +12,10 @@ import { Ionicons } from "@expo/vector-icons";
 import GenreList from "../components/GenreList";
 import { providerData } from "../constants/providerData"; 
 import COLORS from "../style/Colors";
+import { UserContext } from "../contexts/User";
 
 const EditProfileScreen = ({closeModal}) => {
+  const {user, setUser} = useContext(UserContext) // user from db
   const [newPassword, setNewPassword] = useState("");
   const [newPicture, setNewPicture] = useState("");
   const [selectedGenres, setSelectedGenres] = useState([]);

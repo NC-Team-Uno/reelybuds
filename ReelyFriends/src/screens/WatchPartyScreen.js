@@ -1,35 +1,34 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from 'react-native';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
 import WatchPartyCard from '../components/WatchPartyCard';
+import { UserContext } from '../contexts/User';
 
 const App = () => {
+  const { user, setUser } = useContext(UserContext); // user from db
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={[styles.container, styles.centeredView]}>
-         <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
+      <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
 
-           <Pressable
+      <Pressable
         style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-            
+        onPress={() => setModalVisible(true)}
+      >
         <Text style={styles.textStyle}>Create Watch Group</Text>
       </Pressable>
-          
-           <WatchPartyCard />
+
+      <WatchPartyCard />
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-        }}>
-  
-            <CreateWatchPartyModal
-            closeModal={()=> setModalVisible(false)}
-            />
+        }}
+      >
+        <CreateWatchPartyModal closeModal={() => setModalVisible(false)} />
       </Modal>
-      
     </View>
   );
 };
