@@ -39,20 +39,10 @@ export const providerData = {
     name: "Paramount+",
     logo: "https://paramountshop.com/cdn/shop/files/paramount-mobile-min.png?v=1676315492",
   },
-  skygo: {
-    id: 29,
-    name: "Sky Go",
-    logo: "https://image.tmdb.org/t/p/original/fBHHXKC34ffxAsQvDe0ZJbvmTEQ.jpg",
-  },
   britbox: {
     id: 380,
     name: "BritBox",
     logo: "https://play-lh.googleusercontent.com/IZmZF3X9QgCF26V6oYtpZDhnWdjbhg0idG7HSkdIV2PyumE80s0faHGkSMJe2MV4JCQ=w600-h300-pc0xffffff-pd",
-  },
-  youtube: {
-    id: 192,
-    name: "YouTube",
-    logo: "https://image.tmdb.org/t/p/original/6IPjvnYl6WWkIwN158qBFXCr2Ne.jpg",
   },
 };
 
