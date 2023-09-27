@@ -1,12 +1,32 @@
+<<<<<<< HEAD
 import React, {useContext, useState} from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity} from 'react-native';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
 import WatchPartyCard from '../components/WatchPartyCard';
 import { UserContext } from '../contexts/User';
+=======
+
+import React, {useEffect, useState} from 'react';
+import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, FlatList} from 'react-native';
+import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
+import WatchPartyCard from '../components/WatchPartyCard';
+import {getUserWatchGroups} from '../api/backendAPICalls'
+
+>>>>>>> main
 
 const App = () => {
   const { user, setUser } = useContext(UserContext); // user from db
   const [modalVisible, setModalVisible] = useState(false);
+  const [groups, setGroups] = useState([])
+
+
+  useEffect(() => {
+    getUserWatchGroups('ReelCritic2023').then((data) => {
+      setGroups(data.reverse())
+    })
+  }, [])
+
+
   return (
     <View style={[styles.container, styles.centeredView]}>
       <Text style={styles.yourWatchParties}>Your Watch Parties</Text>
@@ -18,49 +38,77 @@ const App = () => {
         <Text style={styles.textStyle}>Create Watch Group</Text>
       </Pressable>
 
+<<<<<<< HEAD
       <WatchPartyCard />
+=======
+
+      <FlatList
+            horizontal={false}
+            data={groups}
+            renderItem={({ item }) => {
+              if (item.length !== 0) {
+                return (
+                  <TouchableOpacity key={item._id}
+                   >
+                    <WatchPartyCard group={item} />
+                  </TouchableOpacity>
+                );
+              }
+            }}
+          ></FlatList>
+          
+        
+>>>>>>> main
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
+<<<<<<< HEAD
         }}
       >
         <CreateWatchPartyModal closeModal={() => setModalVisible(false)} />
+=======
+
+        }}>
+  
+            <CreateWatchPartyModal setGroups={setGroups}
+            closeModal={()=> setModalVisible(false)}
+            />
+
+>>>>>>> main
       </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#1E2030",
-        height: 150,
-    },
-    yourWatchParties:{
-        textAlign: "center",
-        fontSize: 25,
-        color: "#fff",
-        marginBottom:5,
-    },
+  container: {
+    backgroundColor: "#1E2030",
+    height: 150,
+  },
+  yourWatchParties: {
+    textAlign: "center",
+    fontSize: 25,
+    color: "#fff",
+    marginBottom: 5,
+  },
   centeredView: {
     flex: 1,
-    alignItems: 'center',
-
+    alignItems: "center",
   },
   buttonOpen: {
-backgroundColor: "red"
-
+    backgroundColor: "red",
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "#fff",
     borderRadius: 20,
-    paddingTop:2,
+    paddingTop: 2,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -75,20 +123,19 @@ backgroundColor: "red"
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#f96501',
+    backgroundColor: "#f96501",
   },
   buttonClose: {
-    backgroundColor: '#f96501',
+    backgroundColor: "#f96501",
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 

@@ -3,17 +3,26 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, ScrollView, Text, Pressable } from "react-native";
 import Providers from "../components/Providers";
 import { auth } from "../../firebase";
+<<<<<<< HEAD
 import { signOut, updateProfile } from "firebase/auth";
+=======
+import { onAuthStateChanged, signOut } from "firebase/auth";
+>>>>>>> main
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../contexts/User";
 import COLORS from "../style/Colors";
 
 
 const Homepage = () => {
+<<<<<<< HEAD
   const { user, setUser } = useContext(UserContext); // user from db
+=======
+  const [user, setUser] = useState(null);
+>>>>>>> main
   const [timesPressed, setTimesPressed] = useState(0);
   const navigation = useNavigation();
 
+<<<<<<< HEAD
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.text}>
@@ -26,6 +35,31 @@ const Homepage = () => {
           setTimesPressed((current) => current + 1);
           signOut(auth)
             .then(() => {})
+=======
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user.email);
+      } else {
+        setUser("guest");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return (
+    <ScrollView style={styles.container}>
+      <Text style={styles.container}>Hello, {user} !</Text>
+      <StatusBar style="light" translucent={false} />
+      <Providers />
+      <Pressable
+        onPress={() => {
+          setTimesPressed((current) => current + 1);
+          signOut(auth)
+            .then(() => {
+              navigation.navigate("LogIn");
+            })
+>>>>>>> main
             .catch((error) => {
               alert("Error signing out: " + error.message);
             });
@@ -42,7 +76,11 @@ const Homepage = () => {
             {pressed ? "Signing out" : "Sign out"}
           </Text>
         )}
+<<<<<<< HEAD
       </Pressable> */}
+=======
+      </Pressable>
+>>>>>>> main
     </ScrollView>
   );
 };

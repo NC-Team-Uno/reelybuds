@@ -1,14 +1,20 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 
-const GroupNameInput = () => {
-  const [groupName, setGroupName] = React.useState('Enter group name');
+
+const GroupNameInput = ({ name, setName}) => {
 
   return (
     <SafeAreaView>
-      <TextInput
+      <TextInput 
         style={styles.input}
-        onChangeText={setGroupName}
+        value={name}
+        onChangeText={(text)=>{
+       setName(text)
+      
+        
+
+        }}
         placeholder="Enter Group Name"
         placeholderTextColor="#fff" 
       />

@@ -1,40 +1,43 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, Button, Alert, navigation} from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Button,
+  Alert,
+  navigation,
+} from "react-native";
 
-export default function WatchPartyCard(){
-
-    return (
-        <>
-        <View style={styles.watchGroupContainer}>
-            <Text style={styles.innerContainerGroupName}>Northcoders Movie Buds</Text>
-       
-       <View style={styles.providersBox}>
-       <Image
-        source={require('../../assets/face.jpeg')}
-        style={styles.groupImage} 
-      />
-    <Image
-        source={require('../../assets/disneypluslogo.jpeg')}
-        style={styles.disneyLogo} 
-      />
-      <Image
-        source={require('../../assets/netflixlogo.jpeg')}
-        style={styles.disneyLogo} 
-      />
-    </View>
-  <View style={styles.friendsBox}>
-            <Text style={styles.individualFriend}>Kieran</Text>
-            <Text style={styles.individualFriend}>Andra</Text>
-            <Text style={styles.individualFriend}>Hayden</Text>
-            <Text style={styles.individualFriend}>Viktoriia</Text>
-            <Text style={styles.individualFriend}>Imran</Text>
-            <Text style={styles.individualFriend}>Sula</Text>
+export default function WatchPartyCard({ group }) {
+  const { name, avatar, members, groupAdmin, streamingServices } = group;
+  return (
+     <View style={styles.watchGroupContainer}>
+        <Text style={styles.innerContainerGroupName}>{name}</Text>
+       <Text>admin: {groupAdmin}</Text><Image style={{width: 100, height: 100}} source={{uri: avatar}}></Image>
+        <View style={styles.providersBox}>
         </View>
-        </View>
-    </>
-)
-}
+        <View style={styles.friendsBox}>
+        
 
+<<<<<<< HEAD
+=======
+          {members.map((member) => {
+            return (
+              <View key={member._id}>
+              <Text style={styles.individualFriend}>
+               {member}
+              </Text>
+              </View>
+            );
+          })}
+          </View>
+          </View>
+          )
+        }
+
+
+>>>>>>> main
 const styles = StyleSheet.create({
   watchGroupContainer: {
     backgroundColor: "#50515e",
@@ -63,7 +66,11 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 100,
+<<<<<<< HEAD
     alignSelf: "flex-start",
+=======
+    alignSelf: "left",
+>>>>>>> main
     margin: 10,
   },
   disneyLogo: {
@@ -80,8 +87,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   individualFriend: {
+<<<<<<< HEAD
     backgroundColor: "#f96501",
     color: 'white',
+=======
+    backgroundColor: "#50515E",
+    color: "white",
+>>>>>>> main
     padding: 10,
     marginLeft: 3,
     marginRight: 3,
@@ -94,4 +106,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> main
