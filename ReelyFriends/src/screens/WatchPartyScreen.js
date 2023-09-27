@@ -31,7 +31,7 @@ const App = () => {
     getUserWatchGroups(user.username).then((data) => {
       setGroups(data.reverse());
     });
-  }, []);
+  }, [groups]);
 
   const handlePress = (item) => {
     setGroupModalData(item);

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   StyleSheet,
   Text,
@@ -11,18 +10,17 @@ import {
 } from "react-native";
 import GroupNameInput from "./GroupNameInput";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import WatchGroupFriends from "./WatchGroupFriends";
 import { postWatchGroup, getUserWatchGroups } from "../api/backendAPICalls";
 import { UserContext } from "../contexts/User";
 
 export default function CreateWatchPartyModal({ closeModal, setGroups }) {
-  const {user, setUser} = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext);
   const [groupAdmin, setGroupAdmin] = useState(user.username);
-  const [name, setName] = React.useState("");
-  const [avatar, setAvatar] = React.useState("");
-  const [members, setMembers] = React.useState([groupAdmin]);
- 
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [members, setMembers] = useState([groupAdmin]);
 
   const objectToSend = { groupAdmin, name, avatar, members };
 
@@ -41,7 +39,8 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
         <View style={styles.avatarContainer}>
           <TouchableOpacity
             onPress={() => {
-              setAvatar("https://t4.ftcdn.net/jpg/03/54/98/47/360_F_354984781_y61LJvrAl1bL0c8DkisoEhtQHQFyOv2C.jpg"
+              setAvatar(
+                "https://t4.ftcdn.net/jpg/03/54/98/47/360_F_354984781_y61LJvrAl1bL0c8DkisoEhtQHQFyOv2C.jpg"
               );
             }}
           >
@@ -53,66 +52,74 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
             />
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={()=>{
-            setAvatar("https://outsourcetopk.com/public/assets/images/portfolio/logo/Popcorn-1.jpg");
-          }}>
-
-          <Image
-            source={{
-              uri: "https://outsourcetopk.com/public/assets/images/portfolio/logo/Popcorn-1.jpg",
+            onPress={() => {
+              setAvatar(
+                "https://outsourcetopk.com/public/assets/images/portfolio/logo/Popcorn-1.jpg"
+              );
             }}
-            style={styles.profileImage}
-          />
+          >
+            <Image
+              source={{
+                uri: "https://outsourcetopk.com/public/assets/images/portfolio/logo/Popcorn-1.jpg",
+              }}
+              style={styles.profileImage}
+            />
           </TouchableOpacity>
-          <TouchableOpacity 
-          onPress={()=>{
-            setAvatar("https://i.pinimg.com/1200x/3e/08/1f/3e081f1c27ea7933ed8c9f32989c67ed.jpg");
-          }}>
-          <Image
-            source={{
-              uri: "https://i.pinimg.com/1200x/3e/08/1f/3e081f1c27ea7933ed8c9f32989c67ed.jpg",
+          <TouchableOpacity
+            onPress={() => {
+              setAvatar(
+                "https://i.pinimg.com/1200x/3e/08/1f/3e081f1c27ea7933ed8c9f32989c67ed.jpg"
+              );
             }}
-            style={styles.profileImage}
-          />
+          >
+            <Image
+              source={{
+                uri: "https://i.pinimg.com/1200x/3e/08/1f/3e081f1c27ea7933ed8c9f32989c67ed.jpg",
+              }}
+              style={styles.profileImage}
+            />
           </TouchableOpacity>
-          <TouchableOpacity 
-          onPress={()=>{
-            setAvatar("https://endlessicons.com/wp-content/uploads/2012/09/pizza-icon-614x460.png");
-          }}>
-          <Image
-            source={{
-              uri: "https://endlessicons.com/wp-content/uploads/2012/09/pizza-icon-614x460.png",
+          <TouchableOpacity
+            onPress={() => {
+              setAvatar(
+                "https://endlessicons.com/wp-content/uploads/2012/09/pizza-icon-614x460.png"
+              );
             }}
-            style={[styles.profileImage, styles.pizzaIcon]}
-          />
+          >
+            <Image
+              source={{
+                uri: "https://endlessicons.com/wp-content/uploads/2012/09/pizza-icon-614x460.png",
+              }}
+              style={[styles.profileImage, styles.pizzaIcon]}
+            />
           </TouchableOpacity>
-          <TouchableOpacity 
-          onPress={()=>{
-            setAvatar("https://thenounproject.com/api/private/icons/4929894/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0");
-          }}>
-          <Image
-            source={{
-              uri: "https://thenounproject.com/api/private/icons/4929894/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0",
+          <TouchableOpacity
+            onPress={() => {
+              setAvatar(
+                "https://thenounproject.com/api/private/icons/4929894/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0"
+              );
             }}
-            style={[styles.profileImage, styles.pizzaIcon]}
-          />
+          >
+            <Image
+              source={{
+                uri: "https://thenounproject.com/api/private/icons/4929894/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0",
+              }}
+              style={[styles.profileImage, styles.pizzaIcon]}
+            />
           </TouchableOpacity>
-          </View>
-          <View>
+        </View>
+        <View>
           <Text style={styles.selectFriendsTitle}>Select friends</Text>
-            
+
           <View style={styles.friends}>
             <WatchGroupFriends
-            members={members}
-            setMembers={setMembers}
-            groupAdmin={groupAdmin}
-          />
-           <Icon name="add" color={"#f46201"} size={25} />
-
+              members={members}
+              setMembers={setMembers}
+              groupAdmin={groupAdmin}
+            />
+            <Icon name="add" color={"#f46201"} size={25} />
+          </View>
         </View>
-        </View>
-
-       
       </View>
       <Pressable
         style={[styles.pressable]}
@@ -124,15 +131,12 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
             console.log("group posted", objectToSend);
             getUserWatchGroups(user.username).then((data) => {
               setGroups(data.reverse());
-              
             });
             closeModal();
           }
         }}
       >
-        <TouchableOpacity>
         <Text style={styles.createButton}>Create Watch Group</Text>
-        </TouchableOpacity>
       </Pressable>
     </View>
   );
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
   },
 
   selectAvatarText: {
-    color: "#fff",  
+    color: "#fff",
     marginLeft: 15,
     fontSize: 20,
   },
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     margin: 6,
     borderWidth: 2,
-    borderColor: '#696a77',
+    borderColor: "#696a77",
   },
   title: {
     fontSize: 30,
@@ -185,8 +189,8 @@ const styles = StyleSheet.create({
     alignItems: "end",
     position: "absolute",
   },
-  pizzaIcon:{
-    backgroundColor: '#fff',
+  pizzaIcon: {
+    backgroundColor: "#fff",
   },
 
   avatarContainer: {
@@ -209,25 +213,24 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     textAlign: "center",
   },
-selectFriendsTitle:{
+  selectFriendsTitle: {
     color: "#fff",
     marginLeft: 15,
     fontSize: 20,
   },
-friends:{
-  flexDirection: "row",
-  alignItems: "center",
-  backgroundColor: '#fff',
-  padding: 4,
-  width: 175,
-  paddingLeft: 10,
-  borderRadius: 12,
-  marginLeft: 10,
-  marginRight: 10,
-  marginTop: 5,
-  marginBottom: 1,
-  fontWeight: 'bold', //wont work - why?
-  justifyContent: 'space-between'
+  friends: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 4,
+    width: 175,
+    paddingLeft: 10,
+    borderRadius: 12,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 5,
+    marginBottom: 1,
+    fontWeight: "bold", //wont work - why?
+    justifyContent: "space-between",
   },
 });
-
