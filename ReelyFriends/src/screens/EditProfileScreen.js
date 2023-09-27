@@ -1,43 +1,73 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import axios from "axios";
+import GenreList from "../components/GenreList";
 import {
   ScrollView,
   View,
   Text,
   TextInput,
   StyleSheet,
-  Pressable, 
-  Image
+  Pressable,
+  Image,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import GenreList from "../components/GenreList";
-import { providerData } from "../constants/providerData"; 
+import { providerData } from "../constants/providerData";
 import COLORS from "../style/Colors";
+import { UserContext } from "../contexts/User";
 
 const EditProfileScreen = ({closeModal}) => {
+  const {user, setUser} = useContext(UserContext) // user from db
   const [newPassword, setNewPassword] = useState("");
   const [newPicture, setNewPicture] = useState("");
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedGenreNames, setSelectedGenreNames] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
+  const [userData, setUserData] = useState("Sunny");
+
+  const findProviderIdByLogo = (logoUrl) => {
+    for (const providerKey in providerData) {
+      if (providerData[providerKey].logo === logoUrl) {
+        return providerData[providerKey].id;
+      }
+    }
+    return null;
+  };
+
+  const handleProfileUpdate = () => {
+    const providerIds = selectedServices.map((logoUrl) =>
+      findProviderIdByLogo(logoUrl)
+    );
+
+    const updatedUserData = {
+      ...userData,
+      preferences: selectedGenreNames,
+      streamingServices: providerIds,
+      avatar: newPicture,
+    };
+
+    axios
+      .patch(
+        `https://reelyfriends-api-mnnh.onrender.com/users/${userData}`,
+        updatedUserData
+      )
+      // .then((response) => {
+      //   console.log("User data updated successfully:", response.data);
+      // })
+      .catch((error) => {
+        console.error("Error updating user data:", error);
+      });
+  };
 
   const handlePasswordChange = () => {
     // Implement logic to update the user's password
   };
 
-  const handleGenreSelection = (genre) => {
-    // Implement logic to add/remove genres from the selectedGenres array
-  };
 
- const toggleServiceSelection = (service) => {
-   if (selectedServices.includes(service)) {
-     setSelectedServices(selectedServices.filter((s) => s !== service));
-   } else {
-     setSelectedServices([...selectedServices, service]);
-   }
- };
-
-  const handleProfileUpdate = () => {
-    // Implement logic to update the user's profile data on the server
-    // Include selectedServices in the update
+  const toggleServiceSelection = (service) => {
+    if (selectedServices.includes(service)) {
+      setSelectedServices(selectedServices.filter((s) => s !== service));
+    } else {
+      setSelectedServices([...selectedServices, service]);
+    }
   };
 
   return (
@@ -71,7 +101,12 @@ const EditProfileScreen = ({closeModal}) => {
       </View>
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Select Genres You Like</Text>
-        <GenreList />
+        <GenreList
+          selectedGenreNames={selectedGenreNames}
+          handleGenreSelection={(genreName) =>
+            setSelectedGenreNames([...selectedGenreNames, genreName])
+          }
+        />
       </View>
 
       <View style={styles.section}>
@@ -95,7 +130,7 @@ const EditProfileScreen = ({closeModal}) => {
                       : COLORS.BASIC_BACKGROUND,
                   },
                 ]}
-                onPress={() => toggleServiceSelection(provider.logo)} 
+                onPress={() => toggleServiceSelection(provider.logo)}
               >
                 <Image
                   source={{ uri: provider.logo }}
@@ -113,7 +148,7 @@ const EditProfileScreen = ({closeModal}) => {
       </View>
     </ScrollView>
   );
-};
+}  
 
 const styles = StyleSheet.create({
   container: {
@@ -201,4 +236,3 @@ const styles = StyleSheet.create({
 });
 
 export default EditProfileScreen;
-

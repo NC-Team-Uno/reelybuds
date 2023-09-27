@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Alert,
@@ -13,8 +14,15 @@ import WatchPartyCard from "../components/WatchPartyCard";
 import { getUserWatchGroups } from "../api/backendAPICalls";
 import GroupDetail from "../components/GroupDetail";
 import CreateWatchGroup from "../components/CreateWatchGroup";
+import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
+import { UserContext } from '../contexts/User';
+
+
+
+
 
 const App = () => {
+  const { user, setUser } = useContext(UserContext); // user from db
   const [modalVisible, setModalVisible] = useState(false);
   const [groups, setGroups] = useState([]);
   const [groupModalData, setGroupModalData] = useState([]);

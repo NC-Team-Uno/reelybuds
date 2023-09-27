@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import {
   View,
   Text,
@@ -12,50 +13,12 @@ import { providerData } from "../constants/providerData";
 import { getMovieDetails } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
 import COLORS from "../style/Colors";
+import { UserContext } from "../contexts/User";
 
 export default function UserScreen() {
+  const { user, setUser } = useContext(UserContext); // user from db
   const [moviesLiked, setMoviesLiked] = useState([]);
   const [moviesWatch, setMoviesWatch] = useState([]);
-  const [userData, setUserData] = useState({
-    _id: "650af73caa1b3fded7210987",
-    username: "MovieBuffMaster",
-    avatar:
-      "https://gravatar.com/avatar/8f77f34d18833ea1ffba1a8ba15633b9?s=200&d=robohash&r=pg",
-    streamingServices: [
-      "8",
-      "337",
-      "350",
-      "9",
-      "39",
-      "38",
-      "103",
-      "531",
-      "29",
-      "380",
-    ],
-    likedFilms: [
-      "677179",
-      "330",
-      "343668",
-      "155",
-      "49026",
-      "399404",
-      "591274",
-      "159824",
-      "1001811",
-    ],
-    wishlist: [
-      "107",
-      "345940",
-      "4108",
-      "1008042",
-      "156022",
-      "20504",
-      "1271",
-      "117263",
-      "10191",
-    ],
-  });
 
   useEffect(() => {
     const fetchMovies = async (movieIds, stateSetter) => {
@@ -72,24 +35,26 @@ export default function UserScreen() {
       }
     };
 
-    fetchMovies(userData.likedFilms, setMoviesLiked);
-    fetchMovies(userData.wishlist, setMoviesWatch);
-  }, [userData]);
+    fetchMovies(user.likedFilms, setMoviesLiked);
+    fetchMovies(user.wishlist, setMoviesWatch);
+  }, []);
 
   const getProviderLogos = () => {
-    return userData.streamingServices.map((serviceId) => {
-      const provider = Object.values(providerData).find(
-        (provider) => provider.id === parseInt(serviceId)
-      );
-      return provider ? provider.logo : "null";
-    });
+    if (user.hasOwnProperty("streamingServices")) {
+      return user.streamingServices.map((serviceId) => {
+        const provider = Object.values(providerData).find(
+          (provider) => provider.id === parseInt(serviceId)
+        );
+        return provider ? provider.logo : "null";
+      });
+    }
   };
 
   return (
     <ScrollView style={styles.container}>
       <HamburgerMenu />
-      <Text style={styles.username}>{userData.username}</Text>
-      <Image source={{ uri: userData.avatar }} style={styles.profileImage} />
+      <Text style={styles.username}>{user.username}</Text>
+      <Image source={{ uri: user.avatar }} style={styles.profileImage} />
       <View style={styles.list}>
         <Text style={[styles.text, styles.componentToCome]}>Likes</Text>
         <FlatList

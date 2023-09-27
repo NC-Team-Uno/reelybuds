@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { StyleSheet, Text, TextInput, View, Pressable, Dimensions} from 'react-native';
-import { createUserWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import { auth } from '../../firebase';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { providerData } from '../constants/providerData';
+import { UserContext } from '../contexts/User';
 
 
 
 function CreateProfile({route}) {
 
-  const { userName, email, password} = route.params;
+    const { user } = useContext(UserContext);
+    console.log(user);
+
+  
 
   const [timesPressed, setTimesPressed] = useState(0);
   const [avatar, setAvatar] = useState('');
@@ -57,22 +61,24 @@ function CreateProfile({route}) {
   };
 
   const createUserFirebase = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(()=> {   
-      navigation.navigate('Homepage')   
-      })
+    createUserWithEmailAndPassword(auth, user.email, user.password)
+    .then(()=>{updateProfile(auth.currentUser, {displayName: user.userName})})
     .catch((error) => {
         const errorMessage = error.message;
         alert('Sign up failed: ' + errorMessage);
       })   
   }
 
-  const userprofile = {username: userName, avatar: avatar ? avatar : 'https://gravatar.com/avatar/8f77f34d18833ea1ffba1a8ba15633b9?s=200&d=robohash&r=pg', streamingServices: streamingPreferences.map((service)=>{return providerData[service].id.toString()}), preferences: selectedGenres, wishlist: [], likedFilms: [], friends: [], watchGroups:[]};
+  const userprofile = {username: user.username, avatar: avatar ? avatar : 'https://gravatar.com/avatar/8f77f34d18833ea1ffba1a8ba15633b9?s=200&d=robohash&r=pg', streamingServices: streamingPreferences.map((service)=>{return providerData[service].id.toString()}), preferences: selectedGenres, wishlist: [], likedFilms: [], friends: [], watchGroups:[]};
 
   const handleCreateAccount = () => {
     setIsSubmitting(true);
-    axios.post('https://reelyfriends-api-mnnh.onrender.com/users', userprofile).then((user)=> { createUserFirebase(); })
-    .catch((err)=> alert('Please retry' + err));
+       axios
+         .post("https://reelyfriends-api-mnnh.onrender.com/users", userprofile)
+         .then((user) => {
+           createUserFirebase();
+         })
+         .catch((err) => alert("Please retry" + err));
     setTimeout(() => {
     setIsSubmitting(false);
     }, 2000);
