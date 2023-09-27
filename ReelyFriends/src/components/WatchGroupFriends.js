@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from 'react'
-import {View, Text, Styles, TouchableOpacity, Icon } from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity, Icon } from "react-native";
 import {getUserFriends} from "../api/backendAPICalls";
 
 export default function WatchGroupFriends({members, setMembers, groupAdmin}){
@@ -26,10 +26,19 @@ return (
             setIsDisabled(true)
             setMembers([...members, friend])
             }} key={friend}>
-        <Text>{friend}</Text>
+        <Text style={styles.friend}>{friend}</Text>
         </TouchableOpacity>
         )
     })}
     </>
 )
 }
+
+ const styles = StyleSheet.create({
+    friend:{
+        color: '#50515e',
+        fontWeight: 'bold'
+
+    }
+ 
+})

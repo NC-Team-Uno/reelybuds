@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 25,
     color: "#fff",
-    marginBottom: 5,
+    marginBottom: 7,
+    marginTop: 7,
   },
   centeredView: {
     flex: 1,
