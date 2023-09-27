@@ -7,6 +7,7 @@ export default function FriendsScreen(){
   const { user, setUser } = useContext(UserContext); // user from db
   const [users, setUsers] = useState([]);
 
+  console.log(user);
   useEffect(() => {
     getAllUsers().then((data) => {
       setUsers(data);
@@ -15,7 +16,27 @@ export default function FriendsScreen(){
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.friendsText}> Friends </Text>
+      <Text style={styles.friendsText}> Your Friends</Text>
+      <ScrollView>
+        {user.friends.map(friend=>{
+          const content = users.filter(user=>user.username === friend)[0]
+          console.log(content)
+        
+          return (
+            <View key={content._id} style={styles.card}>
+              <Image
+                style={styles.image}
+                src={
+                  content.avatar ||
+                  "https://gravatar.com/avatar/8f77f34d18833ea1ffba1a8ba15633b9?s=200&d=robohash&r=pg"
+                }
+              ></Image>
+              <Text style={styles.names}> {content.username}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
+      <Text style={styles.friendsText}> Add Friends </Text>
       {users.map((member, i) => {
         return (
           <View key={member._id} style={styles.card}>
