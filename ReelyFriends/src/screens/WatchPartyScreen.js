@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
   Modal,
@@ -20,7 +20,6 @@ import { UserContext } from '../contexts/User';
 
 
 
-
 const App = () => {
   const { user, setUser } = useContext(UserContext); // user from db
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,7 +27,7 @@ const App = () => {
   const [groupModalData, setGroupModalData] = useState([]);
 
   useEffect(() => {
-    getUserWatchGroups("ReelCritic2023").then((data) => {
+    getUserWatchGroups(user.username).then((data) => {
       setGroups(data.reverse());
     });
   }, []);
@@ -47,6 +46,7 @@ const App = () => {
       <FlatList
         horizontal={false}
         data={groups}
+        key={groups.item}
         renderItem={({ item }) => {
           return (
             <>

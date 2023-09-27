@@ -21,28 +21,6 @@ const Homepage = () => {
       </Text>
       <StatusBar style="dark" translucent={false} />
       <Providers />
-      {/* <Pressable
-        onPress={() => {
-          setTimesPressed((current) => current + 1);
-          signOut(auth)
-            .then(() => {})
-            .catch((error) => {
-              alert("Error signing out: " + error.message);
-            });
-        }}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? "#D2E6FF" : "#f96501",
-          },
-          styles.wrapperCustom,
-        ]}
-      >
-        {({ pressed }) => (
-          <Text style={styles.pressed}>
-            {pressed ? "Signing out" : "Sign out"}
-          </Text>
-        )}
-      </Pressable> */}
     </ScrollView>
   );
 };
