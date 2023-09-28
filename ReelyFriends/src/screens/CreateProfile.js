@@ -7,6 +7,7 @@ import {
   Pressable,
   Dimensions,
   Image,
+  ScrollView,
 } from "react-native";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -60,7 +61,6 @@ function CreateProfile({ route }) {
     const providerIds = selectedServices.map((logoUrl) =>
       findProviderIdByLogo(logoUrl)
     );
-    console.log(selectedGenres);
     const userprofile = {
       username: user.username,
       avatar: avatar
@@ -87,77 +87,79 @@ function CreateProfile({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textSelection}>Upload profile picture</Text>
-      <TextInput
-        value={avatar}
-        onChangeText={(avatar) => {
-          setAvatar(avatar);
-        }}
-        placeholder={"your photo url here"}
-        placeholderTextColor="#50515e"
-        style={styles.input}
-      />
-      <View style={styles.section}>
-        <Text style={styles.textSelection}>
-          Select favourite streaming providers
-        </Text>
-        <View style={styles.buttonContainer}>
-          {Object.keys(providerData).map((providerKey) => {
-            const provider = providerData[providerKey];
-            const isSelected = selectedServices.includes(provider.logo);
-            return (
-              <Pressable
-                key={providerKey}
-                style={[
-                  styles.pressableButton,
-                  {
-                    width: "30%",
-                    backgroundColor: isSelected
-                      ? COLORS.LIGHT_BACKGROUND
-                      : COLORS.BASIC_BACKGROUND,
-                    borderColor: isSelected
-                      ? COLORS.FONT_COLOR_ORANGE
-                      : COLORS.BASIC_BACKGROUND,
-                  },
-                ]}
-                onPress={() => toggleServiceSelection(provider.logo)}
-              >
-                <Image
-                  source={{ uri: provider.logo }}
-                  style={styles.providerLogo}
-                />
-              </Pressable>
-            );
-          })}
-        </View>
-      </View>
-
-      <Text style={styles.textSelection}>Select favourite genres</Text>
-      <View style={styles.selectionContainer}>
-        <GenreList
-          selectedGenreNames={selectedGenres}
-          handleGenreSelection={setSelectedGenres}
+      <ScrollView>
+        <Text style={styles.textSelection}>Upload profile picture</Text>
+        <TextInput
+          value={avatar}
+          onChangeText={(avatar) => {
+            setAvatar(avatar);
+          }}
+          placeholder={"your photo url here"}
+          placeholderTextColor="#50515e"
+          style={styles.input}
         />
-      </View>
-      <Pressable
-        onPress={() => {
-          setTimesPressed((current) => current + 1);
-          handleCreateAccount();
-        }}
-        disabled={isSubmitting}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? "#D2E6FF" : "#de5900",
-          },
-          styles.wrapperCustom,
-        ]}
-      >
-        {({ pressed }) => (
-          <Text style={styles.pressed}>
-            {pressed ? "Creating account ..." : "Complete profile"}
+        <View style={styles.section}>
+          <Text style={styles.textSelection}>
+            Select favourite streaming providers
           </Text>
-        )}
-      </Pressable>
+          <View style={styles.buttonContainer}>
+            {Object.keys(providerData).map((providerKey) => {
+              const provider = providerData[providerKey];
+              const isSelected = selectedServices.includes(provider.logo);
+              return (
+                <Pressable
+                  key={providerKey}
+                  style={[
+                    styles.pressableButton,
+                    {
+                      width: "25%",
+                      backgroundColor: isSelected
+                        ? COLORS.LIGHT_BACKGROUND
+                        : COLORS.BASIC_BACKGROUND,
+                      borderColor: isSelected
+                        ? COLORS.FONT_COLOR_ORANGE
+                        : COLORS.BASIC_BACKGROUND,
+                    },
+                  ]}
+                  onPress={() => toggleServiceSelection(provider.logo)}
+                >
+                  <Image
+                    source={{ uri: provider.logo }}
+                    style={styles.providerLogo}
+                  />
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+
+        <Text style={styles.textSelection}>Select favourite genres</Text>
+        <View style={styles.selectionContainer}>
+          <GenreList
+            selectedGenreNames={selectedGenres}
+            handleGenreSelection={setSelectedGenres}
+          />
+        </View>
+        <Pressable
+          onPress={() => {
+            setTimesPressed((current) => current + 1);
+            handleCreateAccount();
+          }}
+          disabled={isSubmitting}
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? "#D2E6FF" : "#de5900",
+            },
+            styles.wrapperCustom,
+          ]}
+        >
+          {({ pressed }) => (
+            <Text style={styles.pressed}>
+              {pressed ? "Creating account ..." : "Complete profile"}
+            </Text>
+          )}
+        </Pressable>
+      </ScrollView>
     </View>
   );
 }
@@ -185,6 +187,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     marginTop: 5,
+    marginLeft: 30,
     height: 37,
   },
   textSelection: {
@@ -196,6 +199,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 10,
     marginTop: 20,
+    marginLeft: 25,
   },
 
   create: {
@@ -215,6 +219,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     marginTop: 30,
+    marginLeft: 35,
   },
   pressed: {
     borderRadius: 20,

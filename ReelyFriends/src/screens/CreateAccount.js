@@ -6,7 +6,6 @@ import { UserContext } from '../contexts/User';
 function CreateAccount() {
  
     const { user, setUser } = useContext(UserContext);
-    console.log(user);
 
   const [timesPressed, setTimesPressed] = useState(0);
   const [userName, setUserName] = useState('');
