@@ -4,29 +4,27 @@ import { View, Text, StyleSheet, Image } from "react-native";
 export default function WatchPartyCard({ group }) {
   const { name, avatar, members, groupAdmin } = group;
   return (
-     <View style={styles.watchGroupContainer}>
-        <Text style={styles.innerContainerGroupName}>{name}</Text>
-       <Text style={styles.admin}>Admin: {groupAdmin}</Text>
-   
-    
-        <View style={styles.friendsAndAvatarBox}>
-        <Image style={styles.avatar} source={{uri: avatar}}></Image>
-       <View>
+    <View style={styles.watchGroupContainer}>
+      <Text style={styles.innerContainerGroupName}>{name}</Text>
+      <Text style={styles.admin}>Admin: {groupAdmin}</Text>
+
+      <View style={styles.friendsAndAvatarBox}>
+        <Image style={styles.avatar} source={{ uri: avatar }}></Image>
+        <View>
           {members.map((member) => {
             return (
               <View style={styles.friends} key={member._id}>
-              <Text key={member.id} style={styles.individualFriend}>
-               {member}
-              </Text>
+                <Text key={member.id} style={styles.individualFriend}>
+                  {member}
+                </Text>
               </View>
-
             );
- }
-)}</View>
-          </View>
-          </View>
-          )
-        }
+          })}
+        </View>
+      </View>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   watchGroupContainer: {
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     color: "black",
     backgroundColor: "#fc873f",
     padding: 10,
-    width:300,
+    width: 300,
     textAlign: "center",
     borderRadius: 15,
     marginRight: 20,
@@ -54,16 +52,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 17.5,
   },
-  admin:{
+  admin: {
     backgroundColor: "#d3d3d3",
-    marginTop:5,
+    marginTop: 5,
     marginBottom: 5,
     width: 300,
     borderRadius: 15,
     color: "black",
-    fontWeight: 'bold',
-    textAlign: 'center',
-    alignSelf: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
+    alignSelf: "center",
   },
 
   avatar: {
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     margin: 10,
     borderWidth: 2,
-    borderColor: '#696a77',
+    borderColor: "#696a77",
   },
   friendsAndAvatarBox: {
     backgroundColor: "#d3d3d3",

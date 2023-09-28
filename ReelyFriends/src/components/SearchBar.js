@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 
 export default SearchBar = ({text, setText}) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import {getUserFriends} from "../api/backendAPICalls";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -12,7 +12,6 @@ export default function WatchGroupFriends({members, setMembers, groupAdmin}){
         })
         },[])
     const [friendsList, setFriendsList] = useState([]);
-    const [isDisabled, setIsDisabled] = useState(false);
     if (friendsList.length === 0){
         setFriendsList(["Loading..."])
     }

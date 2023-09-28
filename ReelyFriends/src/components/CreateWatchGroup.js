@@ -1,24 +1,24 @@
+import React, { useState } from "react";
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  FlatList,
+} from "react-native";
+import CreateWatchPartyModal from "../components/CreateWatchPartyModal";
 
-
-
-
-import React, { useState} from 'react';
-import { Modal, StyleSheet, Text, Pressable, View, FlatList} from 'react-native';
-import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
-
-
-
-export default CreateWatchGroup = ({setGroups}) => {
+export default CreateWatchGroup = ({ setGroups }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={[styles.container, styles.centeredView]}>
-
       <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.textStyle}>Create Watch Group</Text>
+        <Text style={styles.textStyle}>Create Watch Party</Text>
       </Pressable>
       <Modal
         animationType="slide"
@@ -26,13 +26,12 @@ export default CreateWatchGroup = ({setGroups}) => {
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-
-        }}>
-  
-            <CreateWatchPartyModal setGroups={setGroups}
-            closeModal={()=> setModalVisible(false)}
-            />
-
+        }}
+      >
+        <CreateWatchPartyModal
+          setGroups={setGroups}
+          closeModal={() => setModalVisible(false)}
+        />
       </Modal>
     </View>
   );
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    height:40
+    height: 40,
   },
   buttonOpen: {
     backgroundColor: "#f96501",
@@ -95,5 +94,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-

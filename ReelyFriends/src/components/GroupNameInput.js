@@ -11,9 +11,6 @@ const GroupNameInput = ({ name, setName}) => {
         value={name}
         onChangeText={(text)=>{
        setName(text)
-      
-        
-
         }}
         placeholder="Enter Group Name"
         placeholderTextColor="#fff" 
