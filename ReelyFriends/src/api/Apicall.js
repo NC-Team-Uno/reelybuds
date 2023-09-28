@@ -32,6 +32,24 @@ const getMovieDetails = async (movieId) => {
   }
 };
 
+const searchMovieByName = async (name) => {
+  try {
+      const response = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?query=${name}&include_adult=false&language=en-US&page=1`,
+    {
+      params: {
+        api_key: process.env.TMDB_API_KEY,
+      },
+    }
+  );
+  return response.data.results;
+  // return response;
+  } catch (err) {
+    console.log(err);
+  }
+
+};
+
 const getMovieGenres = async () => {
   try {
     const response = await axios.get(`${TMDB_BASE_URL}/genre/movie/list`, {
@@ -166,4 +184,5 @@ export {
   getProviderLogo,
   getLink,
   getAllMoviesForUser,
+  searchMovieByName,
 };

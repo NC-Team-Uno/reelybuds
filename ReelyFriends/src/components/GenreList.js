@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Pressable, Text, View } from "react-native";
+import { StyleSheet, FlatList, Pressable, Text } from "react-native";
 import { getMovieGenres } from "../api/Apicall";
 import COLORS from "../style/Colors";
 
@@ -12,7 +12,9 @@ const GenreList = ({ handleGenreSelection }) => {
       .then((data) => {
         setGenres(data);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const toggleGenreSelection = (genreName) => {
