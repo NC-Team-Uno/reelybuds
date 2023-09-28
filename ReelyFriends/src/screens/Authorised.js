@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Homepage from "./Homepage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -70,16 +70,8 @@ export default function App() {
                 ),
               }}
             />
-            {/* <Tab.Screen
-              name="CreateWatchParty"
-              component={CreateWatchParty}
-              options={{
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => (
-                  <Icon name="albums-outline" size={size} color={color} />
-                ),
-              }}
-            /> */}
+
+
             <Tab.Screen
               name="Watch Party"
               component={WatchPartyScreen}

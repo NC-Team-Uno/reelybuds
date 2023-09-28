@@ -58,11 +58,6 @@ const EditProfileScreen = ({closeModal}) => {
       });
   };
 
-  const handlePasswordChange = () => {
-    // Implement logic to update the user's password
-  };
-
-
   const toggleServiceSelection = (service) => {
     if (selectedServices.includes(service)) {
       setSelectedServices(selectedServices.filter((s) => s !== service));

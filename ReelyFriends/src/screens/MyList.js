@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { getAllMoviesForUser, searchMovieByName } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
 import { UserContext } from "../contexts/User";

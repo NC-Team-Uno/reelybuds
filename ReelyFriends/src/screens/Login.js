@@ -11,9 +11,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
 
-
-
 function LogIn() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userEmailError, setUserEmailError] = useState("");
@@ -41,7 +40,7 @@ function LogIn() {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user; // get username by email from MongoDB
+        const user = userCredential.user; 
       })
       .catch((error) => {
         const errorCode = error.code;

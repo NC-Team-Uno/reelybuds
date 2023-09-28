@@ -19,6 +19,7 @@ import GenreList from "../components/GenreList";
 import COLORS from "../style/Colors";
 
 function CreateProfile({ route }) {
+
   const { user } = useContext(UserContext);
   const [timesPressed, setTimesPressed] = useState(0);
   const [avatar, setAvatar] = useState("");
@@ -132,7 +133,6 @@ function CreateProfile({ route }) {
             })}
           </View>
         </View>
-
         <Text style={styles.textSelection}>Select favourite genres</Text>
         <View style={styles.selectionContainer}>
           <GenreList

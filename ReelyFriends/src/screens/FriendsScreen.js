@@ -4,10 +4,9 @@ import { UserContext } from "../contexts/User";
 import { getAllUsers} from "../api/backendAPICalls";
 
 export default function FriendsScreen(){
-  const { user, setUser } = useContext(UserContext); // user from db
+  const { user, setUser } = useContext(UserContext); 
   const [users, setUsers] = useState([]);
 
-  console.log(user);
   useEffect(() => {
     getAllUsers().then((data) => {
       setUsers(data);

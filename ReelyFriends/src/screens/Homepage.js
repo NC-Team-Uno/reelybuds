@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, ScrollView, Text, Pressable } from "react-native";
+import { StyleSheet, ScrollView, Text} from "react-native";
 import Providers from "../components/Providers";
-import { auth } from "../../firebase";
-import { signOut, updateProfile } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../contexts/User";
 import COLORS from "../style/Colors";
 
 
 const Homepage = () => {
-  const { user, setUser } = useContext(UserContext); // user from db
+  const { user, setUser } = useContext(UserContext); 
   const [timesPressed, setTimesPressed] = useState(0);
   const navigation = useNavigation();
 
