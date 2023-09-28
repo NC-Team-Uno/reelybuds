@@ -30,7 +30,7 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
         <Icon name="close" color={"#f46201"} size={40} />
       </TouchableOpacity>
       <View style={styles.internalContainer}>
-        <Text style={styles.title}>Create Watch Group</Text>
+        <Text style={styles.title}>Create Watch Party</Text>
 
         <GroupNameInput name={name} setName={setName} />
 
@@ -117,7 +117,6 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
               setMembers={setMembers}
               groupAdmin={groupAdmin}
             />
-           
           </View>
         </View>
       </View>
@@ -135,7 +134,7 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
           }
         }}
       >
-        <Text style={styles.createButton}>Create Watch Group</Text>
+        <Text style={styles.createButton}>Create Watch Party</Text>
       </Pressable>
     </View>
   );
