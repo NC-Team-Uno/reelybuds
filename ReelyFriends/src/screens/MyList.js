@@ -1,25 +1,34 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import Icon from "react-native-ionicons";
-import { getAllMoviesForUser } from "../api/Apicall";
+import { getAllMoviesForUser, searchMovieByName } from "../api/Apicall";
 import MovieCard from "../components/MovieCard";
 import { UserContext } from "../contexts/User";
+import SearchBar from "../components/SearchBar";
 
 export default function MyList() {
-  const { user, setUser } = useContext(UserContext); // user from db
+  const { user, setUser } = useContext(UserContext);
   const [movieList, setMovieList] = useState([]);
   const [pageNo, setPageNo] = useState(1);
+  const [text, setText] = useState("");
   const endReached = () => {
     setPageNo(pageNo + 1);
   };
 
   useEffect(() => {
-    getAllMoviesForUser(pageNo, user.streamingServices).then((movies) =>
-      setMovieList(movieList.concat(movies))
-    );
-  }, [pageNo]);
+    if (text === "") {
+      getAllMoviesForUser(pageNo, user.streamingServices).then((movies) =>
+        setMovieList(movieList.concat(movies))
+      );
+    } else {
+      searchMovieByName(text).then((movies) => {
+        setMovieList(movies);
+      });
+    }
+  }, [pageNo, text]);
+
   return (
     <View style={styles.container}>
+      <SearchBar setMovieList={setMovieList} text={text} setText={setText} />
       <FlatList
         data={movieList}
         onEndReached={endReached}

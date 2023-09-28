@@ -128,7 +128,6 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
             Alert.alert("A group name is required to create a watch group.");
           } else {
             postWatchGroup(objectToSend);
-            console.log("group posted", objectToSend);
             getUserWatchGroups(user.username).then((data) => {
               setGroups(data.reverse());
             });
@@ -141,7 +140,6 @@ export default function CreateWatchPartyModal({ closeModal, setGroups }) {
     </View>
   );
 }
-const deviceWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -228,7 +226,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 5,
     marginBottom: 1,
-    fontWeight: "bold", //wont work - why?
+    fontWeight: "bold",
     justifyContent: "space-between",
   },
 });

@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import { View } from "react-native";
-import ProvidersMovies from "./ProvidersMovies";
-import { getMoviesByProvider } from "../api/Apicall";
+import  { useState, useEffect, useContext } from "react";
+
 import { UserContext } from "../contexts/User";
 
-//need to get list of user friends and render their details - like getting movie data
+
 
 const FriendsList = () => {
   const {user,setUser} = useContext(UserContext) // user from db

@@ -2,12 +2,10 @@
 
 
 
-import React, {useEffect, useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, FlatList} from 'react-native';
+import React, { useState} from 'react';
+import { Modal, StyleSheet, Text, Pressable, View, FlatList} from 'react-native';
 import CreateWatchPartyModal from '../components/CreateWatchPartyModal';
-import WatchPartyCard from '../components/WatchPartyCard';
-import {getUserWatchGroups} from '../api/backendAPICalls'
-import GroupDetail from '../components/GroupDetail';
+
 
 
 export default CreateWatchGroup = ({setGroups}) => {
